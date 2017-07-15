@@ -131,7 +131,7 @@ $(document).on('ready', function () {
     var cloudIntro = function() {
         var MR = Math.random;
         var funcs = {1: null,2: null,3: null,4: null,5: null,6: null,7: null};
-        var xPreStartPos = [ WIDTH * .7,WIDTH * .2,WIDTH * .4, MR() * WIDTH, MR() * WIDTH, MR() * WIDTH, MR() * WIDTH];
+        var xPreStartPos = [ WIDTH * .7,WIDTH * .2,WIDTH * .4, MR() * WIDTH, MR() * WIDTH, -200, MR() * WIDTH];
 
         function cloudGen(inCloudClass, objKey){
             return funcs[objKey] = function(){
