@@ -119,10 +119,8 @@ $(document).on('ready', function () {
         }
     }
 
-
     preloader();
-  
-
+   
 
   (function cloudsAnim(){
     var isFirstInit = true;
@@ -130,9 +128,10 @@ $(document).on('ready', function () {
     TweenLite.defaultEase = Power1.easeInOut;
     var cloudIntro = function() {
         var MR = Math.random;
-        var funcs = {1: null,2: null,3: null,4: null,5: null,6: null,7: null};
-        var xPreStartPos = [ WIDTH * .7,WIDTH * .2,WIDTH * .4, MR() * WIDTH, MR() * WIDTH, -200, MR() * WIDTH];
+        var funcs =        {1: null, 2: null, 3: null, 4: null, 5: null, 6: null, 7: null};
+        var xPreStartPos = {1: WIDTH * .5, 2: WIDTH * .1, 3: WIDTH * .2,  4: -400, 5: -800, 6: -200, 7: 0};
 
+      console.log('xPreStartPos ', xPreStartPos);
         function cloudGen(inCloudClass, objKey){
             return funcs[objKey] = function(){
                 var tempWidth = MR()*45 + 30;
@@ -150,8 +149,10 @@ $(document).on('ready', function () {
 
         for (var key in funcs) {
             cloudGen('.cloud'+key, key)();
+          if(key >= 7){
+            isFirstInit = false;
+          }
         }
-      isFirstInit = false;
     };
 
     var init = function() {
