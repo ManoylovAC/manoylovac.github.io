@@ -6,12 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>varshavskiy</title>
-    <link href="static/css/index.min.css" rel="stylesheet">
+    <link href="static/css/index.min.css?v1" rel="stylesheet">
     <link rel="icon" href="static/favicon.png">
   </head>
   <body>
-    <!-- Header-->
-    <header></header>
     <!-- Main content-->
     <main class="content" data-page="home">
       <div class="preload js-preloader">
@@ -68,29 +66,27 @@
       <div class="pops js-pops">
         <div class="wrapper-circle"></div>
         <div class="form-container">
-          <form class="form js-matrix">
+          <form class="form js-matrix js-callback-form">
             <div class="form__title">Зворотній дзвінок</div>
             <div class="form__sub-title">Ми передзвонимо Вам протягом дня</div>
             <div class="form__group">
-              <input type="text" required>
+              <input class="form__control" type="text" required>
               <span class="form__bar"></span>
               <label>Ваше ім'я</label>
             </div>
             <div class="form__group">
-              <input type="text" required>
+              <input class="form__control" type="text" required>
               <span class="form__bar"></span>
               <label>Номер телефону</label>
             </div>
-            <button class="act-blank-btn js-cline">передзвонити мені</button>
+            <button class="act-blank-btn js-callback-submit" type="submit">передзвонити мені</button>
             <i class="form__close js-pops-close"></i>
           </form>
         </div>
       </div>
     </main>
-    <!-- Footer-->
-    <!-- Scripts-->
     <script src="static/js/index.jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.2/TweenMax.min.js"></script>
-    <script src="static/js/varshav.js"></script>
+    <script src="static/js/varshav.js?v1"></script>
   </body>
 </html>
