@@ -1,0 +1,41 @@
+/** codesplit div styles */
+
+.codesplit {
+  @apply my-4 rounded bg-gray-100 py-4;
+}
+
+.snip-above > .codesplit {
+  @apply relative rounded-t-none border-t border-dashed border-gray-400;
+}
+
+.snip-above > .codesplit::before {
+  @apply content-icon-scissors absolute -left-3.5 -top-3 h-5 w-5;
+}
+
+.snip-below > .codesplit {
+  @apply relative rounded-b-none border-b border-dashed border-gray-400;
+}
+
+.snip-below > .codesplit::after {
+  @apply content-icon-scissors absolute -bottom-2.5 -left-3.5 h-5 w-5;
+}
+
+.pair {
+  @apply w-full overflow-x-auto px-5;
+}
+
+.pair.split {
+  @apply border-noc-200 my-1 flex flex-col-reverse flex-wrap justify-between gap-x-8 gap-y-2 border-l-2 bg-gray-200 py-2 lg:flex-row lg:flex-wrap-reverse;
+}
+
+.pair code.hljs {
+  @apply bg-transparent p-0 text-sm;
+}
+
+.comment {
+  @apply flex flex-grow text-sm text-gray-600 lg:justify-end;
+}
+
+.comment > p {
+  @apply max-w-[calc(100vw-5.5rem)] lg:w-[18em];
+}
