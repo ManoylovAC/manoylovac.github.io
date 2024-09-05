@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AndyMan</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --dark-blue-color: #00294a;
+            --light-blue-color: #ace2f8;
+            --dark-green-color: #054200;
+            --light-green-color: #b4f1a6;
+            --hover-color: #FFEB3B;
+            --border-color: #C8C8C8FF;
+            --code-bg-color: #e3e3e3;
+        }
+
+        body {
+            line-height: 1.35;
+            font-family: Roboto, system-ui;
+        }
+
+        h1, h2, h3, h4, h5, h6, div, ul, li, p {
+            margin: 0; padding:0;
+        }
+
+        p {
+            margin-top: 20px;
+        }
+
+        .main {
+            width: 100%; display: flex; justify-content: center; align-items: center; flex-direction: column;
+        }
+
+        .content {
+            max-width: 600px; text-align: justify; display: flex; flex-direction: column;
+        }
+
+        .photo {
+            width: 150px; height: 150px; border-radius: 50%; margin: 30px auto 0;
+        }
+
+        .main-title {
+            margin: 10px 0 25px; padding: 0; text-align: center;
+        }
+
+        .secondary-title {
+            margin: 20px 0 15px; padding: 0; text-align: left;
+        }
+
+        .page-contents {
+            border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);
+        }
+
+        .page-contents__list {
+
+        }
+
+        .page-contents__list {
+            margin-left: 15px; padding: 20px 0;
+        }
+
+        .page-contents__item + .page-contents__item {
+            margin-top: 10px;
+        }
+
+        .page-contents__item-inactive {
+            /*color: lightgray;*/
+            opacity: .2;
+        }
+
+        /* LINKS */
+        a, a:link, a:visited {
+            color: black;
+            font-weight: 600;
+            transition: 0.25s ease;
+        }
+
+        a:active, a:hover {
+            background-color: var(--hover-color);
+        }
+
+        .link {
+            padding: 1px 5px;
+            border-radius: 3px;
+        }
+
+        .inline-link {
+            background: var(--light-blue-color);
+            color: var(--dark-blue-color);
+            padding: 1px 5px;
+            border-radius: 3px;
+        }
+
+        .ext-link {
+            background: var(--light-green-color);
+            color: var(--dark-green-color);
+            padding: 1px 5px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+<main class="main">
+    <div class="content">
+
+        <img class="photo" src="./images/andyman.jpg" alt="Andy Man photo" >
+        <h1 class="main-title">Андрій Манойлов</h1>
+
+        <div class="page-contents">
+            <ul class="page-contents__list">
+                <li class="page-contents__item">
+                    <a class="inline-link" href="https://manoylovac.github.io/noc2">Природа коду</a>
+                    — український переклад цікавезної і популярної серед творчих програмістів книги про природні симуляції
+                    <a class="link" href="https://natureofcode.com">The Nature Of Code</a>
+                    <br>(автор <b>Daniel Shiffman</b>)
+                </li>
+                <li class="page-contents__item">
+                    <a class="inline-link" href="https://thebookofshaders.com/?lan=ua">Книга про шейдери</a>
+                    — український переклад книги <a class="link" href="https://thebookofshaders.com">The Book Of Shaders</a>
+                    <br>(автори <b>Patricio Gonzalez Vivo</b> та <b>Jen Lowe</b>)
+                </li>
+                <li class="page-contents__item page-contents__item-inactive">
+                    <b>Виявлення колізій</b> (WIP)
+                    — український переклад онлайн-книги з виявлення перетинів між геометричними фігурами —
+                    <a class="link" href="https://www.jeffreythompson.org/collision-detection" target="_blank">Collision Detection</a>
+                    <br>(автор <b>Jeffrey Thompson</b>)
+                </li>
+            </ul>
+        </div>
+
+        <h2 class="secondary-title">Українською кому книги програмування про креативне потрібні?</h2>
+        <p>
+            Вітаю друзі!
+        </p>
+        <p>
+            Сподіваюсь грайливий заголовок не дуже збив вас з пантелику і ви все одно відважилися читати далі.
+        </p>
+        <p>
+            Хочу поділитися з вами своїм перекладом нещодавно оновленої і чудової книги Деніела Шиффмана
+            <a class="inline-link" href="https://natureofcode.com/" target="_blank">The Nature Of Code</a>
+            про симуляції природних процесів, яка містить багато практичних та інтерактивних прикладів. З дозволу автора
+            <a class="inline-link" href="https://manoylovac.github.io/noc2/translation.html" target="_blank">переклад книги</a>
+            доступний онлайн. Можна одразу перейти до
+            <a class="inline-link" href="https://manoylovac.github.io/noc2/examples.html" target="_blank">сторінки прикладів</a>
+            та оцінити для себе практичну сторону матеріалу.
+        </p>
+        <p>
+            Початок перекладу стартував гарячим літом 2023-го у спокійних домашніх умовах та легких капцях на босу ногу
+            з усіма доступними зручностями, а завершився наступного пекельного літа 2024-го року, вже у лавах ЗСУ з
+            важкими берцями та постійними переміщеннями. Якщо вам буде цікаво дізнатися про процес перекладу більше,
+            сміливо питайте — буду радий поділитися своїм досвідом.
+        </p>
+        <p>
+            Також, якщо вам до вподоби цей проєкт, ви можете допомогти покращити його. Можливо ви маєте змогу підготувати
+            зображення з перекладом, виправити неточності чи термінологію, пошерити цікавинку серед знайомих, знайти
+            видавництво, зробити легший спосіб для оновлення тощо. Через проходження служби у мене наразі навряд чи буде
+            для цього достатньо часу і можливостей, тож якщо є бажання долучайтеся. Контакти є на
+            <a class="inline-link" href="https://manoylovac.github.io/noc2/translation.html#contacts" target="_blank">сторінці з перекладом</a>.
+        </p>
+        <p>
+            PS: минулим літом я також переклав невелику класичну книгу по шейдерам —
+            <a class="inline-link" href="https://thebookofshaders.com/?lan=ua" target="_blank">The Book Of Shaders</a>
+            — це була моя перша спроба open-source перекладу, тому, якщо ви хотіли познайомитися з шейдерами, тепер
+            можете зробити це українською.
+        </p>
+        <p>
+            PPS: наразі, по змозі, планую завершити переклад невеликої книги з виявлення зіткнень між геометричними
+            фігурами —
+            <a class="inline-link" href="https://www.jeffreythompson.org/collision-detection" target="_blank">Collision Detection</a>.
+        </p>
+        <p>
+            З найкращими побажаннями Андрій Манойлов!
+        </p>
+    </div>
+</main>
+
+</body>
+</html>
+ 
