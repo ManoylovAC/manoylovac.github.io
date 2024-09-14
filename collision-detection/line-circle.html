@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="./assets/images/graphics/favicon.png">
+    <meta name="description" content="An online book about collision detection using p5js, онлайн-книга про виявлення зіткнень за допомогою p5js">
+    <meta name="keywords" content="Line and circle collision, interactive collision, перевірка на зіткнення між лінією і кругом, зіткнення, ітерактивні приклади">
+    <title>Виявлення зіткнень: лінія і круг</title>
+
+    <!-- FONTS AND CSS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400..700&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link href="./assets/css/stylesheet.css" rel="stylesheet" type="text/css">
+
+    <!-- CODE PRETTIFY -->
+    <link href="./assets/css/obsidian.min.css" rel="stylesheet" type="text/css">
+    <script src="./assets/js/highlight.min.js"></script>
+
+    <!-- additional behaviour -->
+    <script src="./assets/js/main.js"></script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-46TNRV0VFR"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-46TNRV0VFR');
+    </script>
+    <script src="./assets/js/main.js"></script>
+</head>
+
+<body>
+<div id="wrapper">
+    <header class="navigation">
+        <span id="prev"><a href="./line-point.html">←</a></span>
+        <span id="title">
+            <a id="navigation-title"
+               class="navigation-title inline-link bg-blue"
+               data-prev-title="Лінія і Точка"
+               data-curr-title="Виявлення зіткнень"
+               data-next-title="Лінія і Лінія"
+               href="table-of-contents.html"
+            >Виявлення зіткнень</a>
+        </span>
+        <span id="next"><a href="./line-line.html">→</a></span>
+    </header>
+
+    <iframe class="w-full canvas" style="aspect-ratio:2/1" loading="lazy" src="./assets/code-examples/line-circle/"></iframe>
+
+    <h1 class="uppercase">Лінія і Круг</h1>
+
+    <p>
+        Щоб перевірити, чи круг перетинається з лінією, ми використаємо код із попередніх прикладів. Подібну практику ми
+        використовуватимемо і в решті книги. Результівна математика стає трохи заплутаною, але ми спростимо складні частини.
+    </p>
+
+    <p>
+        Спочатку перевіримо, чи один із кінців лінії знаходиться всередині круга. Це може статися зокрема, якщо відрізок
+        набагато менший за круг. Для цього ми можемо використати код із розділу
+        <a class="inline-link" href="./point-circle.html">Точка і Круг</a> з початку книги. Якщо будь-який кінець відрізка
+        знаходиться всередині, тоді одразу повертаємо <span class="code">true</span>.
+    </p>
+
+    <pre><code class="language-js code-block">const inside1 = isPointWithCircleCollides(x1,y1, cx,cy,r);
+const inside2 = isPointWithCircleCollides(x2,y2, cx,cy,r);
+
+if (inside1 || inside2) {
+    return true;
+}
+</code></pre>
+
+    <p>
+        Далі нам потрібно знайти найближчу точку на лінії. Для початку давайте обчислимо довжину лінії за допомогою
+        теореми Піфагора:
+    </p>
+
+    <pre><code class="language-js code-block">const distX = x1 - x2;
+const distY = y1 - y2;
+const len = sqrt((distX * distX) + (distY * distY));
+</code></pre>
+
+    <p>
+        Потім ми отримуємо значення, яке англійською коротко називають <span class="code">dot</span>.
+        Якщо раніше ви стикалися з векторною математикою, то мова йде про
+        <a class="inline-link" href="http://en.wikipedia.org/wiki/Dot_product" target="_blank">скалярний добуток</a>
+        двох векторів. Якщо ж для вас це щось нове, то не хвилюйтеся і вважайте цю частину кроком з такою математикою,
+        яку вам не хотілося та не доведеться рахувати вручну
+    </p>
+
+    <pre><code class="language-js code-block">const dot = (((cx - x1) * (x2 - x1)) + ((cy - y1) * (y2 - y1))) / pow(len, 2);
+</code></pre>
+
+    <p>
+        Ви завжди можете почитати більше про скалярний добуток, щоб зрозуміти його суть краще. Наприклад в книзі
+        Nature Of Code Деніела Шиффмана є цілий розділ де доступною мовою розповідається про
+        <a class="inline-link" href="https://manoylovac.github.io/noc2/vectors.html" target="_blank">вектори</a>, а у
+        розділі автономних агентів про
+        <a class="inline-link" href="https://manoylovac.github.io/noc2/autonomous-agents.html#the-dot-product" target="_blank">скалярний добуток</a>
+        та цілі його використання, зокрема і про визначення кута між двома векторами.
+    </p>
+
+    <p>
+        Нарешті, ми можемо використати це рівняння, щоб знайти найближчу точку на прямій:
+    </p>
+
+    <pre><code class="language-js code-block">const closestX = x1 + (dot * (x2 - x1));
+const closestY = y1 + (dot * (y2 - y1));
+</code></pre>
+
+    <p>
+        Однак це повертає точку в будь-якому місці прямої, оскільки вона тягнеться до нескінченності в обох напрямках.
+        Іншими словами, це може дати нам точку з кінця лінії! Отже, перевірмо, чи ця найближча точка насправді
+        знаходиться на нашому відрізку, використовуючи щойно створений алгоритм з розділу
+        <a class="inline-link" href="./line-point.html">Лінія і Точка</a>.
+        Це один з перших випадків, коли ми будемо вкладати функції з попередніх розділів під час роботи над складнішими
+        зіткненнями.
+    </p>
+
+    <p>
+        Якщо точка знаходиться на відрізку значить ми можемо продовжувати. Якщо ні, тоді ми можемо негайно повернутися
+        <span class="code">false</span>, оскільки це означає, що найближча точка знаходиться на лінії поза одним із кінців відрізка:
+    </p>
+
+    <pre><code class="language-js code-block">const isOnSegment = isLineWithPointCollides(x1, y1, x2, y2, closestX, closestY);
+
+if (!isOnSegment) {
+    return false;
+}
+</code></pre>
+
+    <p>
+        Нарешті, ще раз використовуючи теорему Піфагора, ми вираховуємо відстань від круга до найближчої точки на лінії:
+    </p>
+
+    <pre><code class="language-js code-block">const distX = closestX - cx;
+const distY = closestY - cy;
+const distance = sqrt((distX * distX) + (distY * distY));
+</code></pre>
+
+    <p>
+        Якщо ця відстань менша за радіус, тоді ми маємо колізію
+        (так само як <a class="inline-link" href="./point-circle.html">Точка і Круг</a>).
+    </p>
+
+    <pre><code class="language-js code-block">if (distance <= r) {
+    return true;
+}
+
+return false;
+</code></pre>
+
+    <p>
+        Ось повний приклад, у якому зібрано усі частини. Зверніть увагу, що у нас внизу є три функції:
+        та, яку ми щойно створили, і дві з попередніх розділів.
+    </p>
+
+    <pre><code class="language-js code-block sm-txt">// координати та радіус круга
+let cx = 0;
+let cy = 0;
+let r = 30;
+
+// координати відрізка
+let x1, y1;
+let x2, y2;
+
+function setup() {
+  createCanvas(window.innerWidth, window.innerHeight);
+  strokeWeight(15); // збільшена жирність, щоб краще бачити лінію
+
+  x1 = 100;
+  y1 = height - 100;
+  x2 = width - 100;
+  y2 = 100;
+}
+
+function draw() {
+  background(255);
+
+  // оновлення координат круга координатами курсора
+  cx = mouseX;
+  cy = mouseY;
+
+  // результат перевірки на зіткнення
+  const isHit = isLineWithCircleCollides(x1, y1, x2, y2, cx, cy, r);
+
+  // зміна кольору при зіткненні
+  if (isHit) {
+    stroke(255, 150, 0, 150);
+  } else {
+    stroke(0, 150, 255, 150);
+  }
+
+  // малювання лінії
+  line(x1, y1, x2, y2);
+
+  // малювання круга
+  fill(0, 150);
+  noStroke();
+  ellipse(cx, cy, r * 2, r * 2);
+}
+
+// перевірка на перетин між лінією та кругом
+function isLineWithCircleCollides(x1, y1, x2, y2, cx, cy, r) {
+  // якщо один з кінців всередині круга,
+  // тоді одразу повертаємо true
+  const inside1 = isPointWithCircleCollides(x1, y1, cx, cy, r);
+  const inside2 = isPointWithCircleCollides(x2, y2, cx, cy, r);
+  if (inside1 || inside2) return true;
+
+  // отримання довжини лінії
+  let distX = x1 - x2;
+  let distY = y1 - y2;
+  const len = sqrt((distX * distX) + (distY * distY));
+
+  // скалярний добуток прямої та круга
+  const dot = (((cx - x1) * (x2 - x1)) + ((cy - y1) * (y2 - y1))) / pow(len, 2);
+
+  // знаходження найближчої точки на прямій
+  const closestX = x1 + (dot * (x2 - x1));
+  const closestY = y1 + (dot * (y2 - y1));
+
+  // ця точка дійсно знаходиться на відрізку?
+  // якщо так, продовжуємо, але повертаємо false
+  const onSegment = isLineWithPointCollides(x1, y1, x2, y2, closestX, closestY);
+  if (!onSegment) return false;
+
+  // малювання кружечка, щоб підсвітити найближчу точку на лінії (опціонально)
+  fill(255, 0, 0);
+  noStroke();
+  ellipse(closestX, closestY, 20, 20);
+
+  // обчислення відстані до найближчої точки
+  distX = closestX - cx;
+  distY = closestY - cy;
+  const distance = sqrt((distX * distX) + (distY * distY));
+
+  if (distance <= r) {
+    return true;
+  }
+
+  return false;
+}
+
+// перевірка на перетин між лінією та точкою
+function isLineWithPointCollides(x1, y1, x2, y2, px, py) {
+  // обчислення відстані від точки до двох кінців відрізка
+  const d1 = dist(px, py, x1, y1);
+  const d2 = dist(px, py, x2, y2);
+
+  // обчислення довжини відрізка
+  const lineLen = dist(x1, y1, x2, y2);
+
+  // невеликий додатковий буфер для збільшення області перетину
+  const buffer = 0.1;
+
+  // якщо сума двох відстаней дорівнює довжині відрізка, тоді точка знаходиться на відрізку!
+  // зауважте, що тут ми додатково використовуємо буфер для збільшення радіуса зіткнення
+  if (d1 + d2 >= lineLen - buffer && d1 + d2 <= lineLen + buffer) {
+    return true;
+  }
+
+  return false;
+}
+
+// перевірка на перетин між точкою та кругом
+function isPointWithCircleCollides(px, py, cx, cy, r) {
+  // отримання дистанції між точкою та центром круга
+  // за допомоги теореми Піфагора
+  const distX = px - cx;
+  const distY = py - cy;
+  const distance = sqrt((distX * distX) + (distY * distY));
+
+  // якщо відстань менша за радіус кола, значить точка всередині!
+  if (distance <= r) {
+    return true;
+  }
+
+  return false;
+}
+</code></pre>
+
+    <p>
+        Реалізацію потрібної математики при роботі з лініями й не лише з ними можна отримати від деяких вбудованих
+        методів класу
+        <span class="code"><a class="inline-link" href="https://p5js.org/reference/p5/p5.Vector/" target="_blank">p5.Vector</a></span>.
+        Якщо раніше ви не користувалися векторним обʼєктом, можливо, варто трохи з ними ознайомитись. У чудовій книзі
+        Деніела Шиффмана The Nature Of Code є цілий розділ присвячений
+        <a class="inline-link" href="https://manoylovac.github.io/noc2/vectors.html" target="_blank">векторам</a>,
+        який написано дуже простою і доступною мовою. Ми також трохи розглянемо <span class="code">p5.Vector</span>,
+        коли почнемо працювати з багатокутниками.
+    </p>
+
+    <p>
+        Цей приклад базується на коді
+        <a class="inline-link" href="https://web.archive.org/web/20171010010653/http://forums.codeguru.com/showthread.php?194400-Distance-between-point-and-line-segment" target="_blank">Philip Nicoletti</a>.
+        і там більше опису того, як працює цей алгоритм, і математики, що стоїть за ним.
+    </p>
+
+    <a href="./line-line.html"><p class="nextPage">Далі: Лінія і Лінія</p></a>
+
+    <footer>
+        <p>
+            [
+            <a class="inline-link" href="./index.html">вступ</a>,
+            <a href="https://github.com/jeffThompson/CollisionDetection" target="_blank">оригінальне джерело</a>
+            ]
+        </p>
+
+        <p class="license">
+            <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+                <img id="license" class="license" alt="Creative Commons License" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png">
+            </a>
+        </p>
+    </footer>
+
+    <script>hljs.highlightAll();</script>
+</div>
+</body>
+</html>

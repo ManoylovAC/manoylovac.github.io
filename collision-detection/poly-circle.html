@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="./assets/images/graphics/favicon.png">
+    <meta name="description" content="An online book about collision detection using p5js, онлайн-книга про виявлення зіткнень за допомогою p5js">
+    <meta name="keywords" content="polygon with circle collision, interactive collision, перевірка на зіткнення між багатокутником і кругом, зіткнення, ітерактивні приклади">
+    <title>Виявлення зіткнень: багатокутник і круг</title>
+
+    <!-- FONTS AND CSS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400..700&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link href="./assets/css/stylesheet.css" rel="stylesheet" type="text/css">
+
+    <!-- CODE PRETTIFY -->
+    <link href="./assets/css/obsidian.min.css" rel="stylesheet" type="text/css">
+    <script src="./assets/js/highlight.min.js"></script>
+
+    <!-- additional behaviour -->
+    <script src="./assets/js/main.js"></script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-46TNRV0VFR"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-46TNRV0VFR');
+    </script>
+    <script src="./assets/js/main.js"></script>
+</head>
+
+<body>
+<div id="wrapper">
+    <header class="navigation">
+        <span id="prev"><a href="./poly-point.html">←</a></span>
+        <span id="title">
+            <a id="navigation-title"
+               class="navigation-title inline-link bg-blue"
+               data-prev-title="Прямокутник і Точка"
+               data-curr-title="Виявлення зіткнень"
+               data-next-title="Багатокутник і Прямокутник"
+               href="table-of-contents.html"
+            >Виявлення зіткнень</a>
+        </span>
+        <span id="next"><a href="./poly-rect.html">→</a></span>
+    </header>
+
+    <iframe class="w-full canvas" style="aspect-ratio:2/1" loading="lazy" src="./assets/code-examples/poly-circle/"></iframe>
+
+    <p class="caption">
+        Зверніть увагу на те, що відбувається, коли круг повністю знаходиться
+        <br>
+        всередині багатокутника (ми виправимо це пізніше).
+    </p>
+
+    <h1 class="uppercase">Прямокутник і Круг</h1>
+
+    <p>
+        Задачу по перевірці, чи круг має колізію з багатокутником, можна спростити до серії перевірок на зіткнення
+        <a class="inline-link" href="line-circle.html">лінії з кругом</a>, по одному для кожної сторони багатокутника.
+        Оскільки ми вже розглядали кроки перебору вершин для перевірки зіткнення <a class="inline-link" href="./line-circle.html">лінії з кругом</a>,
+        давайте просто подивимося на перевірку кожної сторони:
+    </p>
+
+    <pre><code class="language-js code-block">let isCollision = isLineWithCircleCollides(vc.x,vc.y, vn.x,vn.y, cx,cy,r);
+if (isCollision) return true;
+</code></pre>
+
+    <p>
+        Чудово! Таким чином ми можемо спиратися на попередній код, дозволяючи гнучкому, складному коду виникати з
+        простіших частин.
+    </p>
+
+    <p>
+        Ось повний приклад:
+    </p>
+
+    <pre><code class="language-js code-block sm-txt">/ змінні для круга
+let cx = 0;
+let cy = 0;
+let r = 30;
+
+// масив для векторів, по одному для кожної вершини багатокутника
+let vertices = [];
+
+function setup() {
+  createCanvas(window.innerWidth, window.innerHeight);
+  noStroke();
+
+  // створення координат для багатокутника (тут це трапеція)
+  vertices[0] = createVector(width/2-100, height/2-100);
+  vertices[1] = createVector(width/2+100, height/2-100);
+  vertices[2] = createVector(width/2+50,  height/2+100);
+  vertices[3] = createVector(width/2-50,  height/2+100);
+}
+
+function draw() {
+  background(255);
+
+  // оновлення координат центру круга координатами курсора
+  cx = mouseX;
+  cy = mouseY;
+
+  // результат перевірки на зіткнення
+  // при зіткненні змінюємо колір
+  const isHit = isPolyWithCircleCollides(vertices, cx, cy, r);
+  if (isHit) fill(255, 150, 0);
+  else fill(0, 150, 255);
+
+  // малювання багатокутника через перебір вершин
+  noStroke();
+  beginShape();
+  for (const v of vertices) {
+    vertex(v.x, v.y);
+  }
+  endShape();
+
+  // малювання круга
+  fill(0, 150);
+  ellipse(cx, cy, r * 2, r * 2);
+}
+
+// перевірка на перетин між багатокутником і кругом
+function isPolyWithCircleCollides(vertices, cx, cy, r) {
+  // перебір кожної вершини з використанням наступної вершини в списку
+  let next = 0;
+  for (let current = 0; current < vertices.length; current++) {
+    // отримання наступної вершини зі списку
+    next = current + 1;
+    // коли дійшли до останньої вершини, беремо першу під індексом 0
+    if (next === vertices.length) {
+      next = 0;
+    }
+
+    // отримуємо p5.Vector у нашій поточній позиції
+    // це зробить наш оператор if трохи чистішим
+    const vc = vertices[current];  // c для "current" (поточний)
+    const vn = vertices[next];     // n для "next" (наступний)
+
+    // перевірка колізії між кругом і лінією, утвореною між двома вершинами
+    const isCollision = isLineWithCircleCollides(vc.x, vc.y, vn.x, vn.y, cx, cy, r);
+    if (isCollision) return true;
+  }
+
+  // наведений вище алгоритм лише перевіряє, чи круг торкається країв багатокутника –
+  // у більшості випадків цього достатньо, але ви можете розкоментувати наступний код,
+  // щоб також перевірити, чи центр кола знаходиться всередині багатокутника
+
+  // const isCenterInside = isPolygonPointCollides(vertices, cx,cy);
+  // if (isCenterInside) return true;
+
+  // у іншому випадку повертаємо false
+  return false;
+}
+
+// перевірка на перетин між лінією і кругом
+function isLineWithCircleCollides(x1, y1, x2, y2, cx, cy, r) {
+
+  // якщо один з кінців всередині круга,
+  // тоді одразу повертаємо true
+  const inside1 = isPointWithCircleCollides(x1, y1, cx, cy, r);
+  const inside2 = isPointWithCircleCollides(x2, y2, cx, cy, r);
+  if (inside1 || inside2) return true;
+
+  // отримання довжини лінії
+  let distX = x1 - x2;
+  let distY = y1 - y2;
+  const len = sqrt((distX * distX) + (distY * distY));
+
+  // скалярний добуток прямої та круга
+  const dot = (((cx - x1) * (x2 - x1)) + ((cy - y1) * (y2 - y1))) / pow(len, 2);
+
+  // знаходження найближчої точки на прямій
+  const closestX = x1 + (dot * (x2 - x1));
+  const closestY = y1 + (dot * (y2 - y1));
+
+  // ця точка дійсно знаходиться на відрізку?
+  // якщо так, продовжуємо, але повертаємо false
+  const onSegment = isLineWithPointCollides(x1, y1, x2, y2, closestX, closestY);
+  if (!onSegment) return false;
+
+  // малювання кружечка, щоб підсвітити найближчу точку на лінії (опціонально)
+  fill(255, 0, 0);
+  noStroke();
+  ellipse(closestX, closestY, 20, 20);
+
+  // обчислення відстані до найближчої точки
+  distX = closestX - cx;
+  distY = closestY - cy;
+  const distance = sqrt((distX * distX) + (distY * distY));
+
+  // чи круг має перетин з лінією?
+  if (distance <= r) {
+    return true;
+  }
+
+  return false;
+}
+
+// перевірка на перетин між лінією і точкою
+function isLineWithPointCollides(x1, y1, x2, y2, px, py) {
+  // обчислення відстані від точки до двох кінців відрізка
+  const d1 = dist(px, py, x1, y1);
+  const d2 = dist(px, py, x2, y2);
+
+  // обчислення довжини відрізка
+  const lineLen = dist(x1, y1, x2, y2);
+
+  // невеликий додатковий буфер для збільшення області перетину
+  const buffer = 0.1;
+
+  // якщо сума двох відстаней дорівнює довжині відрізка, тоді точка знаходиться на відрізку!
+  // зауважте, що тут ми додатково використовуємо буфер для збільшення радіуса зіткнення
+  if (d1 + d2 >= lineLen - buffer && d1 + d2 <= lineLen + buffer) {
+    return true;
+  }
+
+  return false;
+}
+
+// перевірка на перетин між точкою і кругом
+function isPointWithCircleCollides(px, py, cx, cy, r) {
+  // отримання дистанції між точкою та центром круга
+  // за допомоги теореми Піфагора
+  const distX = px - cx;
+  const distY = py - cy;
+  const distance = sqrt((distX * distX) + (distY * distY));
+
+  // якщо відстань менша за радіус кола, значить точка всередині!
+  if (distance <= r) {
+    return true;
+  }
+
+  return false;
+}
+
+// перевірка на перетин між багатокутником та точкою
+// потрібно, лише якщо ви збираєтеся перевірити, чи круг знаходиться ВСЕРЕДИНІ багатокутника
+function isPolygonPointCollides(vertices, px, py) {
+  let isCollision = false;
+
+  // перебір кожної вершини з використанням наступної вершини в списку
+  let next = 0;
+  for (let current = 0; current < vertices.length; current++) {
+
+    // отримання наступної вершини зі списку
+    next = current + 1;
+    // коли дійшли до останньої вершини, беремо першу під індексом 0
+    if (next === vertices.length) {
+      next = 0;
+    }
+
+    // отримуємо p5.Vector у нашій поточній позиції
+    // це зробить наш оператор if трохи чистішим
+    const vc = vertices[current];// c для "current" (поточний)
+    const vn = vertices[next];   // n для "next" (наступний)
+
+    // порівняти позицію, інвертувати змінну 'isCollision'
+    if (((vc.y > py && vn.y < py) || (vc.y < py && vn.y > py)) &&
+      (px < (vn.x - vc.x) * (py - vc.y) / (vn.y - vc.y) + vc.x)) {
+      isCollision = !isCollision;
+    }
+  }
+
+  return isCollision;
+}
+</code></pre>
+
+    <p>
+        Оскільки функція <span class="code">isPolyWithCircleCollides()</span> викликає <span class="code">isLineWithCircleCollides()</span>
+        яка викликає функцію <span class="code">isLineWithPointCollides()</span>, ми могли б об’єднати їх в одну єдину функцію,
+        але ідея функцій у програмуванні полягає у їх повторному використанні. Якщо ми оновимо функцію
+        <span class="code">isLineWithPointCollides()</span>, то це вплине на усі наші проєкти, які її використовують.
+    </p>
+
+    <p>
+        Але! У нас є невелика проблема. Спробуйте перемістити круг так, щоб він був повністю всередині багатокутника.
+        Виявлення колізії зникає! Такі ситуації називаються <em>граничними випадками </em>, коли для перевірки потрібен
+        інший набір параметрів.
+    </p>
+
+    <p>
+        У більшості випадків нам не потрібно знати, чи круг всередині: уявіть, що багатокутник — це космічний корабель,
+        а круг — астероїд. Як тільки астероїд торкається корабля, ми реєструємо зіткнення і щось робимо (наприклад,
+        руйнуємо корабель).
+    </p>
+
+    <p>
+        Якщо потрібно дізнатися, чи знаходиться круг всередині багатокутника, ви можете додати ще два рядки коду до
+        функції <span class="code">isPolyWithCircleCollides()</span> (безпосередньо перед фіналом <span class="code">return false;</span>),
+        щоб перевірити, чи знаходиться центр круга всередині багатокутника:
+    </p>
+
+    <pre><code class="language-js code-block">const isCenterInside = isPolygonPointCollides(cx,cy, vertices);
+
+if (isCenterInside) return true;
+</code></pre>
+
+    <p>
+        Ми робимо це після перевірки ребер (сторін багатокутника), оскільки вони, швидше за все, будуть перетнуті першими.
+        Якщо ця перевірка вам не потрібна, облиште її.
+    </p>
+
+    <a href="./poly-rect.html"><p class="nextPage">Далі: Багатокутник і Прямокутник</p></a>
+
+    <footer>
+        <p>
+            [
+            <a class="inline-link" href="./index.html">вступ</a>,
+            <a href="https://github.com/jeffThompson/CollisionDetection" target="_blank">оригінальне джерело</a>
+            ]
+        </p>
+
+        <p class="license">
+            <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+                <img id="license" class="license" alt="Creative Commons License" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png">
+            </a>
+        </p>
+    </footer>
+
+    <script>hljs.highlightAll();</script>
+</div>
+</body>
+</html>

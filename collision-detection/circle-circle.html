@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="./assets/images/graphics/favicon.png">
+    <meta name="description" content="An online book about collision detection using p5js, онлайн-книга про виявлення зіткнень за допомогою p5js">
+    <meta name="keywords" content="circle and circle collision, interactive collision, перевірка на зіткнення між кругом і кругом, зіткнення, ітерактивні приклади">
+    <title>Виявлення зіткнень: круг з кругом</title>
+
+    <!-- FONTS AND CSS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400..700&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link href="./assets/css/stylesheet.css" rel="stylesheet" type="text/css">
+
+    <!-- CODE PRETTIFY -->
+    <link href="./assets/css/obsidian.min.css" rel="stylesheet" type="text/css">
+    <script src="./assets/js/highlight.min.js"></script>
+
+    <!-- additional behaviour -->
+    <script src="./assets/js/main.js"></script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-46TNRV0VFR"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-46TNRV0VFR');
+    </script>
+    <script src="./assets/js/main.js"></script>
+</head>
+
+<body>
+<div id="wrapper">
+    <header class="navigation">
+        <span id="prev"><a href="./point-circle.html">←</a></span>
+        <span id="title">
+            <a id="navigation-title"
+               class="navigation-title inline-link bg-blue"
+               data-prev-title="Точка і Круг"
+               data-curr-title="Виявлення зіткнень"
+               data-next-title="Завдання 1"
+               href="table-of-contents.html"
+            >Виявлення зіткнень</a>
+        </span>
+        <span id="next"><a href="./section-1-challenges.html">→</a></span>
+    </header>
+
+    <iframe class="w-full canvas" style="aspect-ratio:2/1" loading="lazy" src="./assets/code-examples/circle-circle/"></iframe>
+
+    <h1 class="uppercase">Круг і Круг</h1>
+
+    <p>
+        Зіткнення з точками — це добре, але об’єкти, окрім вістря курсора, рідко коли займають одну точку простору.
+        Далі ми можемо використати те саме застосування теореми Піфагора з прикладу
+        <a class="inline-link" href="./point-circle.html">точки з кругом</a>, щоб зробити перевірку на зіткнення двох кругів.
+    </p>
+
+    <p>
+        Спочатку обчислимо відстань між центрами двох кругів:
+    </p>
+
+    <pre><code class="language-js code-block">const distX = c1x - c2x;
+const distY = c1y - c2y;
+const distance = sqrt((distX * distX) + (distY * distY));
+</code></pre>
+
+    <p>
+        Щоб перевірити, чи круги стикаються, ми дивимося, чи відстань між їхніми центрами менша за суму їхніх радіусів.
+    </p>
+
+    <pre><code class="language-js code-block">if (distance &lt;= c1r + c2r) {
+    return true;
+}
+
+return false;
+</code></pre>
+
+    <p>У повному прикладі це виглядає так:</p>
+
+    <pre><code class="language-js code-block sm-txt">// змінні для положення та розміну першого рухомого круга
+let circle1x = 0;
+let circle1y = 0;
+let circle1r = 30;
+
+// змінні для положення та розміну другого статичного круга
+let circle2x;
+let circle2y;
+let circle2r = 100;
+
+function setup() {
+  createCanvas(window.innerWidth, window.innerHeight);
+  noStroke();
+  circle2x = width / 2;
+  circle2y = height / 2;
+}
+
+function draw() {
+  background(255);
+
+  // оновлення координат першого круга координатами курсора
+  circle1x = mouseX;
+  circle1y = mouseY;
+
+  // перевірка на зіткнення
+  const isHit = isCircleWithCircleCollides(circle1x, circle1y, circle1r, circle2x, circle2y, circle2r);
+
+  // якщо є зіткнення, змінюємо колір другого круга
+  if (isHit) {
+    fill(255, 150, 0);
+  } else {
+    fill(0, 150, 255);
+  }
+
+  // малюємо другий круг
+  ellipse(circle2x, circle2y, circle2r * 2, circle2r * 2);
+
+  // малюємо перший круг
+  fill(0, 150);
+  ellipse(circle1x, circle1y, circle1r * 2, circle1r * 2);
+}
+
+// перевірка на перетин між двома кругами
+function isCircleWithCircleCollides(circle1x, circle1y, circle1r, circle2x, circle2y, circle2r) {
+  // обчислюємо дистанцію між центрами двох кругів,
+  // використовуючи теорему Піфагора
+  const distX = circle1x - circle2x;
+  const distY = circle1y - circle2y;
+  const distance = sqrt((distX * distX) + (distY * distY));
+
+  // якщо відстань менша ніж сума обох радіусів,
+  // значить круги перетинаються
+  if (distance <= circle1r + circle2r) {
+    return true;
+  }
+
+  return false;
+}
+</code></pre>
+
+    <p>
+        Зіткнення <strong>круга з кругом</strong> можна використовувати для створення "обмежувальних кіл" навколо більш
+        складних об’єктів. Жертвуючи в такому підході точністю, цей спосіб до виявлення зіткнень є дуже швидким і може
+        бути хорошим наближенням для деяких задач.
+    </p>
+
+    <p><img src="./assets/images/bounding-circle.jpg" alt="Приклад обмежувального кола" title="Приклад обмежувального кола"></p>
+
+    <p class="caption">
+        Хоча обмежувальне коло містить деякі області, які не є частиною фігури, воно є хорошим наближенням для цього
+        <a class="inline-link" href="https://uk.wikipedia.org/wiki/%D0%94%D0%B2%D0%B0%D0%BD%D0%B0%D0%B4%D1%86%D1%8F%D1%82%D0%B8%D0%BA%D1%83%D1%82%D0%BD%D0%B8%D0%BA" target="_blank">додекагона</a>.
+    </p>
+
+    <p>
+        Вам може бути цікаво, чому ми говоримо лише про круги, а не про еліпси. Цей вид зіткнень може здатися доволі
+        схожим, але математика для перевірки <a class="inline-link" href="http://stackoverflow.com/questions/2945337/how-to-detect-if-an-ellipse-intersectscollides-with-a-circle" target="_blank">зіткнення еліпсів
+        насправді досить складна</a>. Вважайте це великим викликом після освоєння інших прикладів зіткнень!
+    </p>
+
+    <p>
+        Якщо вам дуже потрібно, то ви можете взяти готові рішення і використати їх напряму. Ось один з інтерактивних прикладів
+        <a class="inline-link" href="https://openprocessing.org/sketch/1977364" target="_blank">перетину еліпсів</a>.
+    </p>
+
+
+    <a href="./section-1-challenges.html"><p class="nextPage">Далі: Завдання 1</p></a>
+
+    <footer>
+        <p>
+            [
+            <a class="inline-link" href="./index.html">вступ</a>,
+            <a href="https://github.com/jeffThompson/CollisionDetection" target="_blank">оригінальне джерело</a>
+            ]
+        </p>
+
+        <p class="license">
+            <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+                <img id="license" class="license" alt="Creative Commons License" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png">
+            </a>
+        </p>
+    </footer>
+
+    <script>hljs.highlightAll();</script>
+</div>
+</body>
+</html>

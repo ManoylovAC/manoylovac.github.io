@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="./assets/images/graphics/favicon.png">
+    <meta name="description" content="An online book about collision detection using p5js, онлайн-книга про виявлення зіткнень за допомогою p5js">
+    <meta name="keywords" content="{KEYWORDS} collision, interactive collision, перевірка на зіткнення між точкою і прямокутником, зіткнення, ітерактивні приклади">
+    <title>Виявлення зіткнень: точка з прямокутником</title>
+
+    <!-- FONTS AND CSS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400..700&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link href="./assets/css/stylesheet.css" rel="stylesheet" type="text/css">
+
+    <!-- CODE PRETTIFY -->
+    <link href="./assets/css/obsidian.min.css" rel="stylesheet" type="text/css">
+    <script src="./assets/js/highlight.min.js"></script>
+
+    <!-- additional behaviour -->
+    <script src="./assets/js/main.js"></script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-46TNRV0VFR"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-46TNRV0VFR');
+    </script>
+    <script src="./assets/js/main.js"></script>
+</head>
+
+<body>
+<div id="wrapper">
+    <header class="navigation">
+        <span id="prev"><a href="./section-1-challenges.html">←</a></span>
+        <span id="title">
+            <a id="navigation-title"
+               class="navigation-title inline-link bg-blue"
+               data-prev-title="Завдання 1"
+               data-curr-title="Виявлення зіткнень"
+               data-next-title="Прямокутник і прямокутник"
+               href="table-of-contents.html"
+            >Виявлення зіткнень</a>
+        </span>
+        <span id="next"><a href="./rect-rect.html">→</a></span>
+    </header>
+
+    <iframe class="w-full canvas" style="aspect-ratio:2/1" loading="lazy" src="./assets/code-examples/point-rect/"></iframe>
+
+    <h1 class="uppercase">Точка і Прямокутник</h1>
+
+    <p>
+        Перевіряти зіткнення з круглими об’єктами досить легко, оскільки відстань від їх центру до їх краю однакова в
+        усіх напрямках. Для прямокутників потрібен трохи складніший алгоритм.
+    </p>
+
+    <p>Скажімо, у нас є квадрат:</p>
+
+    <pre><code class="language-js code-block">const rectX = 10;  // x-позиція
+const rectY = 10;  // y-позиція
+const rectW = 30;  // ширина
+const rectH = 30;  // висота
+</code></pre>
+
+    <p>
+        Щоб побачити, чи знаходиться точка всередині квадрата, ми повинні перевірити наступні умови:
+    </p>
+
+    <pre><code class="language-text code-block">Чи X-координата точки розташована ПРАВОРУЧ від ЛІВОГО КРАЮ прямокутника?
+Чи X-координата точки розташована ЛІВОРУЧ від ПРАВОГО КРАЮ прямокутника?
+Чи Y-координата точки розташована НИЖЧЕ ВЕРХНЬОГО КРАЮ прямокутника?
+Чи Y-координата точки розташована ВИЩЕ НИЖНЬОГО КРАЮ прямокутника?
+</code></pre>
+
+    <p>
+        Якщо усі ці умови правдиві одночасно, тоді точка знаходиться всередині прямокутника. Давайте спочатку перевіримо
+        умову щодо лівого краю. Оскільки малювання прямокутника для функції <span class="code">rect()</span> за замовчуванням
+        починається з верхнього лівого кута, тоді значення його лівої координати знаходиться у змінній <span class="code">rectX</span>:
+    </p>
+
+    <pre><code class="language-js code-block">if (pointX &gt;= rectX) {
+    // точка знаходиться праворуч від лівого краю прямокутника
+}
+</code></pre>
+
+    <p>
+        Досить легко, але, можливо, не так інтуїтивно зрозуміло. Ось діаграма, яка пунктирною лінією показує лівий
+        край прямокутника:
+    </p>
+
+    <p>
+        <img src="./assets/images/rect-bounding-box.jpg" alt="Лівий край прямокутника" title="Лівий край прямокутника">
+    </p>
+
+    <p>
+        Якщо ми хочемо перевірити умову для правого краю, нам потрібно отримати його <span class="no-wrap">X-позицію</span>,
+        яка є сумою лівої координати прямокутника і його ширини:
+    </p>
+
+    <pre><code class="language-js code-block">const rightEdge = rectX + rectW;
+if (pointX &lt;= rightEdge) {
+    // точка заходиться ліворуч від правого краю прямокутника
+}
+</code></pre>
+
+    <p>Ось повний код для перевірки всіх умов:</p>
+
+    <pre><code class="language-js code-block">if (
+       px &gt;= rx       // точка правіше лівої сторони прямокутника
+    && px &lt;= rx + rw  // І РАЗОМ З ТИМ точка лівіше правої сторони прямокутника
+    && py &gt;= ry       // І РАЗОМ З ТИМ точка вище нижньої сторони прямокутника
+    && py &lt;= ry + rh  // І РАЗОМ З ТИМ точка нижче верхньої сторони прямокутника
+) {
+    return true;
+}
+
+return false;
+</code></pre>
+
+    <p>
+        Якщо <b><em>всі</em></b> твердження правдиві, тоді точка знаходиться всередині квадрата. Зауважте, що ми рознесли
+        наш оператор <span class="code">if</span> на кілька рядків, що полегшує його читання. Це залежить від особистих
+        уподобань і для ясності ми продовжимо робити це.
+    </p>
+
+    <p>Ось повний код прикладу:</p>
+
+
+
+
+
+    <pre><code class="language-js code-block sm-txt">// змінні для положення точки, які контролюватимуться положенням курсора
+let px = 0;
+let py = 0;
+
+// координати для квадрату
+let sx = 200;
+let sy = 100;
+// змінні для ширини й висоти квадрата
+let sw = 200;
+let sh = 200;
+
+function setup() {
+  createCanvas(window.innerWidth, window.innerHeight);
+  noCursor();
+  strokeWeight(15);       // збільшена жирність точки, щоб краще її бачити
+  // визначення положення координат для лівого верхнього кута, так щоб квадрат був по центру полотна
+  sx = (width - sw) / 2;
+  sy = (height - sw) / 2;
+}
+
+function draw() {
+  background(255);
+
+  // оновлення координат точки координатами курсора
+  px = mouseX;
+  py = mouseY;
+
+  // результат перевірки на зіткнення
+  const isHit = isPointWithRectCollides(px, py, sx, sy, sw, sh);
+
+  // зміна заливки при зіткненні
+  if (isHit) {
+    fill(255, 150, 0);
+  } else {
+    fill(0, 150, 255);
+  }
+
+  // малювання прямокутника
+  noStroke();
+  rect(sx, sy, sw, sh);
+
+  // малювання точки
+  stroke(0);
+  point(px, py);
+}
+
+// перевірка на перетин між точкою та прямокутником
+function isPointWithRectCollides(px, py, rx, ry, rw, rh) {
+  // чи точка знаходиться всередині прямокутника?
+  if (
+       px >= rx       // точка правіше лівої сторони прямокутника
+    && px <= rx + rw  // І РАЗОМ З ТИМ точка лівіше правої сторони прямокутника
+    && py >= ry       // І РАЗОМ З ТИМ точка вище нижньої сторони прямокутника
+    && py <= ry + rh  // І РАЗОМ З ТИМ точка нижче верхньої сторони прямокутника
+  ) {
+    return true;
+  }
+
+  return false;
+}
+</code></pre>
+
+    <a href="./rect-rect.html"><p class="nextPage">Далі: прямокутник і прямокутник</p></a>
+
+    <footer>
+        <p>
+            [
+            <a class="inline-link" href="./index.html">вступ</a>,
+            <a href="https://github.com/jeffThompson/CollisionDetection" target="_blank">оригінальне джерело</a>
+            ]
+        </p>
+
+        <p class="license">
+            <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+                <img id="license" class="license" alt="Creative Commons License" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png">
+            </a>
+        </p>
+    </footer>
+
+    <script>hljs.highlightAll();</script>
+</div>
+</body>
+</html>

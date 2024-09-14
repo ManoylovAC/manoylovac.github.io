@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="./assets/images/graphics/favicon.png">
+    <meta name="description" content="An online book about collision detection using p5js, онлайн-книга про виявлення зіткнень за допомогою p5js">
+    <meta name="keywords" content="polygon with line collision, interactive collision, перевірка на зіткнення між багатокутником і лінією, зіткнення, ітерактивні приклади">
+    <title>Виявлення зіткнень: багатокутник і лінія</title>
+
+    <!-- FONTS AND CSS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400..700&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link href="./assets/css/stylesheet.css" rel="stylesheet" type="text/css">
+
+    <!-- CODE PRETTIFY -->
+    <link href="./assets/css/obsidian.min.css" rel="stylesheet" type="text/css">
+    <script src="./assets/js/highlight.min.js"></script>
+
+    <!-- additional behaviour -->
+    <script src="./assets/js/main.js"></script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-46TNRV0VFR"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-46TNRV0VFR');
+    </script>
+    <script src="./assets/js/main.js"></script>
+</head>
+
+<body>
+<div id="wrapper">
+    <header class="navigation">
+        <span id="prev"><a href="./poly-rect.html">←</a></span>
+        <span id="title">
+            <a id="navigation-title"
+               class="navigation-title inline-link bg-blue"
+               data-prev-title="Багатокутник і Прямокутник"
+               data-curr-title="Виявлення зіткнень"
+               data-next-title="Багатокутник і Багатокутник"
+               href="table-of-contents.html"
+            >Виявлення зіткнень</a>
+        </span>
+        <span id="next"><a href="./poly-poly.html">→</a></span>
+    </header>
+
+    <iframe class="w-full canvas" style="aspect-ratio:2/1" loading="lazy" src="./assets/code-examples/poly-line/"></iframe>
+
+    <h1 class="uppercase">Багатокутник і Лінія</h1>
+
+    <p>
+        Перевірка того, чи лінія стикається з багатокутником, дуже схожа на приклад
+        <a class="inline-link" href="./line-rect.html">прямокутника з лінією</a>. Ми перебираємо кожну сторону
+        багатокутника та виконуємо перевірку на зіткнення <a class="inline-link" href="./line-line.html">лінії з лінією</a>.
+    </p>
+
+    <p>
+        У цьому прикладі ми створимо гарний правильний багатокутник із 16 сторонами (шістнадцятикутник або
+        <a class="inline-link" href="http://en.wikipedia.org/wiki/Hexadecagon" target="_blank">гексадекагон</a>).
+        Точки-вершини знову зберігатимуться у масиві для векторів:
+    </p>
+
+    <pre><code class="language-js code-block">const verticesCount = 16;
+const vertices = [];
+
+const angle = TWO_PI / vertices.length;
+// створення вершин у вигляді правильного багатокутника.
+for (let i = 0; i < verticesCount; i++) {
+  const a = angle * i;
+  const x = width / 2 + cos(a) * 100;
+  const y = height / 2 + sin(a) * 100;
+  vertices.push(createVector(x, y));
+}
+</code></pre>
+
+    <p>
+        У циклі <span class="code">for</span> ми робимо те саме, що і раніше, проходячи по вершинах і отримуючи поточну
+        й наступну точки масиву.
+    </p>
+
+    <pre><code class="language-js code-block">let next = 0;
+for (let current = 0; current < vertices.length; current++) {
+    // отримання наступної вершини зі списку
+    next = current + 1;
+    // коли дійшли до останньої вершини, беремо першу під індексом 0
+    if (next === vertices.length) {
+      next = 0;
+    }
+}
+</code></pre>
+
+    <p>
+        Тепер ми можемо отримати <span class="code">X/Y</span> координати цих двох точок, які утворюють лінію-ребро
+        багатокутника:
+    </p>
+
+    <pre><code class="language-js code-block">const x3 = vertices[current].x;
+const y3 = vertices[current].y;
+const x4 = vertices[next].x;
+const y4 = vertices[next].y;
+</code></pre>
+
+    <p>
+        Маючи дані про ребро багатокутника і лінію ми можемо передати задачу по перевірці колізії функції
+        <span class="code">isLineWithLineCollides()</span> з розділу <a class="inline-link" href="./line-line.html">лінія і лінія</a>.
+        Якщо будь-яка сторона багатокутника має перетин з окремою лінією ми можемо негайно повернути результат
+        <span class="code">true</span>. Це пришвидшить кількість обчислень, оскільки ми можемо пропустити перевірку
+        решти сторін. Якщо ми дійшли до кінця і не отримали жодного перетину, тоді повертаємо <span class="code">false</span>.
+    </p>
+
+    <pre><code class="language-js code-block">const isHit = isLineWithLineCollides(x1, y1, x2, y2, x3, y3, x4, y4);
+
+if (isHit) {
+  return true;
+}
+</code></pre>
+
+    <p>Повний код прикладу:</p>
+
+    <pre><code class="language-js code-block sm-txt">// змінні для лінії
+let x1 = 0;
+let y1 = 0;
+let x2 = 20;
+let y2 = 20;
+
+const verticesCount = 16; // кількість вершин
+let vertices = []; // масив для векторів-вершин багатокутника
+
+function setup() {
+  createCanvas(window.innerWidth, window.innerHeight);
+  strokeWeight(15);  // збільшена жирність, щоб краще бачити лінію
+  noCursor();
+
+  // основано на цьому прикладі: https://processing.org/examples/regularpolygon.html
+  const angle = TWO_PI / verticesCount;
+
+  // створення вершин у вигляді правильного багатокутника.
+  for (let i = 0; i < verticesCount; i++) {
+    const a = angle * i;
+    const x = width / 2 + cos(a) * 100;
+    const y = height / 2 + sin(a) * 100;
+    vertices.push(createVector(x, y));
+  }
+}
+
+function draw() {
+  background(255);
+
+  // оновлення одного з кінців лінії координатами курсора
+  x1 = mouseX;
+  y1 = mouseY;
+
+  // результат перевірки на зіткнення
+  const isHit = isPolyWithLineCollides(vertices, x1, y1, x2, y2);
+  // при зіткненні змінюємо колір
+  if (isHit) fill(255, 150, 0);
+  else fill(0, 150, 255);
+
+  // малювання багатокутника
+  noStroke();
+  beginShape();
+  for (const v of vertices) {
+    vertex(v.x, v.y);
+  }
+  endShape(CLOSE);
+
+  // малювання лінії
+  stroke(0, 150);
+  line(x1, y1, x2, y2);
+}
+
+// перевірка на перетин між багатокутником та лінією
+function isPolyWithLineCollides(vertices, x1, y1, x2, y2) {
+  // перебір кожної вершини з використанням наступної вершини в списку
+  let next = 0;
+  for (let current = 0; current < vertices.length; current++) {
+    // отримання наступної вершини зі списку
+    next = current + 1;
+    // коли дійшли до останньої вершини, беремо першу під індексом 0
+    if (next === vertices.length) {
+      next = 0;
+    }
+
+    // отримання векторів для поточної й наступної точки,
+    // що формують ребро та витягання відповідних XY-координат
+    const x3 = vertices[current].x;
+    const y3 = vertices[current].y;
+    const x4 = vertices[next].x;
+    const y4 = vertices[next].y;
+
+    // перевірка перетину лінії з лінією
+    // якщо є, тоді одразу повертаємо 'true', щоб зупинити інші перевірки
+    const isHit = isLineWithLineCollides(x1, y1, x2, y2, x3, y3, x4, y4);
+    if (isHit) {
+      return true;
+    }
+  }
+
+  // якщо зіткнень не було, повертаємо 'false'
+  return false;
+}
+
+// перевірка на перетин між лінією та кругом
+function isLineWithLineCollides(x1, y1, x2, y2, x3, y3, x4, y4) {
+  // розрахунок напрямку ліній
+  const uA = ((x4-x3)*(y1-y3) - (y4-y3)*(x1-x3)) / ((y4-y3)*(x2-x1) - (x4-x3)*(y2-y1));
+  const uB = ((x2-x1)*(y1-y3) - (y2-y1)*(x1-x3)) / ((y4-y3)*(x2-x1) - (x4-x3)*(y2-y1));
+
+  // якщо uA та uB мають значення між 0 та 1, тоді лінії мають перетин
+  if (uA >= 0 && uA <= 1 && uB >= 0 && uB <= 1) {
+    return true;
+  }
+
+  return false;
+}
+</code></pre>
+
+    <a href="./poly-poly.html"><p class="nextPage">Далі: Багатокутник і Багатокутник</p></a>
+
+    <footer>
+        <p>
+            [
+            <a class="inline-link" href="./index.html">вступ</a>,
+            <a href="https://github.com/jeffThompson/CollisionDetection" target="_blank">оригінальне джерело</a>
+            ]
+        </p>
+
+        <p class="license">
+            <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+                <img id="license" class="license" alt="Creative Commons License" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png">
+            </a>
+        </p>
+    </footer>
+
+    <script>hljs.highlightAll();</script>
+</div>
+</body>
+</html>

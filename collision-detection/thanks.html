@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="./assets/images/graphics/favicon.png">
+    <meta name="description" content="An online book about collision detection using p5js, онлайн-книга про виявлення зіткнень за допомогою p5js">
+    <meta name="keywords" content="matrix collision, interactive collision, перевірка на зіткнення, завдання, ітерактивні приклади">
+    <title>Виявлення зіткнень: робота з матричними перетвореннями</title>
+
+    <!-- FONTS AND CSS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400..700&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link href="./assets/css/stylesheet.css" rel="stylesheet" type="text/css">
+
+    <!-- CODE PRETTIFY -->
+    <link href="./assets/css/obsidian.min.css" rel="stylesheet" type="text/css">
+    <script src="./assets/js/highlight.min.js"></script>
+
+    <!-- additional behaviour -->
+    <script src="./assets/js/main.js"></script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-46TNRV0VFR"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-46TNRV0VFR');
+    </script>
+    <script src="./assets/js/main.js"></script>
+</head>
+
+<body>
+<div id="wrapper">
+    <header class="navigation">
+        <span id="prev"><a href="./matrix-transformations.html">←</a></span>
+        <span id="title">
+            <a id="navigation-title"
+               class="navigation-title inline-link bg-blue"
+               data-prev-title="Робота з матричними перетвореннями"
+               data-curr-title="Виявлення зіткнень"
+               href="table-of-contents.html"
+            >Виявлення зіткнень</a>
+        </span>
+    </header>
+
+    <h1 class="uppercase">Подяки</h1>
+
+    <p>
+        Увесь цей код створено завдяки великій допомозі в Інтернеті та поза ним, що
+        було б неможливо без безлічі творчих людей, які діляться своїими результатами на напрацюваннями.
+    </p>
+
+    <p>Приклади побудовані на основі чи допомоги наступних матеріалів: </p>
+
+    <ul>
+        <li>
+            <a class="inline-link" href="./circle-rect.html">Круг з прямокутником</a> зроблено на основі
+            <a class="inline-link" href="http://vband3d.tripod.com/visualbasic/tut_mixedcollisions.htm" target="_blank">прикладу Мета Вордена</a>
+        </li>
+        <li>
+            <a class="inline-link" href="./line-point.html">Лінія з точкою</a> на основі
+            <a class="inline-link" href="http://stackoverflow.com/a/17693146/1167783" target="_blank">цієї публікації на StackOverflow</a></li>
+        <li>
+            <a class="inline-link" href="./line-circle.html">Лінія з кругом</a> на основі прикладу
+            <a class="inline-link" href="https://web.archive.org/web/20171010010653/http://forums.codeguru.com/showthread.php?194400-Distance-between-point-and-line-segment" target="_blank">Філіпа Ніколетті</a>
+        </li>
+        <li>
+            <a class="inline-link" href="./line-line.html">Лінія з лінію</a> побудована на прикладах
+            <a class="inline-link" href="http://paulbourke.net/geometry/pointlineplane/" target="_blank">Paul Bourke</a> та
+            <a class="inline-link" href="http://community.topcoder.com/tc?module=Static&amp;d1=tutorials&amp;d2=geometry2" target="_blank">Ibackstrom</a>
+        </li>
+        <li>
+            Дуже багато часу було витрачено на <a href="http://www.stackoverflow.com" target="_blank">StackOverflow</a>
+        </li>
+    </ul>
+
+    <p>Також велика подяка:</p>
+
+    <ul>
+        <li>
+            Бену Фраю і Кейсі Рісу, творцям <a class="inline-link" href="https://processing.org/" target="_blank">Processing</a>,
+            що в свою чергу призвело до створення <a class="inline-link" href="https://p5js.org/" target="_blank">p5.js</a>.
+            А також дякую великій спільноті творчих людей, які діляться своїми креативними ідеями та навчальними матералами.
+        </li>
+    </ul>
+
+    <p class="callout">
+        <strong>Ось і все!</strong> Якщо ця книга виявилася корисною для вас або ви створили щось круте за допомогою цих прикладів,
+        будь ласка, дайте мені знати!
+    </p>
+
+
+    <p class="callout bg-yellow">
+        Від перекладача. Інші мої онлайн-переклади можна знайти за адресою
+        <a class="inline-link" href="https://manoylovac.github.io/index.html">https://manoylovac.github.io</a>
+    </p>
+
+    <footer>
+        <p>
+            [
+            <a class="inline-link" href="./index.html">вступ</a>,
+            <a href="https://github.com/jeffThompson/CollisionDetection" target="_blank">оригінальне джерело</a>
+            ]
+        </p>
+
+        <p class="license">
+            <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+                <img id="license" class="license" alt="Creative Commons License"
+                     src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png">
+            </a>
+        </p>
+    </footer>
+
+    <script>hljs.highlightAll();</script>
+</div>
+</body>
+</html>
+

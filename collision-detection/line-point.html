@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="./assets/images/graphics/favicon.png">
+    <meta name="description" content="An online book about collision detection using p5js, онлайн-книга про виявлення зіткнень за допомогою p5js">
+    <meta name="keywords" content="{KEYWORDS} collision, interactive collision, перевірка на зіткнення між лінією і точкою, зіткнення, ітерактивні приклади">
+    <title>Виявлення зіткнень: лінія і точка</title>
+
+    <!-- FONTS AND CSS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400..700&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link href="./assets/css/stylesheet.css" rel="stylesheet" type="text/css">
+
+    <!-- CODE PRETTIFY -->
+    <link href="./assets/css/obsidian.min.css" rel="stylesheet" type="text/css">
+    <script src="./assets/js/highlight.min.js"></script>
+
+    <!-- additional behaviour -->
+    <script src="./assets/js/main.js"></script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-46TNRV0VFR"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-46TNRV0VFR');
+    </script>
+    <script src="./assets/js/main.js"></script>
+</head>
+
+<body>
+<div id="wrapper">
+    <header class="navigation">
+        <span id="prev"><a href="./section-2-challenges.html">←</a></span>
+        <span id="title">
+            <a id="navigation-title"
+               class="navigation-title inline-link bg-blue"
+               data-prev-title="Завдання 2"
+               data-curr-title="Виявлення зіткнень"
+               data-next-title="Лінія і Круг"
+               href="table-of-contents.html"
+            >Виявлення зіткнень</a>
+        </span>
+        <span id="next"><a href="./line-circle.html">→</a></span>
+    </header>
+
+    <iframe class="w-full canvas" style="aspect-ratio:2/1" loading="lazy" src="./assets/code-examples/line-point/"></iframe>
+
+    <h1 class="uppercase">Лінія і Точка</h1>
+
+    <p>
+        Поки що наші зіткнення здебільшого були простими та відносно невеликим вправами. Зіткнення з лінією трохи
+        складніше, хіба що у вашій памʼяті залишився ще свіжий урок геометрії з середньої школи.
+    </p>
+
+    <p>
+        Лінія (<a href="#not-a-line">див. примітку</a>) визначається двома наборами <span class="code">X/Y</span>
+        координат. Ми можемо знайти довжину лінії за допомогою нашої старої перевіреної теореми Піфагора,
+        але оскільки в цьому прикладі нам потрібно буде використати її три рази, давайте на це раз скористаємося
+        зручною функцію <span class="code"><a class="inline-link" href="https://p5js.org/reference/p5/dist/" target="_blank">dist()</a></span>
+        що входить у базовий набір функцій <span class="code">p5js</span>:
+    </p>
+    <pre><code class="language-js code-block">const lineLen = dist(x1,y1, x2,y2);
+</code></pre>
+
+    <p>
+        Нам також потрібно визначити відстань між точкою та двома кінцями лінії:
+    </p>
+
+    <pre><code class="language-js code-block">const d1 = dist(px,py, x1,y1);
+const d2 = dist(px,py, x2,y2);
+</code></pre>
+
+    <p>
+        Якщо значення <span class="code">d1 + d2</span> дорівнює довжині лінії, тоді ми маємо перетин з лінією!
+        Можливо це не одразу інтуїтивно зрозуміло, але подивіться на наступну схему:
+    </p>
+
+    <p>
+        <img src="./assets/images/line-point.jpg" alt="Утворення трикутників між точкою і прямою" title="Утворення трикутників між точкою і прямою">
+    </p>
+
+    <p>
+        Якщо ми згорнемо обидві відстані, то вони будуть довші за лінію!
+    </p>
+
+    <p>
+        Однак тут є певна проблема. Оскільки числа з рухомою крапкою доволі точні, зіткнення відбувається, лише якщо
+        точка знаходиться <em>точно</em> на лінії, що означає, що ми не отримаємо природного відчуття зіткнення. Це дуже
+        схоже на наш перший приклад <a class="inline-link" href="./point-point.html">Точка і Точка</a>. Щоб виправити це,
+        ми створимо невеликий буфер і перевіримо чи сума <span class="code">d1 + d2</span> +/- входить в цей діапазон.
+    </p>
+
+    <pre><code class="language-js code-block">const buffer = 0.1; // чим вище значення, тим менша точність
+</code></pre>
+
+    <p>
+        Спробуйте пограти з цим значенням, поки не отримаєте результат до вашого смаку. Використовуючи значення
+        буфера перевіримо наявність колізії:
+    </p>
+
+    <pre><code class="language-js code-block">if (d1+d2 >= lineLen-buffer && d1+d2 <= lineLen+buffer) {
+    return true;
+}
+
+return false;
+</code></pre>
+
+    <p>
+        Ось повний приклад, який поєднує все вищезазначене:
+    </p>
+
+    <pre><code class="language-js code-block sm-txt">// координати рухомої точки
+let px = 0;
+let py = 0;
+
+// координати кінцевих точок лінії
+let x1 = 100;
+let y1 = 300;
+let x2 = 500;
+let y2 = 100;
+
+function setup() {
+  createCanvas(window.innerWidth, window.innerHeight);
+  noCursor();
+  strokeWeight(15); // збільшена жирність, щоб краще бачити лінії
+
+  x2 = width - 100;
+  y1 = height - 100;
+}
+
+function draw() {
+  background(255);
+
+  // оновлення координат точки координатами курсора
+  px = mouseX;
+  py = mouseY;
+
+  // результат перевірки на зіткнення
+  const isHit = isLineWithPointCollides(x1, y1, x2, y2, px, py);
+
+  // зміна кольору при зіткненні
+  if (isHit) {
+    stroke(255, 150, 0, 150);
+  } else {
+    stroke(0, 150, 255, 150);
+  }
+
+  // малювання лінії
+  line(x1, y1, x2, y2);
+
+  // малювання точки
+  stroke(0, 150);
+  point(px, py);
+}
+
+// перевірка на перетин між лінією та точкою
+function isLineWithPointCollides(x1, y1, x2, y2, px, py) {
+  // отримання відстаней від точки до двох кінців лінії
+  const d1 = dist(px, py, x1, y1);
+  const d2 = dist(px, py, x2, y2);
+
+  // отримання довжини лінії
+  const lineLen = dist(x1, y1, x2, y2);
+
+  // невеликий додатковий буфер для збільшення області перетину
+  // це дозволить легше отримати колізію, бо не потрібне супер точне наведення
+  const buffer = 0.1;
+
+  // якщо дві відстані в сумі дорівнюють довжині лінії, тоді точка лежить на лінії
+  // зауважте, що тут ми використовуємо буфер, щоб збільшити діапазон для колізії
+  if (d1 + d2 >= lineLen - buffer && d1 + d2 <= lineLen + buffer) {
+    return true;
+  }
+
+  return false;
+}
+</code></pre>
+
+    <a name="not-a-line"></a>
+    <p class="callout">
+        <strong>
+            Ну добре, технічно те що ми називали тут лініями насправді називається
+            <a class="inline-link" href="https://uk.wikipedia.org/wiki/%D0%92%D1%96%D0%B4%D1%80%D1%96%D0%B7%D0%BE%D0%BA" target="_blank"><em>відрізками</em></a>.
+        </strong>
+        Але для простоти ми й надалі називатимемо їх загальним терміном <em>лінії</em>.
+    </p>
+
+    <p>
+        Цей алгоритм створено завдяки прикладу <a class="inline-link" href="http://stackoverflow.com/a/17693146/1167783" target="_blank">MrRoy</a>
+        на StackOverflow.
+    </p>
+
+    <a href="./line-circle.html"><p class="nextPage">Далі: Лінія і Круг</p></a>
+
+    <footer>
+        <p>
+            [
+            <a class="inline-link" href="./index.html">вступ</a>,
+            <a href="https://github.com/jeffThompson/CollisionDetection" target="_blank">оригінальне джерело</a>
+            ]
+        </p>
+
+        <p class="license">
+            <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+                <img id="license" class="license" alt="Creative Commons License" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png">
+            </a>
+        </p>
+    </footer>
+
+    <script>hljs.highlightAll();</script>
+</div>
+</body>
+</html>
