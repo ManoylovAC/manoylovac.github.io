@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="./assets/images/graphics/favicon.png">
+    <meta name="description" content="An online book about collision detection using p5js, онлайн-книга про виявлення зіткнень за допомогою p5js">
+    <meta name="keywords" content="challenges collision, interactive collision">
+    <title>Виявлення зіткнень: завдання 4</title>
+
+    <!-- FONTS AND CSS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400..700&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link href="./assets/css/stylesheet.css" rel="stylesheet" type="text/css">
+
+    <!-- CODE PRETTIFY -->
+    <link href="./assets/css/obsidian.min.css" rel="stylesheet" type="text/css">
+    <script src="./assets/js/highlight.min.js"></script>
+
+    <!-- additional behaviour -->
+    <script src="./assets/js/main.js"></script>
+</head>
+
+<body>
+<div id="wrapper">
+    <header class="navigation">
+        <span id="prev"><a href="./poly-poly.html">←</a></span>
+        <span id="title">
+            <a id="navigation-title"
+               class="navigation-title inline-link bg-blue"
+               data-prev-title="Багатокутник і Багатокутник"
+               data-curr-title="Виявлення зіткнень"
+               data-next-title="Трикутник і Точка"
+               href="table-of-contents.html"
+            >Виявлення зіткнень</a>
+        </span>
+        <span id="next"><a href="./tri-point.html">→</a></span>
+    </header>
+
+    <img src="./assets/images/challenge.jpg" alt="прев'ю для секції завдань">
+
+    <h1 class="uppercase">Завдання 4</h1>
+
+    <p>
+        Спробуйте ці завдання-підказки, щоб змінити код, який ми написали раніше:
+    </p>
+
+    <p>
+        <ol>
+            <li>
+                Чи ви можете зробити так, щоб у багатокутника окремо підсвічувалося те ребро, яке знаходиться у стані колізії?
+            </li>
+            <li>
+                Спробуйе створити багатокутники, вершини яких з часом змінюють положення, щоб спостерігати, як вони
+                стикаються. Підказка: ви можете використовувати функцію
+                <span class="code"><a class="inline-link" href="https://p5js.org/reference/p5/random/" target="_blank">random()</a></span>,
+                але для більш природного руху подивіться на приклад з
+                <a class="inline-link" href="http://en.wikipedia.org/wiki/Perlin_noise" target="_blank">шумом Перліна</a>.
+                У p5js для цього є спеціальна функція
+                <span class="code"><a class="inline-link" href="https://p5js.org/reference/p5/noise/" target="_blank">noise()</a></span>
+                Щоб дізнатися більше про випадковість і шум Перліна ви можете прочитати розділ
+                <a class="inline-link" href="https://manoylovac.github.io/noc2/random.html" target="_blank">про випадковість</a>
+                в онлайн-книзі <a class="inline-link" href="https://manoylovac.github.io/noc2/" target="_blank">Природа Коду</a>.
+            </li>
+            <li>
+                Рандомізовані багатокутники можуть формувати чудові абстрактні монстрики! Чи можете ви створити просту
+                гру з багатокутними монстрами, які ганяються один за одним?
+            </li>
+        </ol>
+    </p>
+
+    <a href="./tri-point.html"><p class="nextPage">Далі: Трикутник і Точка</p></a>
+
+    <footer>
+        <p>
+            [
+            <a class="inline-link" href="./index.html">вступ</a>,
+            <a href="https://github.com/jeffThompson/CollisionDetection" target="_blank">оригінальне джерело</a>
+            ]
+        </p>
+
+        <p class="license">
+            <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+                <img id="license" class="license" alt="Creative Commons License" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png">
+            </a>
+        </p>
+    </footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="./assets/images/graphics/favicon.png">
+    <meta name="description" content="An online book about collision detection using p5js, онлайн-книга про виявлення зіткнень за допомогою p5js">
+    <meta name="keywords" content="collision, interactive, зіткнення, інтерактивні приклади зіткнень">
+    <title>Виявлення зіткнень: вступ</title>
+
+    <!-- FONTS AND CSS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400..700&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link href="./assets/css/stylesheet.css" rel="stylesheet" type="text/css">
+
+    <!-- additional behaviour -->
+    <script src="./assets/js/main.js"></script>
+</head>
+
+<body>
+<div id="wrapper">
+    <iframe class="w-full canvas" style="aspect-ratio:2/1" loading="lazy" src="./assets/code-examples/introduction/"></iframe>
+
+    <h1 class="uppercase">Виявлення зіткнень</h1>
+
+    <h4>Автор: Jeff Thompson.</h4>
+    <h4>Переклад: Манойлов Андрій.</h4>
+
+    <p>
+        Зіткнення об’єктів лежить в основі більшості ігрових подій та користувацьких інтерфейсів. Більярдні кийки
+        стикаються з більярдними кулями, зомбі врізаються у стіни, а Маріо приземляється на платформи й топче черепах.
+        Навіть щось таке просте, як натискання кнопки (прямокутник) курсором (точка), є зіткненням.
+    </p>
+
+    <p>
+        У цій книзі пояснюються алгоритми, що стоять за цими зіткненнями, на прикладі використання базових фігур, таких
+        як круги, прямокутники та лінії, щоб ви могли застосувати їх у своїх власних проєктах.
+    </p>
+
+    <p class="callout">
+        Цей переклад має частково оновлені сторінки та перероблені приклади коду з використанням <span class="code">p5js</span>.
+        Якщо у вас виникли проблеми при користуванні сайтом чи пропозиції, будь ласка, <a class="inline-link"
+                href="https://github.com/ManoylovAC/manoylovac.github.io/issues" target="_blank">опублікуйте їх у репозиторії перекладу проєкту</a>.
+        <br><br>
+        Оригінальну книгу та код до неї ви можете знати за наступними посиланнями: <a class="inline-link" href="https://www.jeffreythompson.org/collision-detection" target="_blank">сайт книги</a>, <a class="inline-link" href="https://github.com/jeffThompson/CollisionDetection" target="_blank">вихідний код книги та прикладів.</a>
+    </p>
+
+    <p>
+        Якщо ви готові почати, тоді можете сміливо переходити до <a class="inline-link" href="./table-of-contents.html">Змісту</a>
+    </p>
+
+    <h2 class="uppercase">Що тут розглядається?</h2>
+    <p>
+        Ця книга розглядає зіткнення між точками, кругами, прямокутниками, лініями, багатокутниками та трикутниками. Ці
+        приклади мають бути максимально доступними та зрозумілими. Безумовно, існують швидші та ефективніші способи
+        виявлення цих зіткнень, але ця книга націлена бути дружнього та викладати відповідні принципи з використанням
+        простої математики.
+    </p>
+
+    <p>
+        Кожен розділ містить опис алгоритму зіткнення (колізії) та інтерактивний приклад, створений за допомогою <span class="code">p5.js</span>.
+        Ви можете переглянути <a class="inline-link" href="https://github.com/ManoylovAC/manoylovac.github.io/tree/master/collision-detection" target="_blank">вихідний код</a> для всіх прикладів разом з цією книгою на GitHub.
+    </p>
+
+    <p class="callout">
+        <strong class="uppercase">Примітка!</strong> Якщо на мобільному пристрої у вас чомусь не спрацьовують інтерактивні
+        приклади, спробуйте сайт на комп’ютері.
+    </p>
+
+    <h2 class="uppercase">Що тут не розглядається?</h2>
+    <p>
+        Як і в будь-якій книзі, у даній тематиці набагато більше корисного матеріалу, ніж можна було б висвітлити. Деякі
+        речі не обговорюються і залишаються поза увагою, оскільки їх математика стає надто складною. Тривимірний простір тут
+        не зачіпається. Колізії еліпсів, які здаються досить легкими, насправді дуже складні.
+    </p>
+
+    <p>
+        Якщо існує конкретна колізія, яка тут не охоплена, і яка може бути корисною, надішліть відповідний <a class="inline-link"
+            href="https://github.com/jeffThompson/CollisionDetection/issues" target="_blank">запит автору оригінальної книги</a> або, ще краще,
+        надішліть робочий приклад, який ви створили! Якщо ви маєте корисний тематичний матеріал, який підходить до даної книги, тоді я додам його до даного перекладу
+    </p>
+
+    <h2 class="uppercase">Помітили проблему?</h2>
+    <p>
+        Якщо ви знайшли код, що виконується неправильно, алгоритм, який не зовсім коректно пояснено, або помилку, будь
+        ласка, <a class="inline-link" href="https://github.com/ManoylovAC/manoylovac.github.io/issues" target="_blank">повідомте про це в
+        GitHub-репозиторії цього проєкту</a>. Дякую за допомогу!
+    </p>
+
+    <h2 class="uppercase">Навігація</h2>
+    <p>
+        Добре, напишемо трохи коду! Щоб перейти до наступного розділу натисніть посилання внизу сторінки або скористайтеся
+        стрілками вгорі. Посилання на <a class="inline-link" href="./table-of-contents.html">зміст книги</a> <span class="code">Виявлення Зіткнень</span>
+        завжди можна знайти у верхній частині сторінки.
+    </p>
+
+    <a href="./table-of-contents.html"><p class="nextPage">Далі: Зміст</p></a>
+
+    <footer>
+        <p>
+            [
+            <a class="inline-link" href="./index.html">вступ</a>,
+            <a class="inline-link" href="https://github.com/jeffThompson/CollisionDetection" target="_blank">оригінальне джерело</a>
+            ]
+        </p>
+
+        <p class="license">
+            <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+                <img id="license" class="license" alt="Creative Commons License" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png">
+            </a>
+        </p>
+    </footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="./assets/images/graphics/favicon.png">
+    <meta name="description" content="An online book about collision detection using p5js, онлайн-книга про виявлення зіткнень за допомогою p5js">
+    <meta name="keywords" content="triangle with point collision, interactive collision">
+    <title>Виявлення зіткнень: трикутник і точка</title>
+
+    <!-- FONTS AND CSS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400..700&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link href="./assets/css/stylesheet.css" rel="stylesheet" type="text/css">
+
+    <!-- CODE PRETTIFY -->
+    <link href="./assets/css/obsidian.min.css" rel="stylesheet" type="text/css">
+    <script src="./assets/js/highlight.min.js"></script>
+
+    <!-- additional behaviour -->
+    <script src="./assets/js/main.js"></script>
+</head>
+
+<body>
+<div id="wrapper">
+    <header class="navigation">
+        <span id="prev"><a href="./section-4-challenges.html">←</a></span>
+        <span id="title">
+            <a id="navigation-title"
+               class="navigation-title inline-link bg-blue"
+               data-prev-title="Завдання 4"
+               data-curr-title="Виявлення зіткнень"
+               data-next-title="Де інші приклади з трикутниками?"
+               href="table-of-contents.html"
+            >Виявлення зіткнень</a>
+        </span>
+        <span id="next"><a href="./where-are-the-other-triangle-examples.html">→</a></span>
+    </header>
+
+    <iframe class="w-full canvas" style="aspect-ratio:2/1" loading="lazy" src="./assets/code-examples/tri-point/"></iframe>
+
+    <h1 class="uppercase">Трикутник і Точка</h1>
+
+    <p>
+        Щоб перевірити, чи знаходиться точка всередині трикутника, ми порівнюємо площу цільового трикутника із сумою
+        площ трьох трикутників, утворених між цільовою точкою та кутами цільового трикутника.
+    </p>
+
+    <p>
+        Ось діаграма, яка демонструє трикутники, утворені для цільової точки для двох варіантів, коли точка знаходиться
+        зовні та всередині цільового трикутника:
+    </p>
+
+    <p>
+        <img src="./assets/images/tri-point.jpg" alt="Точки зовні та всередині трикутника, формують три менші трикутники" title="Точки зовні та всередині трикутника, формують три менші трикутники">
+    </p>
+
+    <p>
+        Щоб отримати площу трикутника, ми використовуємо
+        <a class="inline-link" href="https://uk.wikipedia.org/wiki/%D0%A4%D0%BE%D1%80%D0%BC%D1%83%D0%BB%D0%B0_%D0%93%D0%B5%D1%80%D0%BE%D0%BD%D0%B0" target="_blank">формулу Герона</a>:
+    </p>
+
+    <pre><code class="language-js code-block">const areaOrig = abs((x2-x1) * (y3-y1) - (x3-x1) * (y2-y1));
+</code></pre>
+
+    <p>
+        Для зручності обчислення площі трикутника можна винести в окрему функцію, оскільки вона нам ще знадобиться:
+    </p>
+
+    <pre><code class="language-js code-block">function getTriangleArea(x1, y1, x2, y2, x3, y3) {
+    return abs((x2 - x1) * (y3 - y1) - (x3 - x1) * (y2 - y1));
+}
+</code></pre>
+
+    <p>
+        Нам також потрібно обчислити площу трьох трикутників, які можна сформувати від ребер трикутника до точки:
+    </p>
+
+    <pre><code class="language-js code-block">const area1 = getTriangleArea(px, py, x1, y1, x2, y2);
+const area2 = getTriangleArea(px, py, x2, y2, x3, y3);
+const area3 = getTriangleArea(px, py, x3, y3, x1, y1);
+</code></pre>
+
+    <p>
+        Якщо ми візьмемо суму трьох площ і вона буде дорівнювати прощі оригінального трикутника, тоді точка знаходиться
+        всередині трикутника! Використовуючи ці дані, ми можемо перевірити наявність колізії:
+    </p>
+
+    <pre><code class="language-js code-block">if (area1 + area2 + area3 == areaOrig) {
+  return true;
+}
+
+return false;
+</code></pre>
+
+    <p>Повний приклад коду:</p>
+
+    <pre><code class="language-js code-block sm-txt">// змінні для рухомої точки
+let px = 0;
+let py = 0;
+
+// три пари змінних для трьох точок трикутника
+let x1, y1;
+let x2, y2;
+let x3, y3;
+
+function setup() {
+  createCanvas(window.innerWidth, window.innerHeight);
+  noCursor();
+  strokeWeight(15); // збільшена жирність, щоб краще бачити точку
+
+  x1 = width / 2;
+  y1 = 100;
+  x2 = width / 2 + 150;
+  y2 = height - 100;
+  x3 = width / 2 - 150;
+  y3 = height - 100;
+}
+
+function draw() {
+  background(255);
+
+  // оновлення координат точки координатами курсора
+  px = mouseX;
+  py = mouseY;
+
+  // результат перевірки на зіткнення
+  const isHit = isTriWithPointCollides(x1, y1, x2, y2, x3, y3, px, py);
+
+  // при зіткненні змінюємо колір
+  if (isHit) {
+    fill(255, 150, 0);
+  } else {
+    fill(0, 150, 255);
+  }
+
+  // малювання трикутника
+  noStroke();
+  triangle(x1, y1, x2, y2, x3, y3);
+
+  // малювання точки
+  stroke(0, 150);
+  point(px, py);
+}
+
+// перевірка на перетин між точкою та трикутником
+function isTriWithPointCollides(x1, y1, x2, y2, x3, y3, px, py) {
+  // обчислення площі трикутника
+  const areaOrig = abs((x2 - x1) * (y3 - y1) - (x3 - x1) * (y2 - y1));
+
+  // обчислення площі 3-х трикутників між точкою та кутами трикутника
+  const area1 = getTriangleArea(px, py, x1, y1, x2, y2);
+  const area2 = getTriangleArea(px, py, x2, y2, x3, y3);
+  const area3 = getTriangleArea(px, py, x3, y3, x1, y1);
+
+  // якщо сума трьох площ дорівнює площі оригінального трикутника, значить точка всередині!
+  if (area1 + area2 + area3 === areaOrig) {
+    return true;
+  }
+
+  return false;
+}
+
+// обчислення площі трикутника
+function getTriangleArea(x1, y1, x2, y2, x3, y3) {
+  return abs((x2 - x1) * (y3 - y1) - (x3 - x1) * (y2 - y1));
+}
+</code></pre>
+
+    <p>
+        Цей приклад створено на основі модифікованої версії публікації на
+        <a class="inline-link" href="http://gmc.yoyogames.com/index.php?showtopic=106307" target="_blank">YoYo Games</a>.
+        Якщо ви бажаєте прочитати чимале обговорення переваг і проблем цього способу, а також багато інших пропозицій,
+        перегляньте
+        <a class="inline-link" href="http://www.gamedev.net/topic/295943-is-this-a-better-point-in-triangle-test-2d/" target="_blank">цю тему на GameDev.net</a>.
+    </p>
+
+    <a href="./where-are-the-other-triangle-examples.html"><p class="nextPage">Далі: Де інші приклади з трикутниками?</p></a>
+
+    <footer>
+        <p>
+            [
+            <a class="inline-link" href="./index.html">вступ</a>,
+            <a href="https://github.com/jeffThompson/CollisionDetection" target="_blank">оригінальне джерело</a>
+            ]
+        </p>
+
+        <p class="license">
+            <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+                <img id="license" class="license" alt="Creative Commons License" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png">
+            </a>
+        </p>
+    </footer>
+
+    <script>hljs.highlightAll();</script>
+</div>
+</body>
+</html>

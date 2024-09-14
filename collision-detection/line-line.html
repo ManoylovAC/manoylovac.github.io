@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="./assets/images/graphics/favicon.png">
+    <meta name="description" content="An online book about collision detection using p5js, онлайн-книга про виявлення зіткнень за допомогою p5js">
+    <meta name="keywords" content="Line with line collision, interactive collision">
+    <title>Виявлення зіткнень: лінія і лінія</title>
+
+    <!-- FONTS AND CSS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400..700&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link href="./assets/css/stylesheet.css" rel="stylesheet" type="text/css">
+
+    <!-- CODE PRETTIFY -->
+    <link href="./assets/css/obsidian.min.css" rel="stylesheet" type="text/css">
+    <script src="./assets/js/highlight.min.js"></script>
+
+    <!-- additional behaviour -->
+    <script src="./assets/js/main.js"></script>
+</head>
+
+<body>
+<div id="wrapper">
+    <header class="navigation">
+        <span id="prev"><a href="./line-circle.html">←</a></span>
+        <span id="title">
+            <a id="navigation-title"
+               class="navigation-title inline-link bg-blue"
+               data-prev-title="Лінія і Круг"
+               data-curr-title="Виявлення зіткнень"
+               data-next-title="Лінія і Прямокутник"
+               href="table-of-contents.html"
+            >Виявлення зіткнень</a>
+        </span>
+        <span id="next"><a href="./line-rect.html">→</a></span>
+    </header>
+
+    <iframe class="w-full canvas" style="aspect-ratio:2/1" loading="lazy" src="./assets/code-examples/line-line/"></iframe>
+
+    <h1 class="uppercase">Лінія і Лінія</h1>
+
+    <p>
+        За допомогою цього прикладу ви зможете створити супер-класну гру з боєм на мечах!
+        (Або перезавантажити ту, яка так і
+        <a class="inline-link" href="http://www.polygon.com/2014/9/19/6477103/neal-stephensons-kickstarter-clang-cancel" target="_blank">не запустилася</a>)
+    </p>
+
+    <p>
+        Щоб перевірити, чи дві лінії дотикаються, потрібно обчислити відстань до точки їх перетину:
+    </p>
+
+    <pre><code class="language-js code-block sm-txt">const uA = ((x4-x3)*(y1-y3) - (y4-y3)*(x1-x3)) / ((y4-y3)*(x2-x1) - (x4-x3)*(y2-y1));
+
+const uB = ((x2-x1)*(y1-y3) - (y2-y1)*(x1-x3)) / ((y4-y3)*(x2-x1) - (x4-x3)*(y2-y1));
+</code></pre>
+
+    <p>
+        Якщо є колізія, <span class="code">uA</span> і <span class="code">uB</span> повинні бути в діапазоні від 0 до 1.
+        Ми перевіряємо це наступним чином:
+    </p>
+
+    <pre><code class="language-js code-block">if (uA >= 0 && uA <= 1 && uB >= 0 && uB <= 1) {
+    return true;
+}
+
+return false;
+</code></pre>
+
+    <p>
+        От і все! За бажання ми можемо додати ще одну функцію, яка вказуватиме на точку перетину двох ліній. Це може бути
+        корисним, якщо ви, наприклад, створюєте гру з боєм на мечах і хочете, щоб
+        <a class="inline-link" href="http://tvtropes.org/pmwiki/pmwiki.php/Main/SwordSparks" target="_blank">іскри летіли саме там, де вдаряються леза</a>.
+    </p>
+
+    <pre><code class="language-js code-block">const intersectionX = x1 + (uA * (x2 - x1));
+const intersectionY = y1 + (uA * (y2 - y1));
+</code></pre>
+
+    <p>Ось повний приклад:</p>
+
+    <pre><code class="language-js code-block sm-txt">// змінні для відрізка з контрольованим кінцем
+let x1 = 0;
+let y1 = 0;
+let x2 = 20;
+let y2 = 20;
+
+// змінні для статичного відрізка
+let x3 = 100;
+let y3 = 300;
+let x4 = 500;
+let y4 = 100;
+
+function setup() {
+  createCanvas(window.innerWidth, window.innerHeight);
+  strokeWeight(15); // збільшена жирність, щоб краще бачити лінії
+}
+
+function draw() {
+  background(255);
+
+  // оновлення координат кінця першого відрізка координатами курсора
+  x1 = mouseX;
+  y1 = mouseY;
+
+  // результат перевірки на зіткнення
+  const isHit = isLineWithLineCollides(x1, y1, x2, y2, x3, y3, x4, y4);
+
+  // зміна кольору при перетині
+  if (isHit) {
+    stroke(255, 150, 0, 150);
+  } else {
+    stroke(0, 150, 255, 150);
+  }
+
+  // малювання статичного відрізка
+  line(x3, y3, x4, y4);
+
+  // малювання відрізка з контрольованим кінцем
+  stroke(0, 150);
+  line(x1, y1, x2, y2);
+}
+
+// перевірка на перетин між лінією та кругом
+function isLineWithLineCollides(x1, y1, x2, y2, x3, y3, x4, y4) {
+  // розрахунок відстані до точки перетину
+  const uA = ((x4-x3) * (y1-y3) - (y4-y3)*(x1-x3)) / ((y4-y3) * (x2-x1) - (x4-x3) * (y2-y1));
+  const uB = ((x2-x1) * (y1-y3) - (y2-y1)*(x1-x3)) / ((y4-y3) * (x2-x1) - (x4-x3) * (y2-y1));
+
+  // якщо uA та uB мають значення між 0 та 1, тоді лінії мають перетин
+  if (uA >= 0 && uA <= 1 && uB >= 0 && uB <= 1) {
+    // малювання точки у місці перетину ліній (опціонально)
+    const intersectionX = x1 + (uA * (x2 - x1));
+    const intersectionY = y1 + (uA * (y2 - y1));
+    fill(255, 0, 0);
+    noStroke();
+    ellipse(intersectionX, intersectionY, 20, 20);
+
+    return true;
+  }
+
+  return false;
+}
+</code></pre>
+
+    <p>
+        Цей розділ базується на матеріалі <a class="inline-link" href="http://paulbourke.net/geometry/pointlineplane" target="_blank">Paul Bourke</a>,
+        який містить код для перевірки на паралельність ліній та ситуацію, коли будь-який кінець однієї лінії лежить
+        у положенні кінця іншої. А також на основі
+        <a class="inline-link" href="http://community.topcoder.com/tc?module=Static&d1=tutorials&d2=geometry2" target="_blank">цієї публікації Ibackstrom</a>
+        і допомоги з <a class="inline-link" href="http://www.reddit.com/r/math/comments/36dt75/what_does_this_equation_solve_for/crd5mcc" target="_blank">Reddit</a>.
+    </p>
+
+    <a href="./line-rect.html"><p class="nextPage">Далі: Лінія і Прямокутник</p></a>
+
+    <footer>
+        <p>
+            [
+            <a class="inline-link" href="./index.html">вступ</a>,
+            <a href="https://github.com/jeffThompson/CollisionDetection" target="_blank">оригінальне джерело</a>
+            ]
+        </p>
+
+        <p class="license">
+            <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+                <img id="license" class="license" alt="Creative Commons License" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png">
+            </a>
+        </p>
+    </footer>
+
+    <script>hljs.highlightAll();</script>
+</div>
+</body>
+</html>

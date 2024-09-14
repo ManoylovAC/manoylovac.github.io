@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="./assets/images/graphics/favicon.png">
+    <meta name="description" content="An online book about collision detection using p5js, онлайн-книга про виявлення зіткнень за допомогою p5js">
+    <meta name="keywords" content="{KEYWORDS} collision, interactive collision">
+    <title>Виявлення зіткнень: зміст</title>
+
+    <!-- FONTS AND CSS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400..700&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link href="./assets/css/stylesheet.css" rel="stylesheet" type="text/css">
+
+    <!-- additional behaviour -->
+    <script src="./assets/js/main.js"></script>
+</head>
+
+<body>
+<div id="wrapper">
+    <header class="navigation">
+        <span id="prev">
+            <a href="./index.html" title="Вступ">←</a>
+        </span>
+        <span id="title">
+            <a id="navigation-title"
+               class="navigation-title inline-link bg-blue"
+               data-prev-title="Вступ"
+               data-curr-title="Виявлення зіткнень"
+               data-next-title="Ліцензія"
+               href="./table-of-contents.html"
+            >Виявлення зіткнень</a>
+        </span>
+        <span id="next">
+            <a href="./license.html" title="Ліцензія">→</a>
+        </span>
+    </header>
+
+    <p>
+        <img src="./assets/images/table-of-contents.jpg" alt="Point, rectangle, circle, line, triangle, polygon">
+    </p>
+
+    <h1 class="uppercase">Зміст</h1>
+    <p class="caption">
+        Ви можете повернутися на цю сторінку будь-коли, натиснувши на посилання <span class="code">Виявлення зіткнень</span>
+        у верхній частині сторінки!
+    </p>
+
+    <div class="contents-table" id="tableOfContents">
+        <h3 class="uppercase">Преамбула</h3>
+        <ul>
+            <li><a class="inline-link" href="./index.html">Вступ</a></li>
+            <li><a class="inline-link" href="./license.html">Ліцензія</a></li>
+            <li><a class="inline-link" href="./what-you-should-already-know.html">Що бажано знати</a></li>
+        </ul>
+
+        <h3 class="uppercase">Розділ 1</h3>
+        <ul>
+            <li><a class="inline-link" href="./point-point.html">Точка і Точка</a></li>
+            <li><a class="inline-link" href="./point-circle.html">Точка і Круг</a></li>
+            <li><a class="inline-link" href="./circle-circle.html">Круг і Круг</a></li>
+            <li><a class="inline-link" href="./section-1-challenges.html">Завдання</a></li>
+        </ul>
+
+        <h3 class="uppercase">Розділ 2</h3>
+        <ul>
+            <li><a class="inline-link" href="./point-rect.html">Точка і Прямокутник</a></li>
+            <li><a class="inline-link" href="./rect-rect.html">Прямокутник і Прямокутник</a></li>
+            <li><a class="inline-link" href="./circle-rect.html">Круг і Прямокутник</a></li>
+            <li><a class="inline-link" href="./section-2-challenges.html">Завдання</a></li>
+        </ul>
+
+        <h3 class="uppercase">Розділ 3</h3>
+        <ul>
+            <li><a class="inline-link" href="./line-point.html">Лінія і Точка</a></li>
+            <li><a class="inline-link" href="./line-circle.html">Лінія і Круг</a></li>
+            <li><a class="inline-link" href="./line-line.html">Лінія і Лінія</a></li>
+            <li><a class="inline-link" href="./line-rect.html">Лінія і Прямокутник</a></li>
+            <li><a class="inline-link" href="./section-3-challenges.html">Завдання</a></li>
+        </ul>
+
+        <h3 class="uppercase">Розділ 4</h3>
+        <ul>
+            <li><a class="inline-link" href="./poly-point.html">Багатокутник і Точка</a></li>
+            <li><a class="inline-link" href="./poly-circle.html">Багатокутник і Круг</a></li>
+            <li><a class="inline-link" href="./poly-rect.html">Багатокутник і Прямокутник</a></li>
+            <li><a class="inline-link" href="./poly-line.html">Багатокутник і Лінія</a></li>
+            <li><a class="inline-link" href="./poly-poly.html">Багатокутник і Багатокутник</a></li>
+            <li><a class="inline-link" href="./section-4-challenges.html">Завдання</a></li>
+        </ul>
+
+        <h3 class="uppercase">Розділ 5</h3>
+        <ul>
+            <li><a class="inline-link" href="./tri-point.html">Трикутник і Точка</a></li>
+            <li><a class="inline-link" href="./where-are-the-other-triangle-examples.html">Де інші приклади з трикутниками?</a></li>
+            <li><a class="inline-link" href="./section-5-challenges.html">Завдання</a></li>
+        </ul>
+
+        <h3 class="uppercase">Розділ 6</h3>
+        <ul>
+            <li><a class="inline-link" href="./object-oriented-collision.html">Перехід до об’єктно-орієнтованого зіткнення</a></li>
+            <li><a class="inline-link" href="./matrix-transformations.html">Робота з перетвореннями матриці</a></li>
+        </ul>
+
+        <h3 class="uppercase">Подяки</h3>
+        <ul>
+            <li><a class="inline-link" href="./thanks.html">Спроба перелічити тих, хто зробив цю книгу можливою</a></li>
+        </ul>
+    </div>
+
+    <a href="./license.html"><p class="nextPage">Далі: Ліцензія</p></a>
+
+    <footer>
+        <p>
+            [
+            <a class="inline-link" href="./index.html">вступ</a>,
+            <a href="https://github.com/jeffThompson/CollisionDetection" target="_blank">оригінальне джерело</a>
+            ]
+        </p>
+
+        <p class="license">
+            <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+                <img id="license" class="license" alt="Creative Commons License" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png">
+            </a>
+        </p>
+    </footer>
+
+</div>
+
+</body>
+</html>

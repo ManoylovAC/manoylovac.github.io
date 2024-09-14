@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="./assets/images/graphics/favicon.png">
+    <meta name="description" content="An online book about collision detection using p5js, онлайн-книга про виявлення зіткнень за допомогою p5js">
+    <meta name="keywords" content="other triangle collision examples, interactive collision">
+    <title>Виявлення зіткнень: де інші приклади з трикутниками?</title>
+
+    <!-- FONTS AND CSS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400..700&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link href="./assets/css/stylesheet.css" rel="stylesheet" type="text/css">
+
+    <!-- CODE PRETTIFY -->
+    <link href="./assets/css/obsidian.min.css" rel="stylesheet" type="text/css">
+    <script src="./assets/js/highlight.min.js"></script>
+
+    <!-- additional behaviour -->
+    <script src="./assets/js/main.js"></script>
+</head>
+
+<body>
+<div id="wrapper">
+    <header class="navigation">
+        <span id="prev"><a href="./tri-point.html">←</a></span>
+        <span id="title">
+            <a id="navigation-title"
+               class="navigation-title inline-link bg-blue"
+               data-prev-title="Трикутник і Точка"
+               data-curr-title="Виявлення зіткнень"
+               data-next-title="Завдання 5"
+               href="table-of-contents.html"
+            >Виявлення зіткнень</a>
+        </span>
+        <span id="next"><a href="./section-5-challenges.html">→</a></span>
+    </header>
+
+    <p>
+        <img
+            src="./assets/images/where-are-other-triangle-examples.jpg"
+            alt="Трикутник зі знаком питання всередині"
+            title="Трикутник зі знаком питання всередині"
+        >
+    </p>
+
+    <h1>Де інші приклади з трикутниками?</h1>
+
+    <p>
+        Вам може бути цікаво, де всі інші приклади перевірки зіткнення з трикутниками. Відповідь: ми їх вже зробили!
+        Найменша кількість сторін у багатокутнику дорівнює трьом, тому весь код, яким ми використовували для багатокутника
+        також працюватиме і для трикутників.
+    </p>
+
+    <p>
+        Однак, оскільки наш багатокутний код призначений для роботи з <span class="code">p5.Vector</span>, вам потрібно
+        буде визначити свої трикутники за допомогою трьох об’єктів <span class="code">p5.Vector</span> або змінити саму
+        функцію зіткнення, щоб вона опрацьовувала набір координат вершин зручним для вас способом.
+    </p>
+
+    <a href="./section-5-challenges.html"><p class="nextPage">Далі: Завдання 5</p></a>
+
+    <footer>
+        <p>
+            [
+            <a class="inline-link" href="./index.html">вступ</a>,
+            <a href="https://github.com/jeffThompson/CollisionDetection" target="_blank">оригінальне джерело</a>
+            ]
+        </p>
+
+        <p class="license">
+            <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+                <img id="license" class="license" alt="Creative Commons License" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png">
+            </a>
+        </p>
+    </footer>
+
+    <script>hljs.highlightAll();</script>
+</div>
+</body>
+</html>

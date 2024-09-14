@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="./assets/images/graphics/favicon.png">
+    <meta name="description" content="An online book about collision detection using p5js, онлайн-книга про виявлення зіткнень за допомогою p5js">
+    <meta name="keywords" content="polygon with point collision, interactive collision">
+    <title>Виявлення зіткнень: багатокутник і точка</title>
+
+    <!-- FONTS AND CSS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400..700&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link href="./assets/css/stylesheet.css" rel="stylesheet" type="text/css">
+
+    <!-- CODE PRETTIFY -->
+    <link href="./assets/css/obsidian.min.css" rel="stylesheet" type="text/css">
+    <script src="./assets/js/highlight.min.js"></script>
+
+    <!-- additional behaviour -->
+    <script src="./assets/js/main.js"></script>
+</head>
+
+<body>
+<div id="wrapper">
+    <header class="navigation">
+        <span id="prev"><a href="./section-3-challenges.html">←</a></span>
+        <span id="title">
+            <a id="navigation-title"
+               class="navigation-title inline-link bg-blue"
+               data-prev-title="Завдання 3"
+               data-curr-title="Виявлення зіткнень"
+               data-next-title="Прямокутник і Круг"
+               href="table-of-contents.html"
+            >Виявлення зіткнень</a>
+        </span>
+        <span id="next"><a href="./poly-circle.html">→</a></span>
+    </header>
+
+    <iframe class="w-full canvas" style="aspect-ratio:2/1" loading="lazy" src="./assets/code-examples/poly-point/"></iframe>
+
+    <h1 class="uppercase">Прямокутник і Точка</h1>
+
+    <p>
+        Знання про зіткнення кругів й прямокутників це чудово і часто має сенс спрощувати перевірку для зіткнень
+        зі складнішими формами за допомогою обмежувальних рамок і кіл. Але є задачі, коли ми хочемо більшої точності.
+        На щастя, більшість прикладів, що залишилися, використовують ідеї, які ми вже розглянули, навіть якщо спосіб їх
+        застосування стає складнішим.
+    </p>
+
+    <p>
+        У цьому першому прикладі ми перевіримо, чи точка знаходиться у складному багатокутнику. Ми визначимо
+        наш багатокутник за допомогою набору точок з <span class="code">X/Y</span> координатами, які називаються
+        <em>вершинами</em>. Щоб зберегти ці точки, ми будемо використовувати масив об’єктів
+        <span class="code"><a class="inline-link" href="https://p5js.org/reference/p5/p5.Vector/" target="_blank">p5.Vector</a></span>.
+        Ці вектори просто зберігають координати <span class="code">X/Y</span> (або <span class="code">X/Y/Z</span>).
+        Це спрощує зберігання точок і <span class="code">p5js</span> надає нам через обʼєкти
+        <span class="code"><a class="inline-link" href="https://p5js.org/reference/p5/p5.Vector/" target="_blank">p5.Vector</a></span>
+        з готовими зручними методами наповненими математикою, яка інакше була б складнішою для використання.
+        Якщо ви раніше не використовували <span class="code">p5.Vector</span>, перш ніж продовжити ви можете прочитати
+        першу частину розділу про <a class="inline-link" href="https://manoylovac.github.io/noc2/vectors.html" target="_blank">вектори</a>
+        у онлайн-книзі <a class="inline-link" href="https://manoylovac.github.io/noc2/" target="_blank">Природа Коду</a>.
+    </p>
+
+    <p>
+        Спочатку ми створимо масив для майбутніх чотирьох обʼєктів <span class="code">p5.Vector</span>,
+        по одному для кожного кута нашого багатокутника:
+    </p>
+
+    <pre><code class="language-js code-block">let vertices = [];
+</code></pre>
+
+    <p>
+        Тепер створимо самі вектори з конкретними <span class="code">XY</span> значеннями для позицій вершин.
+        Тут ми малюємо трапецію як у прикладі на початку сторінки, але ви можете створити складніші форми або навіть
+        розподілити точки випадковим чином.
+    </p>
+
+    <pre><code class="language-js code-block">vertices[0] = createVector(200, 100);
+vertices[1] = createVector(400, 130);
+vertices[2] = createVector(350, 300);
+vertices[3] = createVector(250, 300);
+</code></pre>
+
+    <p>
+        Для перевірки наявності колізії, ми заведемо окрему змінну для зберігання логічного значення.
+        Пізніше ця змінна буде всередині нашої функції.
+    </p>
+
+    <pre><code class="language-js code-block">let isCollision = false;
+</code></pre>
+
+    <p>
+        Далі потрібно перебрати усі вершини багатокутника одна за одною. Для цього ми використовуємо цикл
+        <span class="code">for</span> зі змінною <span class="code">current</span>. Але нам також потрібна наступна
+        вершина зі списку, щоб ми могли сформувати лінію (сторону багатокутника). Для цього ми використовуємо другу
+        змінну під назвою <span class="code">next</span>. Ці змінні зберігатимуть потрібні індекси масиву.
+        Ось як виглядає цикл:
+    </p>
+
+    <pre><code class="language-js code-block">let next = 0;
+
+for (let current = 0; current < vertices.length; current++) {
+    // отримання наступної вершини зі списку
+    next = current + 1;
+
+    // коли дійшли до останньої вершини, беремо першу під індексом 0
+    if (next === vertices.length) {
+      next = 0;
+    }
+}
+</code></pre>
+
+    <p>
+        Тоді ми можемо використати змінні <span class="code">current</span> і <span class="code">next</span> для
+        отримання векторів з нашого масиву:
+    </p>
+
+    <pre><code class="language-js code-block">const vc = vertices[current];  // c для "current"
+const vn = vertices[next];     // n для "next"
+</code></pre>
+
+    <p>
+        Тепер щодо оператора <span class="code">if</span>. Ми можемо отримати доступ до <span class="code">XY</span>
+        координат кожної вершини за допомогою синтаксису <span class="code">vc.x</span> і <span class="code">vc.y</span>.
+        Ця умова оператора досить складна, тому поки що запишемо її повністю як є, а потім розібʼємо на частини:
+    </p>
+
+    <pre><code class="language-js code-block sm-txt">if (((vc.y > py) != (vn.y > py)) && (px < (vn.x-vc.x) * (py-vc.y) / (vn.y-vc.y) + vc.x)) {
+  isCollision = !isCollision;
+}
+</code></pre>
+
+    <p>
+        Тут відбуваються дві перевірки. Перша перевіряє, чи знаходиться точка між двома вершинами в напрямку
+        <span class="code">Y</span>:
+    </p>
+
+    <pre><code class="language-js code-block">(vc.y >= py && vn.y < py) || (vc.y < py && vn.y >= py)
+</code></pre>
+
+    <p>
+        Ми перевіряємо, чи знаходиться точка або вище <span class="code">vc.y</span> або нижче <span class="code">vn.y</span>,
+        або нижче <span class="code">vc.y</span> і вище <span class="code">vn.y</span>. Ось як це виглядає візуально:
+    </p>
+
+    <p>
+        <img src="./assets/images/poly-point.jpg" alt="Діаграма точки над/під Y-координатами багатокутника" title="Діаграма точки над/під Y-координатами багатокутника">
+    </p>
+
+    <p>
+        Примітка: якщо вам до вподоби, то існує більш лаконічний спосіб написання цього if-оператора:
+    </p>
+
+    <pre><code class="language-js code-block">(vc.y > py) != (vn.y > py)
+</code></pre>
+
+    <p>
+        Це трохи неявно: код виконує ту саму перевірку, але повертає <span class="code">true</span> лише якщо обидві
+        перевірки не збігаються одна з одному!
+    </p>
+
+    <p>
+        Далі — складніша перевірка. Вона заснована на
+        <a class="inline-link" href="https://uk.wikipedia.org/wiki/%D0%A2%D0%B5%D0%BE%D1%80%D0%B5%D0%BC%D0%B0_%D0%96%D0%BE%D1%80%D0%B4%D0%B0%D0%BD%D0%B0" target="_blank">теоремі Жордана</a>,
+        яка включає складну математику, тому ми пропустимо її пояснення. (Якщо ви розумієте, як працює цей алгоритм, дайте мені знати!)
+    </p>
+
+    <pre><code class="language-js code-block">px < (vn.x-vc.x) * (py-vc.y) / (vn.y-vc.y) + vc.x
+</code></pre>
+
+    <p>
+        Якщо обидві перевірки правдиві, ми змінюємо значення <span class="code">isCollision</span> на її протилежне
+        значення. Це відрізняється від наших попередніх перевірок, де ми встановлювали значення змінної для результату
+        колізії просто на <span class="code">true</span> або <span class="code">false</span>. Під час перебору всіх
+        вершин змінна <span class="code">isCollision</span> може змінювати своє значення декілька раз, але в результаті
+        матиме фінальне потрібне значення.
+    </p>
+
+    <pre><code class="language-js code-block">// зміна булевої змінної 'isCollision' на протилежне значення
+isCollision = !isCollision;
+</code></pre>
+
+    <p>
+        Ось повний приклад з усім кодом разом:
+    </p>
+
+    <pre><code class="language-js code-block sm-txt">// змінні для положення точки
+let px = 0;
+let py = 0;
+
+// масив векторів p5js, по одному для кожної вершини багатокутника
+let vertices = [];
+
+function setup() {
+  createCanvas(window.innerWidth, window.innerHeight);
+  strokeWeight(15); // збільшена жирність, щоб краще бачити точку
+  noCursor();
+
+  // встановлення координат вершин
+  // тут ми малюємо трапецію, але ви можете створити складніші фігури
+  vertices[0] = createVector(width / 2 - 100, height / 2 - 100);
+  vertices[1] = createVector(width / 2 + 100, height / 2 - 100);
+  vertices[2] = createVector(width / 2 + 50,  height / 2 + 100);
+  vertices[3] = createVector(width / 2 - 50,  height / 2 + 100);
+}
+
+function draw() {
+  background(255);
+
+  // оновлення координат точки координатами курсора
+  px = mouseX;
+  py = mouseY;
+
+  // результат перевірки на зіткнення
+  const isHit = isPolyWithPointCollides(vertices, px, py);
+
+  // при зіткненні змінюємо колір
+  if (isHit) {
+    fill(255, 150, 0);
+  } else {
+    fill(0, 150, 255);
+  }
+
+  // малювання багатокутника з beginShape() та відповідними вершинами
+  noStroke();
+  beginShape();
+  for (const v of vertices) {
+    vertex(v.x, v.y);
+  }
+  endShape();
+
+  // малювання рухомої точки
+  stroke(0, 150);
+  point(px, py);
+}
+
+// перевірка на перетин між багатокутником та точкою
+function isPolyWithPointCollides(vertices, px, py) {
+  let isCollision = false;
+
+  // перебір кожної вершини з використанням наступної вершини в списку
+  let next = 0;
+  for (let current = 0; current < vertices.length; current++) {
+    // отримання наступної вершини зі списку
+    next = current + 1;
+    // коли дійшли до останньої вершини, беремо першу під індексом 0
+    if (next === vertices.length) {
+      next = 0;
+    }
+
+    // отримуємо p5.Vector у нашій поточній позиції
+    // це зробить наш оператор if трохи чистішим
+    const vc = vertices[current];  // c для "current" (поточний)
+    const vn = vertices[next];     // n для "next" (наступний)
+
+    // здійснити перевірку та за потреби інвертувати змінну 'isCollision'
+    if (((vc.y >= py && vn.y < py) || (vc.y < py && vn.y >= py)) &&
+      (px < (vn.x - vc.x) * (py - vc.y) / (vn.y - vc.y) + vc.x)) {
+      isCollision = !isCollision;
+    }
+  }
+
+  return isCollision;
+}
+</code></pre>
+
+    <p>
+        Ця функція розроблена для роботи з будь-якою кількістю вершин, тому вона може обробляти дуже складні форми!
+        Однак чим більше вершин ви перевіряєте, тим повільнішою буде функція. Якщо ви хочете використати її у повноцінній
+        динамічній грі, навіть кілька з таких перевірок на складних формах можуть сповільнити вашу гру. Збалансуйте
+        потребу в точності та швидкості: все, що здається інтуїтивно зрозумілим, імовірно, є правильним шляхом.
+    </p>
+
+    <p>
+        Приклад колізії цього розділу базується на
+        <a class="inline-link" href="http://stackoverflow.com/a/2922778/1167783" target="_blank">
+            цій відповіді <em>nirg</em> і <em>Pranav</em> на StackOverflow
+        </a>.
+    </p>
+
+    <a href="./poly-circle.html"><p class="nextPage">Далі: Прямокутник і Круг</p></a>
+
+    <footer>
+        <p>
+            [
+            <a class="inline-link" href="./index.html">вступ</a>,
+            <a href="https://github.com/jeffThompson/CollisionDetection" target="_blank">оригінальне джерело</a>
+            ]
+        </p>
+
+        <p class="license">
+            <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+                <img id="license" class="license" alt="Creative Commons License" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png">
+            </a>
+        </p>
+    </footer>
+
+    <script>hljs.highlightAll();</script>
+</div>
+</body>
+</html>

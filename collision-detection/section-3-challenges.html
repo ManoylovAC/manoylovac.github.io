@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="./assets/images/graphics/favicon.png">
+    <meta name="description" content="An online book about collision detection using p5js, онлайн-книга про виявлення зіткнень за допомогою p5js">
+    <meta name="keywords" content="challenges collision, interactive collision">
+    <title>Виявлення зіткнень: завдання 3</title>
+
+    <!-- FONTS AND CSS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400..700&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link href="./assets/css/stylesheet.css" rel="stylesheet" type="text/css">
+
+    <!-- CODE PRETTIFY -->
+    <link href="./assets/css/obsidian.min.css" rel="stylesheet" type="text/css">
+    <script src="./assets/js/highlight.min.js"></script>
+
+    <!-- additional behaviour -->
+    <script src="./assets/js/main.js"></script>
+</head>
+
+<body>
+<div id="wrapper">
+    <header class="navigation">
+        <span id="prev"><a href="./line-rect.html">←</a></span>
+        <span id="title">
+            <a id="navigation-title"
+               class="navigation-title inline-link bg-blue"
+               data-prev-title="Лінія і Прямокутник"
+               data-curr-title="Виявлення зіткнень"
+               data-next-title="Прямокутник і Точка"
+               href="table-of-contents.html"
+            >Виявлення зіткнень</a>
+        </span>
+        <span id="next"><a href="./poly-point.html">→</a></span>
+    </header>
+
+
+    <img src="./assets/images/challenge.jpg" alt="прев'ю для секції завдань">
+
+    <h1 class="uppercase">Завдання 3</h1>
+
+    <p>
+        Спробуйте ці завдання-підказки, щоб змінити код, який ми написали раніше:
+    </p>
+
+    <p>
+        <ol>
+            <li>
+                <a
+                  class="inline-link"
+                  href="https://www.google.com/search?q=cat+lasers&sa=X&biw=970&bih=818&tbm=isch&tbo=u&source=univ&ei=A5hXVb7mCcWwsAT0rYGoCA&ved=0CB4QsAQ"
+                  target="_blank"
+                >
+                    Лазери!
+                </a>
+                Чи можете ви створити просту гру, де гравець використовує курсор для переміщення повз ряди рухомих або
+                статичних лазерів, щоб дістатися іншої сторони умовної кімнати? Намалюйте свого персонажа у вигляді простого круга
+                чи прямокутника або замініть їх зображенням. Якщо використовуєте зображення, то для спрощення обрахунку
+                колізії перевіряйте зіткнення за допомогою обмежувального кола чи рамки про які розповідалося у темах про
+                <a class="inline-link" href="./circle-circle.html">круги</a> та
+                <a class="inline-link" href="./rect-rect.html">прямокутники</a>.
+            </li>
+            <li>
+                Використовуючи зіткнення <a class="inline-link" href="./line-circle.html">лінії з кругом</a>, ми можемо
+                імітувати кульку, яка відскакує від поверхонь під певним кутом. Чи можете ви додати силу тяжіння, а також
+                змусити кульку відскакувати в напрямку, який залежить від кута лінії? Підказка: щоб отримати напрямок відскоку,
+                знайдіть кут між кулькою і найближчою точкою на лінії. Для цього можна скористатися функцією з <span class="code">p5js</span>
+                під назвою
+                <span class="code"><a class="inline-link" href="https://p5js.org/reference/p5.Vector/angleBetween/" target="_blank">angleBetween()</a></span>.
+                Про імітацію різних сил і зокрема гравітацію можна також почитати у розділі
+                <a class="inline-link" href="https://manoylovac.github.io/noc2/forces.html" target="_blank">сили</a>
+                з книги <a class="inline-link" href="https://manoylovac.github.io/noc2/" target="_blank">Природа Коду</a>.
+                У разі чого в розділі про
+                <a class="inline-link" href="https://manoylovac.github.io/noc2/vectors.html#example-12-bouncing-ball-with-vectors" target="_blank">вектори</a>
+                також розглядається і приклад з кулькою, що відплигує від стінок полотна.
+            </li>
+        </ol>
+    </p>
+
+    <a href="./poly-point.html"><p class="nextPage">Далі: Прямокутник і Точка</p></a>
+
+    <footer>
+        <p>
+            [
+            <a class="inline-link" href="./index.html">вступ</a>,
+            <a href="https://github.com/jeffThompson/CollisionDetection" target="_blank">оригінальне джерело</a>
+            ]
+        </p>
+
+        <p class="license">
+            <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+                <img id="license" class="license" alt="Creative Commons License" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png">
+            </a>
+        </p>
+    </footer>
+</div>
+</body>
+</html>

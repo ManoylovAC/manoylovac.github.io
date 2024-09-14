@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="./assets/images/graphics/favicon.png">
+    <meta name="description"
+          content="An online book about collision detection using p5js, онлайн-книга про виявлення зіткнень за допомогою p5js">
+    <meta name="keywords" content="{KEYWORDS} collision, interactive collision">
+    <title>Виявлення зіткнень: що бажано знати</title>
+
+    <!-- FONTS AND CSS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400..700&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+          rel="stylesheet">
+    <link href="./assets/css/stylesheet.css" rel="stylesheet" type="text/css">
+
+    <!-- CODE PRETTIFY -->
+    <link href="./assets/css/obsidian.min.css" rel="stylesheet" type="text/css">
+    <script src="./assets/js/highlight.min.js"></script>
+
+    <!-- additional behaviour -->
+    <script src="./assets/js/main.js"></script>
+</head>
+
+<body>
+<div id="wrapper">
+    <header class="navigation">
+        <span id="prev"><a href="./license.html">←</a></span>
+        <span id="title">
+            <a id="navigation-title"
+               class="navigation-title inline-link bg-blue"
+               data-prev-title="License"
+               data-curr-title="Виявлення зіткнень"
+               data-next-title="Точка і Точка"
+               href="table-of-contents.html"
+            >Виявлення зіткнень</a>
+        </span>
+        <span id="next"><a href="./point-point.html">→</a></span>
+    </header>
+
+    <h1 class="uppercase">Що бажано знати</h1>
+
+    <p>
+        Приклади цієї книги написані з використанням <a class="inline-link" href="https://p5js.org/reference" target="_blank">p5js</a>
+        (в оригінальній книзі це <a class="inline-link" href="http://www.processing.org" target="_blank">Processing</a> —
+        обгортка для мови програмування <span class="code">Java</span>). Хоча вам достатньо лише невеликого досвіду
+        програмування, ви повинні розуміти базову структуру програми на <span class="code">p5js</span>, як використовувати
+        змінні, як малювати фігури та отримувати дані положення курсора миші та як працюють оператори <span class="code">if/else</span>.
+    </p>
+
+    <p>
+        Буде корисним також розуміння того, як використовувати об’єкти <span class="code">PVector</span> для зберігання
+        позицій, але ми ще розглянемо основи, якщо ви не використовували їх раніше.
+    </p>
+
+    <p>
+        Наприкінці ми поговоримо про використання зіткнень в обʼєктно-орієнтованому стилі. Розуміння об’єктно-орієнтованого
+        програмування не буде обов’язковим для роботи з цією книгою, але воно буде корисним для використання її тем у
+        великих проєктах з великою кількістю об’єктів, що стикаються один з одним.
+    </p>
+
+    <p class="callout">
+        <strong>Раніше не використовували p5js? Це нормально!</strong> Якщо раніше ви вже використовували іншу мову
+        програмування, то вам буде легко зрозуміти ці приклади та перенести їх код на потрібну мову, яку ви виберете.
+    </p>
+
+    <h1 class="uppercase">Функції</h1>
+
+    <p>
+        Основою прикладів із зіткненнями є <em>функції</em>, тож вам необхідно ознайомитися з ними, щоб використовувати
+        цю книгу. Якщо ви ніколи раніше не створювали функцію, тоді уважно прочитайте цей розділ. Якщо ви вже розумієте цю
+        тему, можете пропустити її й перейти до наступної секції.
+    </p>
+
+    <p>
+        Функція — це самодостатній фрагмент коду, який можна використовувати повторно. Функції використовуються для операцій,
+        які ви хочете виконати кілька разів, як-от перевірка зіткнень між двома об’єктами.
+    </p>
+
+    <p>
+        Функція <em>повертає</em> (надсилає назад) значення певного <em>типу</em> (як <span class="code">число</span>
+        або <span class="code">булеве значення</span>). Наприклад, ось функція, яка повертає рядок "Привіт!"
+    </p>
+
+    <pre><code class="language-js code-block">function sayHi() {
+    return "Привіт!";
+}</code></pre>
+
+    <p>
+        Коли функція робить щось корисне, то може повернути у місце її виклику певні дані за допомогою команди
+        <code class="code">return</code>. Інколи функції не потрібно нічого повертати, наприклад, коли вона просто малює
+        прямокутник, тоді команді <code class="code">return</code> не потрібна (в такому випадку функція за замовчуванням
+        поверне значення <code class="code">undefined</code>). Звучить знайомо? Складові програми <span class="code">p5js</span>
+        такі як <code class="code"><a class="inline-link" href="https://p5js.org/reference/p5/setup/" target="_blank">setup()</a></code> і <code class="code"><a class="inline-link" href="https://p5js.org/reference/p5/draw/" target="_blank">draw()</a></code> є функціями!
+    </p>
+
+    <p>
+        Функції також можуть отримувати параметри або <em>аргументи</em>, які в них передаються. Аргументу задається ім’я, яке існує лише всередині функції. Кілька аргументів розділяються комами. Ось проста функція, яка додає два числа:
+    </p>
+
+    <pre><code class="language-js code-block">function sum(a, b) {
+    return a + b;
+}
+</code></pre>
+
+    <p>
+        Наприклад, нашу функцію <code class="code">sum()</code> можна використати наступним чином:
+    </p>
+
+    <pre><code class="language-js code-block">let result = sum(2, 2);
+console.log(result);
+// >> 4
+</code></pre>
+
+    <p>
+        Усі приклади в цій книзі є функціями. Їм передаються параметри об’єктів, що підлягають перевірці (такі як
+        положення або розмір), і вони повертають значення <code class="code">boolean</code> незалежно від того,
+        відбувається зіткнення чи ні. Їх також можна змінити, щоб повернути місце зіткнення, як у прикладі
+        <a class="inline-link" href="./line-line.html">Лінія і Лінія</a>. Переглядайте повний код у кінці кожного
+        прикладу, щоб побачити як функція структурована та як вона викликається зі своїми параметрами.
+    </p>
+
+    <h2 class="uppercase">floats</h2>
+
+    <p>
+        В оригінальній версії книги використовується <code class="code">Java</code>-подібний синтаксис
+        <code class="code">Processing</code>, тому там зустрічається і розповідається про відмінність між цілочисленним
+        числовим типом <code class="code">int</code> та числовим типом з рухомою крапкоюю <code class="code">float</code>.
+        Але у <code class="code">javascript</code> і відповідно <code class="code">p5js</code> за замовчуванням
+        одразу використовуються числа з рухомою крапкою, а отже тут ця частина перекладу відсутня, як і повʼязані нюанси
+        роботи з ними. Тож просто не зважайте на цей абзац. Навіщо тоді він взагалі надуркований? Він на той
+        випадок, якщо ви перейдете на оригінальну версію книги й здивуєтьеся відмінностям. Так, вони будуть, оскільки
+        приклади перекладу перероблені з використанням <code class="code">p5js</code>.
+    </p>
+
+    <a href="./point-point.html"><p class="nextPage">Далі: Точка і Точка</p></a>
+
+    <footer>
+        <p>
+            [
+            <a class="inline-link" href="./index.html">вступ</a>,
+            <a href="https://github.com/jeffThompson/CollisionDetection" target="_blank">оригінальне джерело</a>
+            ]
+        </p>
+
+        <p class="license">
+            <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+                <img id="license" class="license" alt="Creative Commons License" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png">
+            </a>
+        </p>
+    </footer>
+
+    <script>hljs.highlightAll();</script>
+</div>
+</body>
+</html>

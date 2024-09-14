@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="./assets/images/graphics/favicon.png">
+    <meta name="description" content="An online book about collision detection using p5js, онлайн-книга про виявлення зіткнень за допомогою p5js">
+    <meta name="keywords" content="point and point collision, interactive collision">
+    <title>Виявлення зіткнень: точка з точкою</title>
+
+    <!-- FONTS AND CSS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400..700&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link href="./assets/css/stylesheet.css" rel="stylesheet" type="text/css">
+
+    <!-- CODE PRETTIFY -->
+    <link href="./assets/css/obsidian.min.css" rel="stylesheet" type="text/css">
+    <script src="./assets/js/highlight.min.js"></script>
+
+    <!-- additional behaviour -->
+    <script src="./assets/js/main.js"></script>
+</head>
+
+<body>
+<div id="wrapper">
+    <header class="navigation">
+        <span id="prev"><a href="./what-you-should-already-know.html">←</a></span>
+        <span id="title">
+            <a id="navigation-title"
+               class="navigation-title inline-link bg-blue"
+               data-prev-title="Що бажано знати"
+               data-curr-title="Виявлення зіткнень"
+               data-next-title="Точка і Круг"
+               href="table-of-contents.html"
+            >Виявлення зіткнень</a>
+        </span>
+        <span id="next"><a href="./point-circle.html">→</a></span>
+    </header>
+
+    <iframe class="w-full canvas" style="aspect-ratio:2/1" loading="lazy" src="./assets/code-examples/point-point/"></iframe>
+
+    <p class="caption">Щоб зіткнути точки, використовуйте курсор!</p>
+
+    <h1 class="uppercase">Точка і Точка</h1>
+
+    <p>
+        Найлегше перевірити зіткнення між двома точками. Щоб перевірити, чи вони торкаються, ми просто перевіряємо,
+        чи збігаються їхні координати <code class="code">X</code> і <code class="code">Y</code>!
+    </p>
+
+    <pre><code class="language-js code-block">if (x1 === x2 &amp;&amp; y1 === y2) {
+    // точки у спільному пооженні: колізія!
+} else {
+    // немає колізії
+}
+</code></pre>
+
+    <p>
+        Щоб зробити цей код зручнішим для використання, ми можемо обернути його у функцію. Як аргументи ми передаватимемо
+        <code class="code">X/Y</code> координати обох точок. Функція повертатиме логічне значення <code class="code">true</code>
+        або <code class="code">false</code> залежно від того, чи є колізія, чи ні:
+    </p>
+
+    <pre><code class="language-js code-block">function isPointWithPointCollides(x1, y1, x2, y2) {
+    if (x1 === x2 &amp;&amp; y1 === y2) {
+        return true;
+    }
+
+    return false;
+}
+</code></pre>
+
+    <p>
+        Зверніть увагу на невелике скорочення вище: ми могли б написати <code class="code">else { return false; }</code>,
+        але наш код робить те саме! Нашу версію легше читати й ви до неї звикнете. Думайте про <code class="code">return false;</code>
+        як про значення за замовчуванням, яке буде повернуто, якщо не виконано певних умов.
+    </p>
+    <p>
+        Звісно цей код можна це більше скоротити й ви можете це зробити як показано нижче, але для наочності та
+        читабельності він буде як було показано вище.
+    </p>
+
+    <pre><code class="language-js code-block">function isPointWithPointCollides(x1, y1, x2, y2) {
+    // чи координати обох точок у спільному положенні?
+    return x1 === x2 &amp;&amp; y1 === y2;
+}
+</code></pre>
+
+    <p>
+        Маючи під рукою нашу першу функцію виявлення зіткнень, ми можемо створити з нею щось корисне. Пограйтеся
+        з інтерактивним прикладом на початку сторінки, наводячи одну точку на іншу і спостерігайте, як буде змінюватися
+        колір фону!
+    </p>
+    <p class="callout">
+        Ви помітите, що ініціювати колізію з точками трохи важко (можете здогадатися чому?) &mdash; це питання, яке ви зможете
+        спробувати вирішити в <a class="inline-link" href="./section-1-challenges.html">першій секції завдань</a>.
+    </p>
+    <p>
+        Повний код інтерактивного прикладу можна побачити нижче. Спробуйте вставити його в
+        <a class="inline-link" href="https://editor.p5js.org/" target="_blank">онлайн редактор p5js</a>, запустити його та внести зміни,
+        щоб побачити, як зміниться поведінка:
+    </p>
+
+    <pre><code class="language-js code-block">// змінні для зберігання координат статичної точки
+let targetX;
+let targetY;
+
+function setup() {
+  createCanvas(window.innerWidth, window.innerHeight);
+  noCursor();
+  strokeWeight(15); // збільшена жирність точки, щоб краще її бачити
+
+  targetX = width / 2;  // визначення горизонтального центра полотна
+  targetY = height / 2; // визначення вертикального центра полотна
+}
+
+function draw() {
+  // результат перевірки на зіткнення, який повертає наша функція
+  let isColliding = isPointWithPointCollides(mouseX, mouseY, targetX, targetY);
+
+  // якщо є колізія, тоді змінюємо колір фону на помаранчевий...
+  if (isColliding) {
+    background('orange');
+  } else {
+    // ...якщо ні, тоді фон лишаємо білим
+    background(255);
+  }
+
+  // малювання статичної точки, яку ми перевірятимемо на зіткнення
+  stroke(0, 150, 255);
+  point(targetX, targetY);
+
+  // малювання другої точки, що контролюється курсором
+  stroke(0, 150);
+  point(mouseX, mouseY);
+}
+
+// перевірка на перетин двох точок
+function isPointWithPointCollides(x1, y1, x2, y2) {
+  // чи координати обох точок у спільному положенні?
+  if (x1 === x2 && y1 === y2) {
+    return true;
+  }
+
+  return false;
+}
+</code></pre>
+
+    <p>
+        Ця базова структура сторінки (інтерактивний приклад, пояснення, частини коду в тексті й фінальний код із прикладу)
+        буде однаковою в усіх розділах.
+    </p>
+
+    <a href="./point-circle.html"><p class="nextPage">Далі: точка і круг</p></a>
+
+    <footer>
+        <p>
+            [
+            <a class="inline-link" href="./index.html">вступ</a>,
+            <a href="https://github.com/jeffThompson/CollisionDetection" target="_blank">оригінальне джерело</a>
+            ]
+        </p>
+
+        <p class="license">
+            <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+                <img id="license" class="license" alt="Creative Commons License" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png">
+            </a>
+        </p>
+    </footer>
+
+    <script>hljs.highlightAll();</script>
+</div>
+</body>
+</html>
