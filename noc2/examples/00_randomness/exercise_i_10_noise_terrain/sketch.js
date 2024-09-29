@@ -8,7 +8,8 @@ let land;
 let theta = 0.0;
 
 function setup() {
-  createCanvas(640, 240, WEBGL);
+  createCanvas(window.innerWidth, window.innerHeight, WEBGL);
+  // createCanvas(640, 240, WEBGL);
 
   // Create a landscape object
   land = new Terrain(20, 800, 400);

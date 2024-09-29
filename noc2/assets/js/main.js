@@ -3,6 +3,8 @@ function getAllExamples () {
 }
 
 function getContentWindowFromExampleButton(btn) {
+    if (!btn) { return; }
+
     const parentExample = btn.closest('[data-type="example"]');
     const iframe = parentExample.querySelector('iframe');
     return iframe.contentWindow;
@@ -27,6 +29,7 @@ function resetHandler({ currentTarget }) {
 
     if (contentWindow) {
         contentWindow.setup();
+        contentWindow.redraw();
         contentWindow.frameRate(60);
         textPart.innerHTML = 'Pause';
     }
@@ -38,9 +41,23 @@ function addSketchesEventsListeners() {
     allExamples.forEach(example => {
         let resetBtn = example.querySelector('.flex button:nth-child(1)');
         let pauseBtn = example.querySelector('.flex button:nth-child(2)');
+        const contentWindow = getContentWindowFromExampleButton(pauseBtn);
 
-        pauseBtn.addEventListener('click', pauseHandler);
-        resetBtn.addEventListener('click', resetHandler);
+        if (contentWindow) {
+            contentWindow.onload = function ({currentTarget}) {
+                setTimeout(() => {
+                    if (currentTarget.noLoop) {
+                        const textPart = pauseBtn.querySelector('span');
+                        currentTarget.frameRate(0);
+                        textPart.innerHTML = 'Play';
+                    }
+                }, 1000);
+
+                pauseBtn.addEventListener('click', pauseHandler);
+                resetBtn.addEventListener('click', resetHandler);
+            }
+        }
+
     });
 }
 

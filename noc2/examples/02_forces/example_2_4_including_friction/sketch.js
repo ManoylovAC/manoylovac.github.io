@@ -8,7 +8,7 @@ function setup() {
   // createCanvas(640, 240);
   createCanvas(window.innerWidth, window.innerHeight);
   mover = new Mover(width / 2, 30, 5);
-  createP('Click mouse to apply wind force.');
+  // createP('Click mouse to apply wind force.');
 }
 
 function draw() {

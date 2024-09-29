@@ -17,7 +17,7 @@ let car1;
 let car2;
 
 function setup() {
-  let text = createP("Hit space bar to toggle debugging lines.<br>Click the mouse to generate a new path.");
+  // let text = createP("Hit space bar to toggle debugging lines.<br>Click the mouse to generate a new path.");
 
   // createCanvas(640, 240);
   createCanvas(window.innerWidth, window.innerHeight);

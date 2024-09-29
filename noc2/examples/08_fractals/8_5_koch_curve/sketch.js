@@ -13,9 +13,9 @@ function setup() {
   // createCanvas(640, 240);
   createCanvas(window.innerWidth, window.innerHeight);
   // Left side of canvas
-  let start = createVector(0, 200);
+  let start = createVector(0, height - 30);
   // Right side of canvas
-  let end = createVector(width, 200);
+  let end = createVector(width, height - 30);
 
   //{!1} The first KochLine object
   segments.push(new KochLine(start, end));

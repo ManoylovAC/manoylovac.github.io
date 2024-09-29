@@ -9,7 +9,6 @@
 function setup() {
   // createCanvas(640, 240);
   createCanvas(window.innerWidth, window.innerHeight);
-  frameRate(1);
 }
 
 function draw() {
@@ -23,6 +22,10 @@ function draw() {
   // Start the recursive branching!
   branch(80);
   pop();
+
+  if (frameRate() > 1) {
+    frameRate(1);
+  }
 }
 
 function branch(length) {

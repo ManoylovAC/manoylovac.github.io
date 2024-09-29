@@ -14,9 +14,9 @@ let flowfield;
 let vehicles = [];
 
 function setup() {
-  let text = createP(
-    "Hit space bar to toggle debugging lines.<br>Click the mouse to generate a new flow field."
-  );
+  // let text = createP(
+  //   "Hit space bar to toggle debugging lines.<br>Click the mouse to generate a new flow field."
+  // );
 
   // createCanvas(640, 240);
   createCanvas(window.innerWidth, window.innerHeight);

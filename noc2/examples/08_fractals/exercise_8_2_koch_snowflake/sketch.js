@@ -14,7 +14,7 @@ function setup() {
   createCanvas(window.innerWidth, window.innerHeight);
   let w = 200;
   let offset = (width - w) / 2;
-  let y = 62;
+  let y = 82;
   let a = createVector(offset, y);
   let b = createVector(width - offset, y);
   let c = createVector(width / 2, y + w * cos(PI / 6));

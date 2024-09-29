@@ -24,7 +24,7 @@ function setup() {
   for (let i = 0; i < 120; i++) {
     newVehicle(random(width), random(height));
   }
-  createP("Hit 'd' to toggle debugging lines.<br/>Click the mouse to generate new vehicles.");
+  // createP("Hit 'd' to toggle debugging lines.<br/>Click the mouse to generate new vehicles.");
 
 }
 

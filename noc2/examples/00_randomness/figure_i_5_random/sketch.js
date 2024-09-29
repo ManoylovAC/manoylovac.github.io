@@ -5,7 +5,8 @@
 let values = [];
 
 function setup() {
-  createCanvas(360,240);
+  // createCanvas(360,240);
+  createCanvas(window.innerWidth, window.innerHeight);
   for (let i = 0; i < width; i++) {
     values[i] = random(height);
   }
