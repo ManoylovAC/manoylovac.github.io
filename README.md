@@ -17,8 +17,8 @@
         <a href="https://thebookofshaders.com/?lan=ua">Книга про шейдери</a> — український переклад книги <a href="https://thebookofshaders.com">The Book Of Shaders</a> <br>(автори <b>Patricio Gonzalez Vivo</b> та <b>Jen Lowe</b>)
     </li>
     <br>
-    <li style="color: gray">
-        <b>Виявлення колізій</b> (WIP) — український переклад онлайн-книги з виявлення перетинів між геометричними фігурами <a href="https://www.jeffreythompson.org/collision-detection" target="_blank">Collision Detection</a> <br>(автор <b>Jeffrey Thompson</b>)
+    <li>
+        <a class="inline-link" href="https://manoylovac.github.io/collision-detection">Виявлення колізій</a> — український переклад онлайн-книги з виявлення перетинів між геометричними фігурами <a href="https://www.jeffreythompson.org/collision-detection" target="_blank">Collision Detection</a> <br>(автор <b>Jeffrey Thompson</b>)
     </li>
 </ul>
 
