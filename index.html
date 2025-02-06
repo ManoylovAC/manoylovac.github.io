@@ -30,7 +30,8 @@
         }
 
         p {
-            margin-top: 20px;
+            margin-top: 15px;
+            text-indent: 1em;
         }
 
         .main {
@@ -58,10 +59,6 @@
         }
 
         .page-contents__list {
-
-        }
-
-        .page-contents__list {
             margin-left: 15px; padding: 20px 0;
         }
 
@@ -71,7 +68,11 @@
 
         .page-contents__item-inactive {
             /*color: lightgray;*/
-            opacity: .2;
+            opacity: .35;
+        }
+
+        .section {
+            margin: 20px 0;
         }
 
         /* LINKS */
@@ -103,6 +104,15 @@
             padding: 1px 5px;
             border-radius: 3px;
         }
+
+        .the-end {
+            display: block;
+            width: 100%;
+            height: 30px;
+            margin-bottom: 20px;
+            background-color: #d5dae3;
+            border-radius: 3px;
+        }
     </style>
 </head>
 <body>
@@ -112,24 +122,30 @@
         <img class="photo" src="./images/andyman.jpg" alt="Andy Man photo" >
         <h1 class="main-title">Андрій Манойлов</h1>
 
+        <div class="section">Перед вами поки що невеликий проєкт з перекладу книг і туторіалів про креативне програмування.</div>
+
         <div class="page-contents">
             <ul class="page-contents__list">
                 <li class="page-contents__item">
                     <a class="inline-link" href="https://manoylovac.github.io/noc2">Природа коду</a>
-                    — український переклад цікавезної і популярної серед творчих програмістів книги про природні симуляції
+                    — переклад цікавезної і популярної серед творчих програмістів книги про природні симуляції
                     <a class="link" href="https://natureofcode.com">The Nature Of Code</a>
                     <br>(автор <b>Daniel Shiffman</b>)
                 </li>
                 <li class="page-contents__item">
                     <a class="inline-link" href="https://thebookofshaders.com/?lan=ua">Книга про шейдери</a>
-                    — український переклад книги <a class="link" href="https://thebookofshaders.com">The Book Of Shaders</a>
+                    — переклад книги <a class="link" href="https://thebookofshaders.com">The Book Of Shaders</a>
                     <br>(автори <b>Patricio Gonzalez Vivo</b> та <b>Jen Lowe</b>)
                 </li>
                 <li class="page-contents__item">
                     <a class="inline-link" href="https://manoylovac.github.io/collision-detection">Виявлення колізій</a>
-                    — український переклад онлайн-книги з виявлення перетинів між геометричними фігурами —
+                    — переклад онлайн-книги з виявлення перетинів між геометричними фігурами —
                     <a class="link" href="https://www.jeffreythompson.org/collision-detection" target="_blank">Collision Detection</a>
                     <br>(автор <b>Jeffrey Thompson</b>)
+                </li>
+                <li class="page-contents__item page-contents__item-inactive">
+                    Маю пару десяків перекладів тутріалів і статей про креативне програмування та генерацію зображень, а
+                    також власні уроки. Маю надію, що колись зможу їх викласти.
                 </li>
             </ul>
         </div>
@@ -139,44 +155,33 @@
             Вітаю друзі!
         </p>
         <p>
-            Сподіваюсь грайливий заголовок не дуже збив вас з пантелику і ви все одно відважилися читати далі.
+            Сподіваюсь грайливий заголовок не дуже збив вас з пантелику і ви все одно відважилися читати далі.
         </p>
         <p>
-            Хочу поділитися з вами своїм перекладом нещодавно оновленої і чудової книги Деніела Шиффмана
-            <a class="inline-link" href="https://natureofcode.com/" target="_blank">The Nature Of Code</a>
-            про симуляції природних процесів, яка містить багато практичних та інтерактивних прикладів. З дозволу автора
-            <a class="inline-link" href="https://manoylovac.github.io/noc2/translation.html" target="_blank">переклад книги</a>
+            Хочу поділитися з вами своїм перекладом нещодавно оновленої і чудової книги Деніела Шиффмана
+            <a class="inline-link" href="https://natureofcode.com/" target="_blank">The Nature Of Code</a>
+            про симуляції природних процесів, яка містить багато практичних та інтерактивних прикладів. З дозволу автора
+            <a class="inline-link" href="https://manoylovac.github.io/noc2/translation.html" target="_blank">переклад книги</a>
             доступний онлайн. Можна одразу перейти до
-            <a class="inline-link" href="https://manoylovac.github.io/noc2/examples.html" target="_blank">сторінки прикладів</a>
+            <a class="inline-link" href="https://manoylovac.github.io/noc2/examples.html" target="_blank">сторінки прикладів</a>
             та оцінити для себе практичну сторону матеріалу.
         </p>
         <p>
             Початок перекладу стартував гарячим літом 2023-го у спокійних домашніх умовах та легких капцях на босу ногу
-            з усіма доступними зручностями, а завершився наступного пекельного літа 2024-го року, вже у лавах ЗСУ з
-            важкими берцями та постійними переміщеннями. Якщо вам буде цікаво дізнатися про процес перекладу більше,
-            сміливо питайте — буду радий поділитися своїм досвідом.
+            з усіма доступними зручностями, а завершився наступного пекельного літа 2024-го року, вже у лавах ЗСУ
+            з важкими берцями та постійними переміщеннями. Якщо вам цікаво дізнатися про процес перекладу цієї книжки більше,
+            тоді запрошую до статті на DOU:
+            <a class="inline-link" href="https://dou.ua/forums/topic/51306" target="_blank">Маленька історія перекладу великої книги про «Природу Коду»</a>.
         </p>
         <p>
-            Також, якщо вам до вподоби цей проєкт, ви можете допомогти покращити його. Можливо ви маєте змогу підготувати
-            зображення з перекладом, виправити неточності чи термінологію, пошерити цікавинку серед знайомих, знайти
-            видавництво, зробити легший спосіб для оновлення тощо. Через проходження служби у мене наразі навряд чи буде
-            для цього достатньо часу і можливостей, тож якщо є бажання долучайтеся. Контакти є на
-            <a class="inline-link" href="https://manoylovac.github.io/noc2/translation.html#contacts" target="_blank">сторінці з перекладом</a>.
-        </p>
-        <p>
-            PS: минулим літом я також переклав невелику класичну книгу по шейдерам —
-            <a class="inline-link" href="https://thebookofshaders.com/?lan=ua" target="_blank">The Book Of Shaders</a>
-            — це була моя перша спроба open-source перекладу, тому, якщо ви хотіли познайомитися з шейдерами, тепер
-            можете зробити це українською.
-        </p>
-        <p>
-            PPS: наразі, по змозі, планую завершити переклад невеликої книги з виявлення зіткнень між геометричними
-            фігурами —
-            <a class="inline-link" href="https://www.jeffreythompson.org/collision-detection" target="_blank">Collision Detection</a>.
+            За бажанням ви можете допомогти покращити цей проєкт. Підготувати зображення з перекладом, виправити неточності,
+            пошерити цікавинку серед знайомих тощо. Контакти можна знайи на
+            <a class="inline-link" href="https://manoylovac.github.io/noc2/translation.html#contacts" target="_blank">сторінці з перекладом</a>.
         </p>
         <p>
             З найкращими побажаннями Андрій Манойлов!
         </p>
+        <p class="the-end"></p>
     </div>
 </main>
 
