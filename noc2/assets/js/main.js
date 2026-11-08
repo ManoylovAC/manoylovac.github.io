@@ -115,3 +115,20 @@ function start() {
 start();
 
 
+
+document.querySelectorAll('.reveal-btn').forEach(function(button) {
+  button.addEventListener('click', function() {
+    // Знаходимо найближчий батьківський контейнер callout
+    const callout = this.closest('.callout');
+    if (!callout) return;
+
+    // Перемикаємо клас на callout
+    const isVisible = callout.classList.toggle('is-answer-visible');
+
+    // Знаходимо внутрішній елемент для зміни тексту
+    const title = this.querySelector('.reveal-btn-title');
+    if (title) {
+      title.textContent = isVisible ? 'Приховати відповідь' : 'Показати відповідь';
+    }
+  });
+});
