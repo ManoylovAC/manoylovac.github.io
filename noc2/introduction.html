@@ -1,57 +1,189 @@
-<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="ie=edge"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><meta data-react-helmet="true" name="description" content="Понад десять років тому я самостійно опублікував “Природу коду” — онлайн-ресурс і друковану книгу у якій досліджував непередбачувані еволюційні та еме"/><meta data-react-helmet="true" property="og:type" content="website"/><meta data-react-helmet="true" property="og:url" content="https://natureofcode.com"/><meta data-react-helmet="true" property="og:image" content="https://natureofcode.com/static/7dd3422c43faa1513528cd25636d9e6b/b08a9/cover.png"/><meta data-react-helmet="true" property="og:title" content="Вступ"/><meta data-react-helmet="true" property="og:description" content="Понад десять років тому я самостійно опублікував “Природу коду” — онлайн-ресурс і друковану книгу у якій досліджував непередбачувані еволюційні та еме"/><meta data-react-helmet="true" name="twitter:card" content="summary_large_image"/><meta data-react-helmet="true" name="twitter:title" content="Вступ"/><meta data-react-helmet="true" name="twitter:description" content="Понад десять років тому я самостійно опублікував “Природу коду” — онлайн-ресурс і друковану книгу у якій досліджував непередбачувані еволюційні та еме"/><meta data-react-helmet="true" name="twitter:image" content="https://natureofcode.com/static/7dd3422c43faa1513528cd25636d9e6b/b08a9/cover.png"/>
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 
-  <link rel="stylesheet" href="./assets/styles/global.css">
+  <title>Вступ / Природа коду</title>
+  <meta name="description" content="Понад десять років тому я самостійно опублікував «Природу коду» — онлайн-ресурс і друковану книгу, у якій досліджував непередбачувані еволюційні та ем..."/>
+  <meta name="author" content="Деніел Шиффман"/>
+  <link rel="canonical" href="https://manoylovac.github.io/noc2/"/>
 
-  <noscript><style>.gatsby-image-wrapper noscript [data-main-image]{opacity:1!important}.gatsby-image-wrapper [data-placeholder-image]{opacity:0!important}</style></noscript><script type="module">const e="undefined"!=typeof HTMLImageElement&&"loading"in HTMLImageElement.prototype;e&&document.body.addEventListener("load",(function(e){const t=e.target;if(void 0===t.dataset.mainImage)return;if(void 0===t.dataset.gatsbyImageSsr)return;let a=null,n=t;for(;null===a&&n;)void 0!==n.parentNode.dataset.gatsbyImageWrapper&&(a=n.parentNode),n=n.parentNode;const o=a.querySelector("[data-placeholder-image]"),r=new Image;r.src=t.currentSrc,r.decode().catch((()=>{})).then((()=>{t.style.opacity=1,o&&(o.style.opacity=0,o.style.transition="opacity 500ms linear")}))}),!0);</script><link rel="icon" href="./favicon-32x32.png" type="image/png"/><link rel="apple-touch-icon" sizes="48x48" href="/icons/icon-48x48.png"/><link rel="apple-touch-icon" sizes="72x72" href="/icons/icon-72x72.png"/><link rel="apple-touch-icon" sizes="96x96" href="/icons/icon-96x96.png"/><link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144x144.png"/><link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png"/><link rel="apple-touch-icon" sizes="256x256" href="/icons/icon-256x256.png"/><link rel="apple-touch-icon" sizes="384x384" href="/icons/icon-384x384.png"/><link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png"/><title data-react-helmet="true">Вступ / Nature of Code</title></head><body><div id="___gatsby"><div style="outline:none" tabindex="-1" id="gatsby-focus-wrapper"><header class="fixed left-0 right-0 top-0 z-40 bg-white px-6 lg:px-8"><div class="mx-auto flex h-[5em] max-w-6xl items-center justify-between"><div class="flex flex-col gap-x-6 lg:flex-row lg:items-center"><a href="./"><span class="text-lg font-black tracking-widest text-noc-400"><span class="font-black">ПРИРОДА</span> КОДУ</span></a><span class="hidden text-sm tracking-widest text-noc-400 xl:block">ДАНІЕЛЬ ШИФФМАН</span></div><button class="flex h-9 w-11 cursor-pointer flex-col items-center justify-between p-2 lg:hidden" aria-label="Toggle menu" title="Toggle menu"><span class="block h-0.5 w-full rounded bg-noc-200 transition-transform"></span><span class="block h-0.5 w-full rounded bg-noc-200 transition-opacity" style="opacity:1"></span><span class="block h-0.5 w-full rounded bg-noc-200 transition-transform"></span></button><div class="hidden items-center gap-6 lg:flex"><ul class="flex items-center gap-6"><li><a href="https://github.com/sponsors/CodingTrain" class="flex items-center gap-1.5 text-sm text-gray-500 hover:underline"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" class="text-noc-200" height="1.2em" width="1.2em" xmlns="http://www.w3.org/2000/svg"><path d="M458.4 64.3C400.6 15.7 311.3 23 256 79.3 200.7 23 111.4 15.6 53.6 64.3-21.6 127.6-10.6 230.8 43 285.5l175.4 178.7c10 10.2 23.4 15.9 37.6 15.9 14.3 0 27.6-5.6 37.6-15.8L469 285.6c53.5-54.7 64.7-157.9-10.6-221.3zm-23.6 187.5L259.4 430.5c-2.4 2.4-4.4 2.4-6.8 0L77.2 251.8c-36.5-37.2-43.9-107.6 7.3-150.7 38.9-32.7 98.9-27.8 136.5 10.5l35 35.7 35-35.7c37.8-38.5 97.8-43.2 136.5-10.6 51.1 43.1 43.5 113.9 7.3 150.8z"></path></svg>SUPPORT</a></li><li><a href="https://github.com/nature-of-code/noc-book-2" class="flex items-center gap-1.5 text-sm text-gray-500 hover:underline"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 496 512" class="text-noc-200" height="1.2em" width="1.2em" xmlns="http://www.w3.org/2000/svg"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path></svg>GITHUB</a></li><li><a href="https://thecodingtrain.com/" class="flex items-center text-sm text-gray-500 hover:underline"><img src="./static/codingtrain_logo-53b0a841be45c7eac7a12f88b7bea596.png" alt="Coding Train&#x27;s logo" class="-ml-2 w-8"/>CODING TRAIN</a></li></ul><div class="not-prose flex items-center gap-4 undefined"><div class="relative"><a href="https://natureofcode.com/" target="_blank" class="flex items-center text-sm text-gray-500 hover:underline"><img src="./favicon-32x32.png" alt="The Nature Of Code logo" class="noc2-logo"/>THE NATURE OF CODE</a></div></div></div></div></header>
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-YD31R75NSS"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+  <!-- Open Graph / Facebook -->
+  <meta property="og:site_name" content="Природа коду"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:locale" content="uk_UA"/>
+  <meta property="og:url" content="https://manoylovac.github.io/noc2/"/>
+  <meta property="og:title" content="Вступ"/>
+  <meta property="og:description" content="Понад десять років тому я самостійно опублікував «Природу коду» — онлайн-ресурс і друковану книгу, у якій досліджував непередбачувані еволюційні та ем..."/>
+  <meta property="og:image" content="https://manoylovac.github.io/noc2/images/cover.png"/>
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
 
-    gtag('config', 'G-YD31R75NSS');
-  </script>
-  <nav class="fixed bottom-0 left-0 right-0 top-[5em] z-20 overflow-y-auto bg-white px-6 lg:hidden mb-menu hidden">
-    <ul class="my-7 space-y-2">
-      <li><a class="text-lg text-gray-800" href="./dedication.html">Присвята</a></li>
-      <li><a class="text-lg text-gray-800" href="./acknowledgements.html">Подяки</a></li>
-      <li><a aria-current="page" class="text-lg text-gray-800 font-bold" href="./introduction.html">Вступ</a></li>
-      <li>
-        <button class="sub-menu-btn flex items-center gap-2 text-lg text-gray-800">
-          <span>Розділи</span>
-          <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 transition-transform" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg" style="transform: scaleY(1);"><polyline points="6 9 12 15 18 9"></polyline></svg>
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:site" content="@shiffman"/>
+  <meta name="twitter:creator" content="@shiffman"/>
+  <meta name="twitter:url" content="https://manoylovac.github.io/noc2/"/>
+  <meta name="twitter:title" content="Вступ"/>
+  <meta name="twitter:description" content="Понад десять років тому я самостійно опублікував «Природу коду» — онлайн-ресурс і друковану книгу, у якій досліджував непередбачувані еволюційні та ем..."/>
+  <meta name="twitter:image" content="https://manoylovac.github.io/noc2/images/cover.png"/>
+
+  <link rel="stylesheet" href="./assets/styles/katex.min.css"/>
+  <link rel="stylesheet" href="./assets/styles/global.css"/>
+  <link rel="icon" href="./favicon-32x32.png" type="image/png"/>
+  <link rel="apple-touch-icon" sizes="48x48" href="./icons/icon-48x48.png"/>
+  <link rel="apple-touch-icon" sizes="72x72" href="./icons/icon-72x72.png"/>
+  <link rel="apple-touch-icon" sizes="96x96" href="./icons/icon-96x96.png"/>
+  <link rel="apple-touch-icon" sizes="144x144" href="./icons/icon-144x144.png"/>
+  <link rel="apple-touch-icon" sizes="192x192" href="./icons/icon-192x192.png"/>
+  <link rel="apple-touch-icon" sizes="256x256" href="./icons/icon-256x256.png"/>
+  <link rel="apple-touch-icon" sizes="384x384" href="./icons/icon-384x384.png"/>
+  <link rel="apple-touch-icon" sizes="512x512" href="./icons/icon-512x512.png"/>
+</head>
+<body>
+<div id="___gatsby">
+  <div style="outline:none" tabindex="-1" id="gatsby-focus-wrapper">
+    <header class="fixed left-0 right-0 top-0 z-40 bg-white px-6 lg:px-8">
+      <div class="mx-auto flex h-[5em] max-w-6xl items-center justify-between">
+        <div class="flex flex-col gap-x-6 lg:flex-row lg:items-center">
+          <a href="./"><span class="text-lg font-black tracking-widest text-noc-400"><span class="font-black">ПРИРОДА</span> КОДУ</span></a>
+          <span class="hidden text-sm tracking-widest text-noc-400 xl:block">ДЕНІЕЛ ШИФФМАН</span>
+        </div>
+        <button class="flex h-9 w-11 cursor-pointer flex-col items-center justify-between p-2 lg:hidden" aria-label="Toggle menu" title="Toggle menu">
+          <span class="block h-0.5 w-full rounded bg-noc-200 transition-transform"></span>
+          <span class="block h-0.5 w-full rounded bg-noc-200 transition-opacity" style="opacity:1"></span>
+          <span class="block h-0.5 w-full rounded bg-noc-200 transition-transform"></span>
         </button>
-        <ul class="space-y-2 py-2 pl-4 sub-menu hidden">
-          <li><a class="flex items-center text-gray-600" href="./random.html"><span class="w-8">0</span><span>Випадковість</span></a></li>
-          <li><a class="flex items-center text-gray-600" href="./vectors.html"><span class="w-8">1</span><span>Вектори</span></a></li>
-          <li><a class="flex items-center text-gray-600" href="./forces.html"><span class="w-8">2</span><span>Сили</span></a></li>
-          <li><a class="flex items-center text-gray-600" href="./oscillation.html"><span class="w-8">3</span><span>Коливання</span></a></li>
-          <li><a class="flex items-center text-gray-600" href="./particles.html"><span class="w-8">4</span><span>Система частинок</span></a></li>
-          <li><a class="flex items-center text-gray-600" href="./autonomous-agents.html"><span class="w-8">5</span><span>Автономні агенти</span></a></li>
-          <li><a class="flex items-center text-gray-600" href="./physics-libraries.html"><span class="w-8">6</span><span>Фізичні бібліотеки</span></a></li>
-          <li><a class="flex items-center text-gray-600" href="./cellular-automata.html"><span class="w-8">7</span><span>Клітинні автомати</span></a></li>
-          <li><a class="flex items-center text-gray-600" href="./fractals.html"><span class="w-8">8</span><span>Фрактали</span></a></li>
-          <li><a class="flex items-center text-gray-600" href="./genetic-algorithms.html"><span class="w-8">9</span><span>Еволюційне моделювання</span></a></li>
-          <li><a class="flex items-center text-gray-600" href="./neural-networks.html"><span class="w-8">10</span><span>Нейронні мережі</span></a></li>
-          <li><a class="flex items-center text-gray-600" href="./neuroevolution.html"><span class="w-8">11</span><span>Нейроеволюція</span></a></li>
-        </ul>
-      </li>
-      <li><a class="text-lg text-gray-800" href="./appendix-creature.html">Додаток: Дизайн створінь</a></li>
-      <li><a class="text-lg text-gray-800" href="./resources.html">Додаткові ресурси</a></li>
-      <li><a class="text-lg text-gray-800" href="./credits.html">Credits</a></li>
-      <li><a class="text-lg text-gray-800" href="./translation.html">Про переклад</a></li>
-      <li><a class="text-lg text-gray-800" href="./examples.html">Приклади</a></li>
-    </ul>
-    <ul class="my-7 space-y-2">
-      <li><a target="_blank" href="https://github.com/sponsors/CodingTrain" class="flex items-center gap-1 text-lg text-gray-800">Support<svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 text-gray-400" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></li>
-      <li><a target="_blank" href="https://github.com/nature-of-code/noc-book-2" class="flex items-center gap-1 text-lg text-gray-800">GitHub<svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 text-gray-400" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></li>
-      <li><a target="_blank" href="https://thecodingtrain.com/" class="flex items-center gap-1 text-lg text-gray-800">Coding Train<svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 text-gray-400" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></li>
+        <div class="hidden items-center gap-6 lg:flex">
+          <ul class="flex items-center gap-6">
+            <li>
+              <a href="https://github.com/sponsors/CodingTrain" class="flex items-center gap-1.5 text-sm text-gray-500 hover:underline">
+                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" class="text-noc-200" height="1.2em" width="1.2em" xmlns="http://www.w3.org/2000/svg"><path d="M458.4 64.3C400.6 15.7 311.3 23 256 79.3 200.7 23 111.4 15.6 53.6 64.3-21.6 127.6-10.6 230.8 43 285.5l175.4 178.7c10 10.2 23.4 15.9 37.6 15.9 14.3 0 27.6-5.6 37.6-15.8L469 285.6c53.5-54.7 64.7-157.9-10.6-221.3zm-23.6 187.5L259.4 430.5c-2.4 2.4-4.4 2.4-6.8 0L77.2 251.8c-36.5-37.2-43.9-107.6 7.3-150.7 38.9-32.7 98.9-27.8 136.5 10.5l35 35.7 35-35.7c37.8-38.5 97.8-43.2 136.5-10.6 51.1 43.1 43.5 113.9 7.3 150.8z"></path></svg>
+                SUPPORT
+              </a>
+            </li>
+            <li>
+              <a href="https://github.com/nature-of-code/noc-book-2" class="flex items-center gap-1.5 text-sm text-gray-500 hover:underline">
+                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 496 512" class="text-noc-200" height="1.2em" width="1.2em" xmlns="http://www.w3.org/2000/svg"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path></svg>
+                GITHUB
+              </a>
+            </li>
+            <li>
+              <a href="https://thecodingtrain.com/" class="flex items-center text-sm text-gray-500 hover:underline">
+                <img src="./images/codingtrain_logo.png" alt="Coding Train's logo" class="-ml-2 w-8"/>
+                CODING TRAIN
+              </a>
+            </li>
+          </ul>
+          <div class="not-prose flex items-center gap-4">
+            <div class="relative">
+              <a href="https://natureofcode.com/" target="_blank" class="flex items-center text-sm text-gray-500 hover:underline">
+                <img src="./favicon-32x32.png" alt="The Nature Of Code logo" class="noc2-logo inline-block mr-1.5 w-4 h-4"/>
+                THE NATURE OF CODE
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
 
-      <li><a target="_blank" href="https://natureofcode.com/" class="flex items-center gap-1 text-lg text-gray-800">The Nature Of Code<svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 text-gray-400" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></li>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YD31R75NSS"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-YD31R75NSS');
+    </script>
+
+    <!-- Mobile menu -->
+    <nav class="fixed bottom-0 left-0 right-0 top-[5em] z-20 overflow-y-auto bg-white px-6 lg:hidden mb-menu hidden">
+      <ul class="my-7 space-y-2">
+  <li><a class="text-lg text-gray-800" href="./dedication.html">Присвята</a></li>
+  <li><a class="text-lg text-gray-800" href="./acknowledgements.html">Подяки</a></li>
+  <li><a aria-current="page" class="text-lg text-gray-800 font-bold" href="./introduction.html">Вступ</a></li>
+  <li>
+    <button class="sub-menu-btn flex items-center gap-2 text-lg text-gray-800">
+      <span>Розділи</span>
+      <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 transition-transform" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg" style="transform: scaleY(1);"><polyline points="6 9 12 15 18 9"></polyline></svg>
+    </button>
+    <ul class="space-y-2 py-2 pl-4 sub-menu hidden">
+      <li><a class="flex items-center text-gray-600" href="./random.html"><span class="w-8">0</span><span>Випадковість</span></a></li>
+      <li><a class="flex items-center text-gray-600" href="./vectors.html"><span class="w-8">1</span><span>Вектори</span></a></li>
+      <li><a class="flex items-center text-gray-600" href="./forces.html"><span class="w-8">2</span><span>Сили</span></a></li>
+      <li><a class="flex items-center text-gray-600" href="./oscillation.html"><span class="w-8">3</span><span>Коливання</span></a></li>
+      <li><a class="flex items-center text-gray-600" href="./particles.html"><span class="w-8">4</span><span>Системи частинок</span></a></li>
+      <li><a class="flex items-center text-gray-600" href="./autonomous-agents.html"><span class="w-8">5</span><span>Автономні агенти</span></a></li>
+      <li><a class="flex items-center text-gray-600" href="./physics-libraries.html"><span class="w-8">6</span><span>Фізичні бібліотеки</span></a></li>
+      <li><a class="flex items-center text-gray-600" href="./cellular-automata.html"><span class="w-8">7</span><span>Клітинні автомати</span></a></li>
+      <li><a class="flex items-center text-gray-600" href="./fractals.html"><span class="w-8">8</span><span>Фрактали</span></a></li>
+      <li><a class="flex items-center text-gray-600" href="./genetic-algorithms.html"><span class="w-8">9</span><span>Еволюційне моделювання</span></a></li>
+      <li><a class="flex items-center text-gray-600" href="./neural-networks.html"><span class="w-8">10</span><span>Нейронні мережі</span></a></li>
+      <li><a class="flex items-center text-gray-600" href="./neuroevolution.html"><span class="w-8">11</span><span>Нейроеволюція</span></a></li>
     </ul>
-  </nav>
-  <div class="mt-[6em] px-6 lg:px-8"><div class="mx-auto max-w-6xl lg:flex lg:justify-between lg:gap-10 xl:gap-14"><aside class="sticky top-[6em] z-10 hidden max-h-[calc(100vh-6em)] min-w-[14em] overflow-y-auto pb-8 lg:block lg:flex-grow"><nav class="border-noc-200 rounded-3xl border"><ul class="divide-noc-200 divide-y"><li><a class="relative block px-3 py-2 text-sm hover:underline" href="./dedication.html">Присвята</a></li><li><a class="relative block px-3 py-2 text-sm hover:underline" href="./acknowledgements.html">Подяки</a></li><li><a aria-current="page" class="relative block px-3 py-2 text-sm hover:underline font-bold" href="./introduction.html">Вступ</a></li><li><a class="group relative flex items-center px-3 py-2 text-sm" href="./random.html"><span class="w-8">0</span><span class="group-hover:underline">Випадковість</span></a></li><li><a class="group relative flex items-center px-3 py-2 text-sm" href="./vectors.html"><span class="w-8">1</span><span class="group-hover:underline">Вектори</span></a></li><li><a class="group relative flex items-center px-3 py-2 text-sm" href="./forces.html"><span class="w-8">2</span><span class="group-hover:underline">Сили</span></a></li><li><a class="group relative flex items-center px-3 py-2 text-sm" href="./oscillation.html"><span class="w-8">3</span><span class="group-hover:underline">Коливання</span></a></li><li><a class="group relative flex items-center px-3 py-2 text-sm" href="./particles.html"><span class="w-8">4</span><span class="group-hover:underline">Системи частинок</span></a></li><li><a class="group relative flex items-center px-3 py-2 text-sm" href="./autonomous-agents.html"><span class="w-8">5</span><span class="group-hover:underline">Автономні агенти</span></a></li><li><a class="group relative flex items-center px-3 py-2 text-sm" href="./physics-libraries.html"><span class="w-8">6</span><span class="group-hover:underline">Фізичні бібліотеки</span></a></li><li><a class="group relative flex items-center px-3 py-2 text-sm" href="./cellular-automata.html"><span class="w-8">7</span><span class="group-hover:underline">Клітинні автомати</span></a></li><li><a class="group relative flex items-center px-3 py-2 text-sm" href="./fractals.html"><span class="w-8">8</span><span class="group-hover:underline">Фрактали</span></a></li><li><a class="group relative flex items-center px-3 py-2 text-sm" href="./genetic-algorithms.html"><span class="w-8">9</span><span class="group-hover:underline">Еволюційне моделювання</span></a></li><li><a class="group relative flex items-center px-3 py-2 text-sm" href="./neural-networks.html"><span class="w-8">10</span><span class="group-hover:underline">Нейронні мережі</span></a></li><li><a class="group relative flex items-center px-3 py-2 text-sm" href="./neuroevolution.html"><span class="w-8">11</span><span class="group-hover:underline">Нейроеволюція</span></a></li><li><a class="relative block px-3 py-2 text-sm hover:underline" href="./appendix-creature.html">Додаток: Дизайн створінь </a></li><li><a class="relative block px-3 py-2 text-sm hover:underline" href="./resources.html">Додаткові ресурси</a></li><li><a class="relative block px-3 py-2 text-sm hover:underline" href="./credits.html">Credits</a></li><li><a class="relative block px-3 py-2 text-sm hover:underline" href="./translation.html">Про переклад</a></li><li><a class="relative block px-3 py-2 text-sm hover:underline" href="./examples.html">Приклади</a></li></ul></nav></aside><main class="prose mx-auto max-w-[50em] pb-8"><section data-type="page" id="section-introduction">
+  </li>
+  <li><a class="text-lg text-gray-800" href="./appendix-creature.html">Додаток: Дизайн створінь</a></li>
+  <li><a class="text-lg text-gray-800" href="./resources.html">Додаткові ресурси</a></li>
+  <li><a class="text-lg text-gray-800" href="./credits.html">Credits</a></li>
+  <li><a class="text-lg text-gray-800" href="./translation.html">Про переклад</a></li>
+  <li><a class="text-lg text-gray-800" href="./examples.html">Приклади</a></li>
+</ul>
+      <ul class="my-7 space-y-2">
+        <li><a target="_blank" href="https://github.com/sponsors/CodingTrain" class="flex items-center gap-1 text-lg text-gray-800">Support<svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 text-gray-400" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></li>
+        <li><a target="_blank" href="https://github.com/nature-of-code/noc-book-2" class="flex items-center gap-1 text-lg text-gray-800">GitHub<svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 text-gray-400" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></li>
+        <li><a target="_blank" href="https://thecodingtrain.com/" class="flex items-center gap-1 text-lg text-gray-800">Coding Train<svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 text-gray-400" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></li>
+        <li><a target="_blank" href="https://natureofcode.com/" class="flex items-center gap-1 text-lg text-gray-800">The Nature Of Code<svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 text-gray-400" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></li>
+      </ul>
+    </nav>
+
+    <!-- Main Content Container -->
+    <div class="mt-[6em] px-6 lg:px-8">
+      <div class="mx-auto max-w-6xl lg:flex lg:justify-between lg:gap-10 xl:gap-14">
+        <!-- Sidebar Navigation -->
+        <aside class="sticky top-[6em] z-10 hidden max-h-[calc(100vh-6em)] min-w-[14em] overflow-y-auto pb-8 lg:block lg:flex-grow">
+          <nav class="border-noc-200 rounded-3xl border">
+            <ul class="divide-noc-200 divide-y">
+  <li><a class="relative block px-3 py-2 text-sm hover:underline" href="./dedication.html">Присвята</a>  </li>
+  <li><a class="relative block px-3 py-2 text-sm hover:underline" href="./acknowledgements.html">Подяки</a>  </li>
+  <li><a aria-current="page" class="relative block px-3 py-2 text-sm hover:underline font-bold" href="./introduction.html">Вступ</a>
+    <ul class="space-y-1 pb-2">
+      <li><a href="#what-is-this-book" class="ml-11 block py-0.5 pr-2 text-sm text-gray-500 hover:underline">Що це за книга?</a></li>
+      <li><a href="#a-word-about-p5js" class="ml-11 block py-0.5 pr-2 text-sm text-gray-500 hover:underline">Кілька слів про p5.js</a></li>
+      <li><a href="#what-do-you-need-to-know" class="ml-11 block py-0.5 pr-2 text-sm text-gray-500 hover:underline">Що вам потрібно знати?</a></li>
+      <li><a href="#how-are-you-reading-this-book" class="ml-11 block py-0.5 pr-2 text-sm text-gray-500 hover:underline">Як читати цю книгу?</a></li>
+      <li><a href="#the-story-of-this-book" class="ml-11 block py-0.5 pr-2 text-sm text-gray-500 hover:underline">«Історія» цієї книги</a></li>
+      <li><a href="#using-this-book-as-a-syllabus" class="ml-11 block py-0.5 pr-2 text-sm text-gray-500 hover:underline">Використання цієї книги як навчальної програми</a></li>
+      <li><a href="#how-to-read-the-code" class="ml-11 block py-0.5 pr-2 text-sm text-gray-500 hover:underline">Як читати код</a></li>
+      <li><a href="#exercises" class="ml-11 block py-0.5 pr-2 text-sm text-gray-500 hover:underline">Вправи</a></li>
+      <li><a href="#getting-help-and-submitting-feedback" class="ml-11 block py-0.5 pr-2 text-sm text-gray-500 hover:underline">Як отримати допомогу та надіслати відгук</a></li>
+    </ul>
+  </li>
+  <li><a class="group relative flex items-center px-3 py-2 text-sm" href="./random.html"><span class="w-8">0</span><span class="group-hover:underline">Випадковість</span></a>  </li>
+  <li><a class="group relative flex items-center px-3 py-2 text-sm" href="./vectors.html"><span class="w-8">1</span><span class="group-hover:underline">Вектори</span></a>  </li>
+  <li><a class="group relative flex items-center px-3 py-2 text-sm" href="./forces.html"><span class="w-8">2</span><span class="group-hover:underline">Сили</span></a>  </li>
+  <li><a class="group relative flex items-center px-3 py-2 text-sm" href="./oscillation.html"><span class="w-8">3</span><span class="group-hover:underline">Коливання</span></a>  </li>
+  <li><a class="group relative flex items-center px-3 py-2 text-sm" href="./particles.html"><span class="w-8">4</span><span class="group-hover:underline">Системи частинок</span></a>  </li>
+  <li><a class="group relative flex items-center px-3 py-2 text-sm" href="./autonomous-agents.html"><span class="w-8">5</span><span class="group-hover:underline">Автономні агенти</span></a>  </li>
+  <li><a class="group relative flex items-center px-3 py-2 text-sm" href="./physics-libraries.html"><span class="w-8">6</span><span class="group-hover:underline">Фізичні бібліотеки</span></a>  </li>
+  <li><a class="group relative flex items-center px-3 py-2 text-sm" href="./cellular-automata.html"><span class="w-8">7</span><span class="group-hover:underline">Клітинні автомати</span></a>  </li>
+  <li><a class="group relative flex items-center px-3 py-2 text-sm" href="./fractals.html"><span class="w-8">8</span><span class="group-hover:underline">Фрактали</span></a>  </li>
+  <li><a class="group relative flex items-center px-3 py-2 text-sm" href="./genetic-algorithms.html"><span class="w-8">9</span><span class="group-hover:underline">Еволюційне моделювання</span></a>  </li>
+  <li><a class="group relative flex items-center px-3 py-2 text-sm" href="./neural-networks.html"><span class="w-8">10</span><span class="group-hover:underline">Нейронні мережі</span></a>  </li>
+  <li><a class="group relative flex items-center px-3 py-2 text-sm" href="./neuroevolution.html"><span class="w-8">11</span><span class="group-hover:underline">Нейроеволюція</span></a>  </li>
+  <li><a class="relative block px-3 py-2 text-sm hover:underline" href="./appendix-creature.html">Додаток: Дизайн створінь</a>  </li>
+  <li><a class="relative block px-3 py-2 text-sm hover:underline" href="./resources.html">Додаткові ресурси</a>  </li>
+  <li><a class="relative block px-3 py-2 text-sm hover:underline" href="./credits.html">Credits</a>  </li>
+  <li><a class="relative block px-3 py-2 text-sm hover:underline" href="./translation.html">Про переклад</a>  </li>
+  <li><a class="relative block px-3 py-2 text-sm hover:underline" href="./examples.html">Приклади</a>  </li>
+</ul>
+          </nav>
+        </aside>
+
+        <!-- Chapter Main Article -->
+        <main class="prose mx-auto max-w-[50em] pb-8">
+          <section data-type="page" id="section-introduction">
 <h1 id="introduction">Вступ</h1>
 <p>Понад десять років тому я самостійно опублікував «<em>Природу коду</em>»&nbsp;— онлайн-ресурс і друковану книгу, у якій досліджував непередбачувані еволюційні та емерджентні властивості природи в програмному забезпеченні за допомогою фреймворку для творчого програмування Processing. Сказати, що відтоді у світі технологій та креативних медіа багато що змінилося&nbsp;— це нічого не сказати, тож ось я знову з вами&nbsp;— із новою, оновленою версією цієї книги, побудованою довкола JavaScript і бібліотеки p5.js. Цього разу в книзі з’явилося кілька нових прийомів у коді, але це все та сама стара природа&nbsp;— птахи й досі махають крилами, а яблука так само падають нам на голови.</p>
 <h2 id="what-is-this-book"><a class="heading-link" href="#what-is-this-book">Що це за книга?</a></h2>
@@ -88,10 +220,10 @@
 <h3 id="part-1-inanimate-objects"><a class="heading-link" href="#part-1-inanimate-objects">Частина 1: Неживі об’єкти</a></h3>
 <p>У траві лежить футбольний м’яч. Удар ногою запускає його в повітря. Гравітація тягне його назад донизу. Сильний порив вітру утримує його в польоті ще на мить, доки він не впаде й не відіб’ється від голови гравця у стрибку. Футбольний м’яч не живий і він не робить вибору щодо того, як йому рухатися світом. Це радше неживий предмет, що чекає, коли його штовхнусть іпотягнуть сили навколишнього середовища.</p>
 <p>Як би ви змоделювали футбольний м’яч, що рухається на цифровому полотні? Якщо вам коли-небудь доводилося програмувати рух круга екраном, ви, напевно, писали такий рядок коду:</p>
-<div class="codesplit callout not-prose" data-code-language="javascript"><div class="pair"><pre><code class="hljs code language-javascript">x = x + <span class="hljs-number">1</span>;
+<div class="codesplit callout not-prose overflow-visible pt-0" data-code-language="javascript"><div class="codesplit-header flex items-start justify-between"><div class="ml-auto hidden sm:flex"><button type="button" class="copy-btn first-letter relative flex items-center rounded px-2.5 py-1.5 text-xs font-semibold text-gray-700 hover:bg-gray-300"><div class="copied-badge pointer-events-none absolute inset-0 flex items-center justify-center rounded bg-noc-400 text-white transition-opacity opacity-0">Скопійовано!</div><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" class="h-4 w-4" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M7 6V3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-3v3c0 .552-.45 1-1.007 1H4.007A1.001 1.001 0 0 1 3 21l.003-14c0-.552.45-1 1.007-1H7zM5.003 8L5 20h10V8H5.003zM9 6h8v10h2V4H9v2z"></path></svg><span class="ml-1">Копіювати</span></button></div></div><div class="pair"><pre><code class="hljs code language-javascript">x = x + <span class="hljs-number">1</span>;
 </code></pre><div class="comment"><p></p></div></div></div>
-<p>Ви малюєте фігуру в точці <code>x</code>. З кожним кадром анімації збільшуєте значення <code>x</code>, перемальовуєте фігуру, і вуаля&nbsp;— виникає ілюзія руху! Можливо, ви пішли на крок чи два далі й додали координату <code>y</code>, а також змінні швидкості вздовж осей <span data-type="equation" class="math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em"></span><span class="mord mathnormal">x</span></span></span></span></span> та <span data-type="equation" class="math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em"></span><span class="mord mathnormal">y</span></span></span></span></span>:</p>
-<div class="codesplit callout not-prose" data-code-language="javascript"><div class="pair"><pre><code class="hljs code language-javascript">x = x + xSpeed;
+<p>Ви малюєте фігуру в точці <code>x</code>. З кожним кадром анімації збільшуєте значення <code>x</code>, перемальовуєте фігуру, і вуаля&nbsp;— виникає ілюзія руху! Можливо, ви пішли на крок чи два далі й додали координату <code>y</code>, а також змінні швидкості вздовж осей <span data-type="equation" class="math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">x</span></span></span></span></span> та <span data-type="equation" class="math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.0359em;">y</span></span></span></span></span>:</p>
+<div class="codesplit callout not-prose overflow-visible pt-0" data-code-language="javascript"><div class="codesplit-header flex items-start justify-between"><div class="ml-auto hidden sm:flex"><button type="button" class="copy-btn first-letter relative flex items-center rounded px-2.5 py-1.5 text-xs font-semibold text-gray-700 hover:bg-gray-300"><div class="copied-badge pointer-events-none absolute inset-0 flex items-center justify-center rounded bg-noc-400 text-white transition-opacity opacity-0">Скопійовано!</div><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" class="h-4 w-4" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M7 6V3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-3v3c0 .552-.45 1-1.007 1H4.007A1.001 1.001 0 0 1 3 21l.003-14c0-.552.45-1 1.007-1H7zM5.003 8L5 20h10V8H5.003zM9 6h8v10h2V4H9v2z"></path></svg><span class="ml-1">Копіювати</span></button></div></div><div class="pair"><pre><code class="hljs code language-javascript">x = x + xSpeed;
 </code></pre><div class="comment"><p></p></div></div><div class="pair"><pre><code class="hljs code language-javascript">y = y + ySpeed;
 </code></pre><div class="comment"><p></p></div></div></div>
 <p>Перша частина цієї історії розвиває цю ідею далі. Дослідивши, як використовувати різні варіанти випадковості для керування рухом об’єкта (<strong>Розділ 0</strong>), я візьму ці змінні <code>xSpeed</code> та <code>ySpeed</code> і продемонструю, як разом вони утворюють вектор (<strong>Розділ 1</strong>). Ви не отримаєте від цього нової функціональності, проте закладете міцний фундамент для програмування руху в усій решті книги.</p>
@@ -115,11 +247,34 @@
 <div data-type="example">
   <h3 id="example--example-title"><a class="heading-link" href="#example--example-title">Приклад #.#: Назва прикладу</a></h3>
   <figure>
-    <div class="not-prose clear-both my-4 overflow-hidden rounded border bg-gray-100" style="max-width:1152px"><div class="relative overflow-hidden rounded-t bg-white"><!-- <div class="absolute left-[50%] top-[50%] -translate-x-[50%] -translate-y-[50%] ">Loading sketch ...</div> --><iframe class="w-full border-none transition-opacity opacity-1000" style="aspect-ratio:2.667" loading="lazy" src="./examples/00_5_introduction/nature_of_code_example_template"></iframe></div><div class="flex items-center justify-between border-t"><div class="flex"><button class="flex items-center border-r px-2.5 py-1.5 text-sm hover:bg-gray-200"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true" class="h-[15px] w-[15px]" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg><span class="ml-1.5">Reset</span></button><button class="flex items-center border-r px-2.5 py-1.5 text-sm hover:bg-gray-200"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true" class="h-4 w-4" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg><span class="ml-1">Pause</span></button></div><a href="https://editor.p5js.org/natureofcode/sketches/teVqZKAF7" target="_blank" rel="noreferrer" class="flex items-center px-2.5 text-[0.8rem] hover:underline">Open in Web Editor<svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="ml-1 text-gray-500" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a></div></div>
+    
+<div class="p5-example-embed not-prose clear-both my-4 overflow-hidden rounded border bg-gray-100" style="max-width:1152px">
+  <div class="relative overflow-hidden rounded-t bg-white">
+    <iframe class="w-full border-none transition-opacity opacity-100" style="aspect-ratio:2.667" loading="lazy" src="./examples/00_5_introduction/nature_of_code_example_template/"></iframe>
+  </div>
+  <div class="flex items-center justify-between border-t px-2 py-1 bg-white">
+    <div class="flex">
+      <button type="button" class="sketch-reset-btn flex items-center border-r px-2.5 py-1.5 text-sm hover:bg-gray-200">
+        <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true" class="h-[15px] w-[15px]" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+        <span class="ml-1.5">Reset</span>
+      </button>
+      <button type="button" class="sketch-pause-btn flex items-center border-r px-2.5 py-1.5 text-sm hover:bg-gray-200">
+        <svg class="icon-pause h-4 w-4" stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        <svg class="icon-play hidden h-4 w-4" stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        <span class="sketch-pause-label ml-1">Pause</span>
+      </button>
+    </div>
+    
+    <a href="https://editor.p5js.org/natureofcode/sketches/teVqZKAF7" target="_blank" rel="noreferrer" class="flex items-center px-2.5 text-[0.8rem] text-gray-600 hover:text-black hover:underline">
+      Open in Web Editor
+      <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="ml-1 text-gray-500" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+    </a>
+  </div>
+</div>
     <figcaption></figcaption>
   </figure>
 </div>
-<div class="codesplit callout not-prose" data-code-language="javascript"><div class="pair"><pre><code class="hljs code language-javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">setup</span>(<span class="hljs-params"></span>) {
+<div class="codesplit callout not-prose overflow-visible pt-0" data-code-language="javascript"><div class="codesplit-header flex items-start justify-between"><div class="ml-auto hidden sm:flex"><button type="button" class="copy-btn first-letter relative flex items-center rounded px-2.5 py-1.5 text-xs font-semibold text-gray-700 hover:bg-gray-300"><div class="copied-badge pointer-events-none absolute inset-0 flex items-center justify-center rounded bg-noc-400 text-white transition-opacity opacity-0">Скопійовано!</div><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" class="h-4 w-4" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M7 6V3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-3v3c0 .552-.45 1-1.007 1H4.007A1.001 1.001 0 0 1 3 21l.003-14c0-.552.45-1 1.007-1H7zM5.003 8L5 20h10V8H5.003zM9 6h8v10h2V4H9v2z"></path></svg><span class="ml-1">Копіювати</span></button></div></div><div class="pair"><pre><code class="hljs code language-javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">setup</span>(<span class="hljs-params"></span>) {
 </code></pre><div class="comment"><p></p></div></div><div class="pair split"><pre><code class="hljs code language-javascript">  <span class="hljs-title function_">createCanvas</span>(<span class="hljs-number">640</span>, <span class="hljs-number">240</span>);
 </code></pre><div class="comment"><p>Цей розмір полотна підібрано під макет книги, але в іншому він не є критичним для прикладів.</p></div></div><div class="pair"><pre><code class="hljs code language-javascript">  <span class="hljs-title function_">background</span>(<span class="hljs-number">255</span>);
 </code></pre><div class="comment"><p></p></div></div><div class="pair"><pre><code class="hljs code language-javascript">}
@@ -141,7 +296,7 @@
 <p>Зверніть увагу, що в прикладі використано коментарі, які пояснюють, що саме відбувається в коді. Ці коментарі розташовані збоку від коду (вигляд може відрізнятися залежно від способу читання книги). Фонове виділення візуально групує коментарі з відповідними рядками коду.</p>
 <h3 id="complete-snippets"><a class="heading-link" href="#complete-snippets"><strong>Завершені фрагменти</strong></a></h3>
 <p>Хоч і зрідка, але «завершені» блоки коду трапляються в основному тексті. Іноді, як у зразку «Приклад #.#» вище, я можу навести весь код повноцінного скетчу p5.js. Проте здебільшого під «завершеним» фрагментом я маю на увазі код цілої функції або класу&nbsp;— повністю сформований блок коду з відкривальною та закривальною фігурними дужками й усім, що між ними. Щось на зразок цього:</p>
-<div class="codesplit callout not-prose" data-code-language="javascript"><div class="pair split"><pre><code class="hljs code language-javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">draw</span>(<span class="hljs-params"></span>) {
+<div class="codesplit callout not-prose overflow-visible pt-0" data-code-language="javascript"><div class="codesplit-header flex items-start justify-between"><div class="ml-auto hidden sm:flex"><button type="button" class="copy-btn first-letter relative flex items-center rounded px-2.5 py-1.5 text-xs font-semibold text-gray-700 hover:bg-gray-300"><div class="copied-badge pointer-events-none absolute inset-0 flex items-center justify-center rounded bg-noc-400 text-white transition-opacity opacity-0">Скопійовано!</div><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" class="h-4 w-4" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M7 6V3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-3v3c0 .552-.45 1-1.007 1H4.007A1.001 1.001 0 0 1 3 21l.003-14c0-.552.45-1 1.007-1H7zM5.003 8L5 20h10V8H5.003zM9 6h8v10h2V4H9v2z"></path></svg><span class="ml-1">Копіювати</span></button></div></div><div class="pair split"><pre><code class="hljs code language-javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">draw</span>(<span class="hljs-params"></span>) {
   <span class="hljs-title function_">background</span>(<span class="hljs-number">255</span>);
   <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> x = <span class="hljs-number">0</span>; x &lt; width; x += spacing) {
     <span class="hljs-title function_">fill</span>(<span class="hljs-number">255</span>);
@@ -152,31 +307,31 @@
 <p>Цей фрагмент демонструє всю функцію <code>draw()</code>, але це все одно не повний скетч. Він передбачає існування глобальної змінної <code>spacing</code>, а також функції <code>setup()</code>, що викликає <code>createCanvas()</code>.</p>
 <h3 id="context-free-code"><a class="heading-link" href="#context-free-code"><strong>Контекстно-незалежний код</strong></a></h3>
 <p>Час від часу на сторінці трапляються окремі рядки коду без навколишньої функції чи контексту. Такі фрагменти наведено для ілюстрації певної думки, і вони не обов’язково мають запускатися «як є». Вони можуть представляти концепцію, крихітну частину алгоритму або прийом програмування:</p>
-<div class="codesplit callout not-prose" data-code-language="javascript"><div class="pair split"><pre><code class="hljs code language-javascript">    <span class="hljs-title function_">fill</span>(<span class="hljs-number">240</span>, <span class="hljs-number">99</span>, <span class="hljs-number">164</span>);
+<div class="codesplit callout not-prose overflow-visible pt-0" data-code-language="javascript"><div class="codesplit-header flex items-start justify-between"><div class="ml-auto hidden sm:flex"><button type="button" class="copy-btn first-letter relative flex items-center rounded px-2.5 py-1.5 text-xs font-semibold text-gray-700 hover:bg-gray-300"><div class="copied-badge pointer-events-none absolute inset-0 flex items-center justify-center rounded bg-noc-400 text-white transition-opacity opacity-0">Скопійовано!</div><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" class="h-4 w-4" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M7 6V3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-3v3c0 .552-.45 1-1.007 1H4.007A1.001 1.001 0 0 1 3 21l.003-14c0-.552.45-1 1.007-1H7zM5.003 8L5 20h10V8H5.003zM9 6h8v10h2V4H9v2z"></path></svg><span class="ml-1">Копіювати</span></button></div></div><div class="pair split"><pre><code class="hljs code language-javascript">    <span class="hljs-title function_">fill</span>(<span class="hljs-number">240</span>, <span class="hljs-number">99</span>, <span class="hljs-number">164</span>);
 </code></pre><div class="comment"><p>RGB-значення, аби зробити круги рожевими.</p></div></div></div>
 <p>Зверніть увагу: цей контекстно-незалежний фрагмент повторює відступ рядка <code>fill(255)</code> із попереднього «завершеного» фрагмента. Я роблю так, коли цей код є частиною того, що вже демонструвалося раніше. Звісно, це не завжди виходитиме настільки охайно й бездоганно, але я дуже стараюся!</p>
 <h3 id="snipped-code"><a class="heading-link" href="#snipped-code"><strong>Обрізані фрагменти коду</strong></a></h3>
 <p>Пильнуйте ножиці! Цей елемент оформлення вказує на те, що фрагмент коду є продовженням попередньої частини або продовжуватиметься після кількох пояснювальних речень. Іноді код насправді не продовжується далі, а просто обрізаний, бо решта рядків не стосується поточної теми. Ножиці ніби промовляють: «Гей, до цього коду може бути продовження вище або нижче, чи принаймні це частина чогось більшого!» Ось як це виглядає разом із пояснювальним текстом:</p>
 <p>Перший крок у створенні скетчу p5.js&nbsp;— сформувати полотно:</p>
 <div class="snip-below">
-  <div class="codesplit callout not-prose" data-code-language="javascript"><div class="pair"><pre><code class="hljs code language-javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">setup</span>(<span class="hljs-params"></span>) {
+  <div class="codesplit callout not-prose overflow-visible pt-0" data-code-language="javascript"><div class="codesplit-header flex items-start justify-between"><div class="ml-auto hidden sm:flex"><button type="button" class="copy-btn first-letter relative flex items-center rounded px-2.5 py-1.5 text-xs font-semibold text-gray-700 hover:bg-gray-300"><div class="copied-badge pointer-events-none absolute inset-0 flex items-center justify-center rounded bg-noc-400 text-white transition-opacity opacity-0">Скопійовано!</div><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" class="h-4 w-4" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M7 6V3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-3v3c0 .552-.45 1-1.007 1H4.007A1.001 1.001 0 0 1 3 21l.003-14c0-.552.45-1 1.007-1H7zM5.003 8L5 20h10V8H5.003zM9 6h8v10h2V4H9v2z"></path></svg><span class="ml-1">Копіювати</span></button></div></div><div class="pair"><pre><code class="hljs code language-javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">setup</span>(<span class="hljs-params"></span>) {
 </code></pre><div class="comment"><p></p></div></div><div class="pair"><pre><code class="hljs code language-javascript">  <span class="hljs-title function_">createCanvas</span>(<span class="hljs-number">640</span>, <span class="hljs-number">240</span>);
 </code></pre><div class="comment"><p></p></div></div></div>
 </div>
 <p>Потім час залити тло:</p>
 <div class="snip-above snip-below">
-  <div class="codesplit callout not-prose" data-code-language="javascript"><div class="pair"><pre><code class="hljs code language-javascript">  <span class="hljs-title function_">background</span>(<span class="hljs-number">255</span>);
+  <div class="codesplit callout not-prose overflow-visible pt-0" data-code-language="javascript"><div class="codesplit-header flex items-start justify-between"><div class="ml-auto hidden sm:flex"><button type="button" class="copy-btn first-letter relative flex items-center rounded px-2.5 py-1.5 text-xs font-semibold text-gray-700 hover:bg-gray-300"><div class="copied-badge pointer-events-none absolute inset-0 flex items-center justify-center rounded bg-noc-400 text-white transition-opacity opacity-0">Скопійовано!</div><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" class="h-4 w-4" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M7 6V3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-3v3c0 .552-.45 1-1.007 1H4.007A1.001 1.001 0 0 1 3 21l.003-14c0-.552.45-1 1.007-1H7zM5.003 8L5 20h10V8H5.003zM9 6h8v10h2V4H9v2z"></path></svg><span class="ml-1">Копіювати</span></button></div></div><div class="pair"><pre><code class="hljs code language-javascript">  <span class="hljs-title function_">background</span>(<span class="hljs-number">255</span>);
 </code></pre><div class="comment"><p></p></div></div></div>
 </div>
 <p>Також мені подобається додавати круг у центрі полотна:</p>
 <div class="snip-above">
-  <div class="codesplit callout not-prose" data-code-language="javascript"><div class="pair"><pre><code class="hljs code language-javascript">  <span class="hljs-title function_">circle</span>(width / <span class="hljs-number">2</span>, height / <span class="hljs-number">2</span>, <span class="hljs-number">200</span>);
+  <div class="codesplit callout not-prose overflow-visible pt-0" data-code-language="javascript"><div class="codesplit-header flex items-start justify-between"><div class="ml-auto hidden sm:flex"><button type="button" class="copy-btn first-letter relative flex items-center rounded px-2.5 py-1.5 text-xs font-semibold text-gray-700 hover:bg-gray-300"><div class="copied-badge pointer-events-none absolute inset-0 flex items-center justify-center rounded bg-noc-400 text-white transition-opacity opacity-0">Скопійовано!</div><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" class="h-4 w-4" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M7 6V3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-3v3c0 .552-.45 1-1.007 1H4.007A1.001 1.001 0 0 1 3 21l.003-14c0-.552.45-1 1.007-1H7zM5.003 8L5 20h10V8H5.003zM9 6h8v10h2V4H9v2z"></path></svg><span class="ml-1">Копіювати</span></button></div></div><div class="pair"><pre><code class="hljs code language-javascript">  <span class="hljs-title function_">circle</span>(width / <span class="hljs-number">2</span>, height / <span class="hljs-number">2</span>, <span class="hljs-number">200</span>);
 </code></pre><div class="comment"><p></p></div></div><div class="pair"><pre><code class="hljs code language-javascript">}
 </code></pre><div class="comment"><p></p></div></div></div>
 </div>
 <p>Усередині <code>draw()</code> я, можливо, захочу розміщувати квадрати у випадкових точках поверх тла й нерухомого круга. Решта коду може бути абсолютно будь-якою!</p>
 <div class="snip-below">
-  <div class="codesplit callout not-prose" data-code-language="javascript"><div class="pair"><pre><code class="hljs code language-javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">draw</span>(<span class="hljs-params"></span>) {
+  <div class="codesplit callout not-prose overflow-visible pt-0" data-code-language="javascript"><div class="codesplit-header flex items-start justify-between"><div class="ml-auto hidden sm:flex"><button type="button" class="copy-btn first-letter relative flex items-center rounded px-2.5 py-1.5 text-xs font-semibold text-gray-700 hover:bg-gray-300"><div class="copied-badge pointer-events-none absolute inset-0 flex items-center justify-center rounded bg-noc-400 text-white transition-opacity opacity-0">Скопійовано!</div><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" class="h-4 w-4" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M7 6V3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-3v3c0 .552-.45 1-1.007 1H4.007A1.001 1.001 0 0 1 3 21l.003-14c0-.552.45-1 1.007-1H7zM5.003 8L5 20h10V8H5.003zM9 6h8v10h2V4H9v2z"></path></svg><span class="ml-1">Копіювати</span></button></div></div><div class="pair"><pre><code class="hljs code language-javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">draw</span>(<span class="hljs-params"></span>) {
 </code></pre><div class="comment"><p></p></div></div><div class="pair"><pre><code class="hljs code language-javascript">  <span class="hljs-title function_">rectMode</span>(<span class="hljs-variable constant_">CENTER</span>);
 </code></pre><div class="comment"><p></p></div></div><div class="pair"><pre><code class="hljs code language-javascript">  <span class="hljs-title function_">square</span>(<span class="hljs-title function_">random</span>(width), <span class="hljs-title function_">random</span>(height), <span class="hljs-number">20</span>);
 </code></pre><div class="comment"><p></p></div></div></div>
@@ -185,13 +340,13 @@
 <p>Характерним побічним ефектом таких обрізаних фрагментів є те, що відкривальна фігурна дужка в одному блоці часто знаходить відповідну закривальну дужку лише через кілька фрагментів (якщо знаходить узагалі). Якщо ви звикли бачити цілісний код JavaScript, це спочатку може викликати легку паніку, але, сподіваюся, ви звикнете.</p>
 <h2 id="exercises"><a class="heading-link" href="#exercises">Вправи</a></h2>
 <p>Кожен розділ містить пронумеровані вправи, які слугують вашим ігровим майданчиком для застосування, експериментів та виходу за межі концепцій і коду, поданих у тексті. Ось який вигляд може мати вправа:</p>
-<div data-type="exercise" class="callout">
+<div data-type="exercise" class="callout relative">
   <h3 id="exercise-"><a class="heading-link" href="#exercise-">Вправа #.#</a></h3>
   <p>Спробуйте підкоригувати Приклад #.# так, щоб кожен круг мав випадковий розмір:</p>
-  <div class="codesplit callout not-prose" data-code-language="javascript"><div class="pair"><pre><code class="hljs code language-javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">draw</span>(<span class="hljs-params"></span>) {
+  <div class="codesplit callout not-prose overflow-visible pt-0" data-code-language="javascript"><div class="codesplit-header flex items-start justify-between"><div class="ml-auto hidden sm:flex"><button type="button" class="reveal-btn flex items-center rounded px-2.5 py-1.5 text-xs font-semibold text-gray-700 hover:bg-gray-300"><svg class="eye-open h-4 w-4" stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg><svg class="eye-off hidden h-4 w-4" stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path></svg><span class="ml-1 reveal-btn-title">Показати відповідь</span></button><button type="button" class="copy-btn first-letter relative flex items-center rounded px-2.5 py-1.5 text-xs font-semibold cursor-not-allowed text-gray-400"><div class="copied-badge pointer-events-none absolute inset-0 flex items-center justify-center rounded bg-noc-400 text-white transition-opacity opacity-0">Скопійовано!</div><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" class="h-4 w-4" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M7 6V3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-3v3c0 .552-.45 1-1.007 1H4.007A1.001 1.001 0 0 1 3 21l.003-14c0-.552.45-1 1.007-1H7zM5.003 8L5 20h10V8H5.003zM9 6h8v10h2V4H9v2z"></path></svg><span class="ml-1">Копіювати</span></button></div></div><div class="pair"><pre><code class="hljs code language-javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">draw</span>(<span class="hljs-params"></span>) {
 </code></pre><div class="comment"><p></p></div></div><div class="pair"><pre><code class="hljs code language-javascript">  <span class="hljs-title function_">fill</span>(<span class="hljs-number">0</span>, <span class="hljs-number">25</span>);
 </code></pre><div class="comment"><p></p></div></div><div class="pair"><pre><code class="hljs code language-javascript">  <span class="hljs-title function_">stroke</span>(<span class="hljs-number">0</span>, <span class="hljs-number">50</span>);
-</code></pre><div class="comment"><p></p></div></div><div class="pair"><pre><code class="hljs code language-javascript">  <span class="hljs-title function_">circle</span>(<span class="hljs-title function_">random</span>(width), <span class="hljs-title function_">random</span>(height), <span class="hljs-title function_">random</span>(<span class="hljs-number">16</span>, <span class="hljs-number">64</span>));
+</code></pre><div class="comment"><p></p></div></div><div class="pair"><pre><code class="hljs code language-javascript">  <span class="hljs-title function_">circle</span>(<span class="hljs-title function_">random</span>(width), <span class="hljs-title function_">random</span>(height), <span class="blank"><span class="hljs-title function_">random</span>(<span class="hljs-number">16</span>, <span class="hljs-number">64</span>)</span>);
 </code></pre><div class="comment"><p></p></div></div><div class="pair"><pre><code class="hljs code language-javascript">}
 </code></pre><div class="comment"><p></p></div></div></div>
 </div>
@@ -206,6 +361,17 @@
 <p>Я вважаю онлайн-версію цієї книги живим документом і радо чекаю на ваші відгуки. З будь-яких питань щодо книги, будь ласка, <a href="https://natureofcode.com/" target="_blank" rel="noopener">відвідайте вебсайт Nature of Code</a>. <a href="https://github.com/nature-of-code" target="_blank" rel="noopener">Початковий текст книги та всі ілюстрації викладено на GitHub</a>. Будь ласка, <a href="https://github.com/nature-of-code/noc-book-2/issues" target="_blank" rel="noopener">залишайте відгуки та надсилайте виправлення через GitHub Issues</a>.</p>
 <p>А найголовніше&nbsp;— я хочу побачити те, що ви створите! Ви можете поділитися своїми напрацюваннями, <a href="https://thecodingtrain.com/showcase" target="_blank" rel="noopener">надіславши їх на пасажирську вітрину проєктів (passenger showcase) на сайті The Coding Train</a> або в каналах згаданого вище сервера Discord. Привітанню в коментарях на YouTube я завжди радий (хоча, якщо чесно, коментарі на YouTube часто краще взагалі не читати), і сміливо тегайте мене на будь-якій платформі, яку запропонує нам майбутнє соціальних мереж&nbsp;— головне, найпривітнішій і найменш токсичній! Я прагну насолодитися всіма блупами, що плаватимуть у вашій екосистемі. Незалежно від того, чи вони тріумфально здійматимуться над хвилею творчості, чи здійматимуть крихітні бризки у ставку навчання&nbsp;— нумо ніжитися в колах, які вони розсилають по самій природі коду!</p>
 </section>
-<hr/><section class="not-prose flex w-full justify-between"><div><a class="group block" href="/acknowledgements.html"><p class="text-gray-500">Попередній розділ</p><span class="text-lg font-semibold group-hover:underline">← <!-- -->Подяки</span></a></div><div><a class="group block text-right" href="./random.html"><p class="text-gray-500">Наступний розділ</p><span class="text-lg font-semibold group-hover:underline">0. Випадковість<!-- --> →</span></a></div></section></main></div></div></div><div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div></div>
+
+
+          <hr/>
+          <section class="not-prose flex w-full justify-between"><div><a class="group block" href="./acknowledgements.html"><p class="text-gray-500">Попередній розділ</p><span class="text-lg font-semibold group-hover:underline">← Подяки</span></a></div><div><a class="group block text-right" href="./random.html"><p class="text-gray-500">Наступний розділ</p><span class="text-lg font-semibold group-hover:underline">0. Випадковість →</span></a></div></section>
+        </main>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script src="./assets/js/main.js"></script>
-</body></html>
+
+</body>
+</html>
