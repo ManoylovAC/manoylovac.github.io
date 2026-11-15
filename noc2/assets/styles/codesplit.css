@@ -24,6 +24,22 @@
   @apply w-full overflow-x-auto px-5;
 }
 
+.pair > pre > code.code-strikethrough {
+  @apply block bg-transparent p-0 text-sm leading-5;
+}
+
+.pair > pre > code.code-bold,
+.pair.bold > pre > code,
+.codesplit pre code strong,
+.codesplit pre code strong * {
+  @apply font-bold;
+}
+
+.codesplit pre code s,
+.codesplit pre code s * {
+  @apply line-through;
+}
+
 .pair.split {
   @apply border-noc-200 my-1 flex flex-col-reverse flex-wrap justify-between gap-x-8 gap-y-2 border-l-2 bg-gray-200 py-2 lg:flex-row lg:flex-wrap-reverse;
 }
