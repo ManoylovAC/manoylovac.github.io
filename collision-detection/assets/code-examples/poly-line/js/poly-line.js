@@ -36,7 +36,7 @@ function draw() {
   y1 = mouseY;
 
   // результат перевірки на зіткнення
-  const isHit = isPolyWithLineCollides(vertices, x1, y1, x2, y2);
+  const isHit = collidePolyLine(vertices, x1, y1, x2, y2);
   // при зіткненні змінюємо колір
   if (isHit) fill(255, 150, 0);
   else fill(0, 150, 255);
@@ -55,7 +55,7 @@ function draw() {
 }
 
 // перевірка на перетин між багатокутником та лінією
-function isPolyWithLineCollides(vertices, x1, y1, x2, y2) {
+function collidePolyLine(vertices, x1, y1, x2, y2) {
   // перебір кожної вершини з використанням наступної вершини в списку
   let next = 0;
   for (let current = 0; current < vertices.length; current++) {
@@ -75,7 +75,7 @@ function isPolyWithLineCollides(vertices, x1, y1, x2, y2) {
 
     // перевірка перетину лінії з лінією
     // якщо є, тоді одразу повертаємо 'true', щоб зупинити інші перевірки
-    const isHit = isLineWithLineCollides(x1, y1, x2, y2, x3, y3, x4, y4);
+    const isHit = collideLineLine(x1, y1, x2, y2, x3, y3, x4, y4);
     if (isHit) {
       return true;
     }
@@ -86,7 +86,7 @@ function isPolyWithLineCollides(vertices, x1, y1, x2, y2) {
 }
 
 // перевірка на перетин між лінією та кругом
-function isLineWithLineCollides(x1, y1, x2, y2, x3, y3, x4, y4) {
+function collideLineLine(x1, y1, x2, y2, x3, y3, x4, y4) {
   // розрахунок напрямку ліній
   const uA = ((x4-x3)*(y1-y3) - (y4-y3)*(x1-x3)) / ((y4-y3)*(x2-x1) - (x4-x3)*(y2-y1));
   const uB = ((x2-x1)*(y1-y3) - (y2-y1)*(x1-x3)) / ((y4-y3)*(x2-x1) - (x4-x3)*(y2-y1));

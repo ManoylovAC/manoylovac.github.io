@@ -1,153 +1,183 @@
 <!DOCTYPE html>
-<html>
+<html lang="uk">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/png" href="./assets/images/graphics/favicon.png">
-    <meta name="description" content="An online book about collision detection using p5js, онлайн-книга про виявлення зіткнень за допомогою p5js">
-    <meta name="keywords" content="collision, interactive, зіткнення, інтерактивні приклади зіткнень, перевірка на зіткнення фігурами, зіткнення, ітерактивні приклади">
-    <title>Виявлення зіткнень: вступ</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/png" href="./assets/images/graphics/favicon.png">
+  <meta name="description" content="Інтерактивний онлайн-посібник із виявлення зіткнень (Collision Detection) у p5.js: алгоритми для точок, кругів, прямокутників, ліній та багатокутників.">
+  <meta name="keywords" content="collision detection, interactive, зіткнення, інтерактивні приклади зіткнень, перевірка зіткнень фігур, p5.js">
+  <title>Виявлення зіткнень: вступ</title>
 
-    <!-- FONTS AND CSS -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400..700&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
-    <link href="./assets/css/stylesheet.css" rel="stylesheet" type="text/css">
+  <!-- FONTS AND CSS -->
+  <link href="./assets/css/stylesheet.css" rel="stylesheet" type="text/css">
 
-    <!-- additional behaviour -->
-    <script src="./assets/js/main.js"></script>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-46TNRV0VFR"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-46TNRV0VFR');
-    </script>
-    <script src="./assets/js/main.js"></script>
+  <!-- additional behaviour -->
+  <script src="./assets/js/main.js"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-46TNRV0VFR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-46TNRV0VFR');
+  </script>
 </head>
 
 <body>
-<div id="wrapper">
+  <div id="wrapper">
     <header class="navigation">
-        <span id="title" style="margin: auto">
-            <a id="navigation-title"
-               class="navigation-title inline-link bg-blue"
-               data-curr-title="Виявлення зіткнень"
-               href="table-of-contents.html"
-            >Виявлення зіткнень</a>
-        </span>
+      <span id="title" style="margin: auto">
+        <a
+          id="navigation-title"
+          class="navigation-title inline-link bg-blue"
+          data-curr-title="Виявлення зіткнень"
+          href="table-of-contents.html"
+        >Виявлення зіткнень</a>
+      </span>
     </header>
 
     <iframe class="w-full canvas" style="aspect-ratio:2/1" loading="lazy" src="./assets/code-examples/introduction/"></iframe>
 
     <h1 class="uppercase">Виявлення зіткнень</h1>
 
-    <h4>Автор: Jeff Thompson.</h4>
-    <h4>Переклад: Манойлов Андрій.</h4>
+    <h4>Автор: Джефф Томпсон (Jeff Thompson)</h4>
+    <h4>Переклад та адаптація для p5.js: Андрій Манойлов</h4>
 
     <p>
-        Зіткнення об’єктів лежить в основі більшості ігрових подій та користувацьких інтерфейсів. Більярдні кийки
-        стикаються з більярдними кулями, зомбі врізаються у стіни, а Маріо приземляється на платформи й топче черепах.
-        Навіть щось таке просте, як натискання кнопки (прямокутник) курсором (точка), є зіткненням.
+      Зіткнення об’єктів лежить в основі більшості ігрових подій та
+      користувацьких інтерфейсів. Більярдні киї б’ють по кулях, зомбі
+      врізаються у стіни, а Маріо приземляється на платформи й стрибає на
+      черепах. Навіть така звична дія, як натискання кнопки (прямокутник)
+      курсором миші (точка),&nbsp;— це теж виявлення зіткнення.
     </p>
 
     <p>
-        У цій книзі пояснюються алгоритми, що стоять за цими зіткненнями, на прикладі використання базових фігур, таких
-        як круги, прямокутники та лінії, щоб ви могли застосувати їх у своїх власних проєктах.
+      У цій книзі крок за кроком пояснюються алгоритми, що стоять за такими
+      перевірками. Ми почнемо з найпростіших геометричних форм&nbsp;— точок,
+      кругів, прямокутників і відрізків,&nbsp;— а згодом перейдемо до складних
+      багатокутників, щоб ви могли впевнено застосовувати ці ідеї у власних
+      іграх та творчих проєктах.
     </p>
 
     <p class="callout">
-        Цей переклад має частково оновлені сторінки та перероблені приклади коду з використанням
-        <span class="code"><a class="inline-link" href="https://p5js.org/" target="_blank">p5.js</a></span>.
-        Якщо у вас виникли проблеми при користуванні сайтом чи пропозиції, будь ласка,
-        <a class="inline-link" href="https://github.com/ManoylovAC/manoylovac.github.io/issues" target="_blank">опублікуйте їх у репозиторії перекладу проєкту</a>.
-        <br><br>
-        Оригінальну книгу та код до неї ви можете знайти за наступними посиланнями:
-        <a class="inline-link" href="https://www.jeffreythompson.org/collision-detection" target="_blank">сайт книги</a>,
-        <a class="inline-link" href="https://github.com/jeffThompson/CollisionDetection" target="_blank">вихідний код книги та прикладів.</a>
+      Цей український посібник містить розширені пояснення та повністю
+      перероблені приклади коду з використанням бібліотеки
+      <a class="inline-link" href="https://p5js.org/" target="_blank">p5.js</a>.
+      Якщо під час читання у вас виникли запитання або є пропозиції щодо
+      покращення тексту чи коду, будь ласка,
+      <a class="inline-link" href="https://github.com/ManoylovAC/manoylovac.github.io/issues" target="_blank">напишіть про це в репозиторії перекладу проєкту</a>.
+      <br><br>
+      Оригінальну англомовну книгу (на Processing) та її код можна знайти тут:
+      <a class="inline-link no-wrap" href="https://www.jeffreythompson.org/collision-detection" target="_blank">сайт оригінальної книги</a>,
+      <a class="inline-link no-wrap" href="https://github.com/jeffThompson/CollisionDetection" target="_blank">вихідний код оригіналу</a>.
     </p>
 
     <p class="callout bg-yellow">
-        Приклади коду на <span class="code">p5js</span> ви можете знайти в
-        <a class="inline-link" href="https://github.com/ManoylovAC/manoylovac.github.io/tree/master/collision-detection/assets/code-examples" target="_blank">поточному репозиторії</a>
-        <br>
-        <br>
-        Інші мої онлайн-переклади можна знайти за адресою
-        <a class="inline-link" href="https://manoylovac.github.io/index.html">https://manoylovac.github.io</a>
+      Усі інтерактивні приклади коду на p5.js зібрані в
+      <a class="inline-link" href="https://github.com/ManoylovAC/manoylovac.github.io/tree/master/collision-detection/assets/code-examples" target="_blank">поточному репозиторії</a>.
+      <br><br>
+      Інші мої українські онлайн-переклади доступні на сторінці
+      <a class="inline-link" href="https://manoylovac.github.io/index.html">https://manoylovac.github.io</a>.
     </p>
 
     <p>
-        Якщо ви готові почати, тоді можете сміливо переходити до <a class="inline-link" href="./table-of-contents.html">Змісту</a>
+      Якщо вам уже кортить почати, сміливо переходьте до
+      <a class="inline-link" href="./table-of-contents.html">Змісту</a>!
     </p>
 
     <h2 class="uppercase">Що тут розглядається?</h2>
     <p>
-        Ця книга розглядає зіткнення між точками, кругами, прямокутниками, лініями, багатокутниками та трикутниками. Ці
-        приклади мають бути максимально доступними та зрозумілими. Безумовно, існують швидші та ефективніші способи
-        виявлення цих зіткнень, але ця книга націлена бути дружнього та викладати відповідні принципи з використанням
-        простої математики.
+      Посібник охоплює перевірку зіткнень між точками, кругами, прямокутниками,
+      лініями, багатокутниками та трикутниками. Головна мета книги&nbsp;— бути
+      максимально доступною, наочною і дружньою до початківців. Звісно, у
+      професійних фізичних рушіях існують ще швидші спеціалізовані алгоритми,
+      проте тут ми розбираємо фундаментальні принципи за допомогою зрозумілої
+      шкільної геометрії та живої візуалізації.
     </p>
 
     <p>
-        Кожен розділ містить опис алгоритму зіткнення (колізії) та інтерактивний приклад, створений за допомогою
-        <span class="code"><a class="inline-link" href="https://p5js.org/" target="_blank">p5.js</a></span>.
-        Ви можете переглянути
-        <a class="inline-link" href="https://github.com/ManoylovAC/manoylovac.github.io/tree/master/collision-detection" target="_blank">вихідний код</a>
-        для всіх прикладів разом з цією книгою на GitHub.
+      Кожен розділ містить інтуїтивне пояснення алгоритму, покроковий розбір
+      формули та інтерактивний приклад на
+      <span class="code-link"><a class="inline-link" href="https://p5js.org/" target="_blank">p5.js</a></span>,
+      з яким можна одразу поекспериментувати. Повний
+      <a class="inline-link" href="https://github.com/ManoylovAC/manoylovac.github.io/tree/master/collision-detection" target="_blank">вихідний код</a>
+      усіх демонстрацій відкритий на GitHub.
     </p>
 
     <p class="callout">
-        <strong class="uppercase">Примітка!</strong> Якщо на мобільному пристрої у вас чомусь не спрацьовують інтерактивні
-        приклади, спробуйте сайт на комп’ютері.
+      <strong class="uppercase">Примітка!</strong> Інтерактивні сцени керуються
+      курсором миші. Якщо на мобільному пристрої приклади реагують не так, як
+      очікувалося, раджу відкрити посібник на комп’ютері.
     </p>
 
-    <h2 class="uppercase">Що тут не розглядається?</h2>
+    <h2 class="uppercase">Що залишається поза межами книги?</h2>
     <p>
-        Як і в будь-якій книзі, у даній тематиці набагато більше корисного матеріалу, ніж можна було б висвітлити. Деякі
-        речі не обговорюються і залишаються поза увагою, оскільки їх математика стає надто складною. Тривимірний простір тут
-        не зачіпається. Колізії еліпсів, які здаються досить легкими, насправді дуже складні.
+      Тема виявлення зіткнень неосяжна, тому деякі речі залишаються поза увагою,
+      оскільки математичні розрахунки для них стають занадто складними. Зокрема,
+      ми не буемо розглядати тривимірний простір (3D). Також тут немає прикладів
+      точного перетину довільних еліпсів: хоча еліпс здається схожим на круг,
+      через різний радіус уздовж осей його точна математика потребує розв’язання
+      рівнянь четвертого степеня. Отже зіткнення еліпсів, які на перший погляд
+      здаються простими, насправді значно складніші у розрахунках.
     </p>
 
     <p>
-        Якщо існує конкретна колізія, яка тут не охоплена, і яка може бути корисною, надішліть відповідний
-        <a class="inline-link" href="https://github.com/jeffThompson/CollisionDetection/issues" target="_blank">запит автору оригінальної книги</a>
-        або, ще краще, надішліть робочий приклад, який ви створили! Якщо ви маєте корисний тематичний матеріал, який
-        підходить до даної книги, тоді я додам його до даного перекладу.
+      Також варто розрізняти <em>виявлення</em> зіткнення (відповідь на
+      питання «чи торкнулися об’єкти?») та <em>фізичну реакцію</em> на нього
+      («під яким кутом і з якою швидкістю вони мають відскочити?»). Ця книга
+      присвячена саме першому кроку&nbsp;— надійному виявленню моменту контакту.
     </p>
 
-    <h2 class="uppercase">Помітили проблему?</h2>
     <p>
-        Якщо ви знайшли код, що виконується неправильно, алгоритм, який не зовсім коректно пояснено, або помилку, будь
-        ласка, <a class="inline-link" href="https://github.com/ManoylovAC/manoylovac.github.io/issues" target="_blank">повідомте про це в
-        GitHub-репозиторії цього проєкту</a>. Дякую за допомогу!
+      Якщо ви знаєте цікавий випадок зіткнення, який варто додати, можете
+      надіслати
+      <a class="inline-link" href="https://github.com/jeffThompson/CollisionDetection/issues" target="_blank">ідею автору оригіналу</a>
+      або поділитися власним прикладом у репозиторії цього перекладу&nbsp;— я з
+      радістю доповню посібник!
+    </p>
+
+    <h2 class="uppercase">Помітили неточність?</h2>
+    <p>
+      Якщо ви знайшли помилку в коді, нечітке пояснення або одруківку, будь
+      ласка,
+      <a class="inline-link" href="https://github.com/ManoylovAC/manoylovac.github.io/issues" target="_blank">повідомте про це в GitHub-репозиторії проєкту</a>.
+      Щиро дякую за допомогу!
     </p>
 
     <h2 class="uppercase">Навігація</h2>
     <p>
-        Добре, напишемо трохи коду! Щоб перейти до наступного розділу натисніть посилання внизу сторінки або скористайтеся
-        стрілками вгорі. Посилання на <a class="inline-link" href="./table-of-contents.html">зміст книги</a> з виявлення зіткнень
-        завжди можна знайти у верхній частині сторінки.
+      Час перейти до практики! Щоб рухатися розділами, натискайте посилання
+      внизу сторінки або користуйтеся стрілками навігації вгорі. Повернутися до
+      <a class="inline-link" href="./table-of-contents.html">повного змісту книги</a>
+      можна будь-якої миті, натиснувши синю плашку «Виявлення зіткнень» у
+      верхній частині екрана.
     </p>
 
-    <a href="./table-of-contents.html"><p class="nextPage">Далі: Зміст</p></a>
+    <a href="./table-of-contents.html">
+      <p class="nextPage">Далі: Зміст</p>
+    </a>
 
     <footer>
-        <p>
-            [
-            <a class="inline-link" href="./index.html">вступ</a>,
-            <a class="inline-link" href="https://github.com/jeffThompson/CollisionDetection" target="_blank">оригінальне джерело</a>
-            ]
-        </p>
+      <p>
+        [
+        <a class="inline-link" href="./index.html">вступ</a>,
+        <a class="inline-link" href="https://github.com/jeffThompson/CollisionDetection" target="_blank">оригінальне джерело</a>
+        ]
+      </p>
 
-        <p class="license">
-            <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
-                <img id="license" class="license" alt="Creative Commons License" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png">
-            </a>
-        </p>
+      <p class="license">
+        <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+          <img
+            id="license"
+            class="license"
+            alt="Creative Commons License"
+            src="./assets/images/graphics/by-nc-sa.svg""
+          >
+        </a>
+      </p>
     </footer>
-
-</div>
+  </div>
 </body>
+
 </html>

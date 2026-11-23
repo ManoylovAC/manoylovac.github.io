@@ -1,51 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html lang="uk">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/png" href="./assets/images/graphics/favicon.png">
-    <meta name="description" content="An online book about collision detection using p5js, онлайн-книга про виявлення зіткнень за допомогою p5js">
-    <meta name="keywords" content="Line with rectangle collision, interactive collision, перевірка на зіткнення між лінією і прямокутником, зіткнення, ітерактивні приклади">
-    <title>Виявлення зіткнень: лінія і прямокутник</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/png" href="./assets/images/graphics/favicon.png">
+  <meta name="description" content="Виявлення зіткнення лінії та прямокутника (Line-Rectangle Collision) у p5.js: перевірка перетину з чотирма сторонами та пряма видимість (Line of Sight).">
+  <meta name="keywords" content="line with rectangle collision, line of sight, interactive collision, перевірка зіткнення лінії і прямокутника, пряма видимість, інтерактивні приклади, p5.js">
+  <title>Виявлення зіткнень: Лінія і Прямокутник</title>
 
-    <!-- FONTS AND CSS -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400..700&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
-    <link href="./assets/css/stylesheet.css" rel="stylesheet" type="text/css">
+  <!-- FONTS AND CSS -->
+  <link href="./assets/css/stylesheet.css" rel="stylesheet" type="text/css">
 
-    <!-- CODE PRETTIFY -->
-    <link href="./assets/css/obsidian.min.css" rel="stylesheet" type="text/css">
-    <script src="./assets/js/highlight.min.js"></script>
+  <!-- CODE PRETTIFY -->
+  <link href="./assets/css/obsidian.min.css" rel="stylesheet" type="text/css">
+  <script src="./assets/js/highlight.min.js"></script>
 
-    <!-- additional behaviour -->
-    <script src="./assets/js/main.js"></script>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-46TNRV0VFR"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-46TNRV0VFR');
-    </script>
-    <script src="./assets/js/main.js"></script>
+  <!-- additional behaviour -->
+  <script src="./assets/js/main.js"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-46TNRV0VFR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-46TNRV0VFR');
+  </script>
 </head>
 
 <body>
-<div id="wrapper">
+  <div id="wrapper">
     <header class="navigation">
-        <span id="prev"><a href="./line-line.html">←</a></span>
-        <span id="title">
-            <a id="navigation-title"
-               class="navigation-title inline-link bg-blue"
-               data-prev-title="Лінія і Лінія"
-               data-curr-title="Виявлення зіткнень"
-               data-next-title="Завдання 3"
-               href="table-of-contents.html"
-            >Виявлення зіткнень</a>
-        </span>
-        <span id="next"><a href="./section-3-challenges.html">→</a></span>
+      <span id="prev"><a href="./line-line.html">←</a></span>
+      <span id="title">
+        <a
+          id="navigation-title"
+          class="navigation-title inline-link bg-blue"
+          data-prev-title="Лінія і Лінія"
+          data-curr-title="Виявлення зіткнень"
+          data-next-title="Завдання 3"
+          href="table-of-contents.html"
+        >Виявлення зіткнень</a>
+      </span>
+      <span id="next"><a href="./section-3-challenges.html">→</a></span>
     </header>
 
     <iframe class="w-full canvas" style="aspect-ratio:2/1" loading="lazy" src="./assets/code-examples/line-rect/"></iframe>
@@ -53,127 +50,140 @@
     <h1 class="uppercase">Лінія і Прямокутник</h1>
 
     <p>
-        Насправді ми вже знаємо всю необхідну інформацію для того, щоб перевірити, чи лінія перетинається з прямокутником:
-        це лише 4 перевірки на зіткнення <a class="inline-link no-wrap" href="./line-line.html">лінії та лінії</a> – по одній
-        перевірці на кожну сторону прямокутника!
+      Гарна новина: ми вже знаємо все необхідне, щоб перевірити перетин лінії з
+      прямокутником! Адже контур будь-якого прямокутника складається з чотирьох
+      відрізків. Тому перевірка зводиться до чотирьох викликів функції
+      <a class="inline-link" href="./line-line.html">collideLineLine()</a>&nbsp;—
+      по одному для кожної сторони прямокутника!
     </p>
 
     <p>
-        Наприклад, лівий край квадрата починається в точці <span class="code">(rx, ry)</span>
-        і тягнеться вниз до <span class="code">ry + rh</span>. Ми можемо розглядати цю сторону як лінію і застосувати
-        алгоритм з попереднього розділу:
+      Наприклад, ліва стінка прямокутника починається у верхньому лівому куті
+      <span class="code">(rx, ry)</span> і спускається вертикально вниз до
+      нижнього лівого кута <span class="code">(rx, ry + rh)</span>. Перевірити
+      перетин нашої лінії з цією стінкою можна одним рядком:
     </p>
 
-    <pre><code class="language-js code-block">const isLeftCollides = isLineWithLineCollides(x1,y1,x2,y2, rx,ry, rx,ry+rh);
-</code></pre>
+    <pre><code class="language-js code-block">const collidesLeft = collideLineLine(x1, y1, x2, y2, rx, ry, rx, ry + rh);</code></pre>
 
-    <p>Для легшого сприйняття візуалізуємо цю частину:</p>
+    <p>Погляньте на схему, де прямокутник розкладено на чотири окремі відрізки:</p>
+
+    <img
+      src="./assets/images/line-rect.jpg"
+      alt="Поділ прямокутника на чотири сторони-відрізки"
+      title="Поділ прямокутника на чотири сторони-відрізки"
+    >
 
     <p>
-        <img src="./assets/images/line-rect.jpg" alt="Поділ прямокутника на чотири лінії" title="Поділ прямокутника на чотири лінії">
+      Запишемо таку саму перевірку для лівої, правої, верхньої та нижньої
+      сторін:
     </p>
+
+    <pre><code class="language-js code-block sm-txt">const collidesLeft   = collideLineLine(x1, y1, x2, y2, rx, ry, rx, ry + rh);
+const collidesRight  = collideLineLine(x1, y1, x2, y2, rx + rw, ry, rx + rw, ry + rh);
+const collidesTop    = collideLineLine(x1, y1, x2, y2, rx, ry, rx + rw, ry);
+const collidesBottom = collideLineLine(x1, y1, x2, y2, rx, ry + rh, rx + rw, ry + rh);</code></pre>
 
     <p>
-        Те ж саме робимо з іншими трьома сторонами:
+      Якщо <em>хоча б одна</em> з чотирьох сторін перетинається з нашою лінією,
+      повертаємо <span class="code">true</span>:
     </p>
 
-    <pre><code class="language-js code-block sm-txt">const isLeftCollides   = isLineWithLineCollides(x1,y1,x2,y2, rx,ry,rx, ry+rh);
-const isRightCollides  = isLineWithLineCollides(x1,y1,x2,y2, rx+rw,ry, rx+rw,ry+rh);
-const isTopCollides    = isLineWithLineCollides(x1,y1,x2,y2, rx,ry, rx+rw,ry);
-const isBottomCollides = isLineWithLineCollides(x1,y1,x2,y2, rx,ry+rh, rx+rw,ry+rh);
-</code></pre>
-
-    <p>
-        Якщо <em>будь-яке</em> з наведених вище тверджень вірне, тоді лінія перетинає прямокутник.
-    </p>
-
-    <pre><code class="language-js code-block">if (isLeftCollides || isRightCollides || isTopCollides || isBottomCollides) {
-    return true;
+    <pre><code class="language-js code-block">if (collidesLeft || collidesRight || collidesTop || collidesBottom) {
+  return true;
 }
 
-return false;
-</code></pre>
+return false;</code></pre>
 
-    <p>
-        Повний приклад наведено нижче. Зауважте, що червоні точки намальовані у функції перевірки перетину
-        <a class="inline-link" href="./line-line.html">лінії з лінією</a>, показуючи де лінія
-        перетинає прямокутник. Ви можете видалити їх із функції, якщо не хочете, щоб вони були у вашому проєкті.
+    <p class="callout">
+      <strong>Маленька деталь:</strong> а що, як короткий відрізок повністю
+      опиниться <em>всередині</em> великого прямокутника, не торкаючись жодної з
+      його чотирьох стінок? Якщо у вашій грі можлива така ситуація, достатньо
+      додати ще одну перевірку
+      <a class="inline-link" href="./point-rect.html">collidePointRect(x1, y1, rx, ry, rw, rh)</a>
+      для одного з кінців відрізка!
     </p>
 
-    <pre><code class="language-js code-block sm-txt">// змінні для відрізка з контрольованим кінцем
+    <p>
+      Повний приклад коду наведено нижче. Червоні точки, які малюються
+      всередині функції <a class="inline-link" href="./line-line.html">collideLineLine</a>, наочно показують,
+      у яких саме місцях лінія входить у прямокутник і виходить із нього. Якщо у вашому проєкті вони не потрбні, ви можете вимкнути їх у коді:
+    </p>
+
+    <pre><code class="language-js code-block">// координати відрізка з керованим кінцем
 let x1 = 0;
 let y1 = 0;
-let x2 = 20;
-let y2 = 20;
+const x2 = 20;
+const y2 = 20;
 
-// координати для квадрату
-let sx = 200;
-let sy = 100;
-// змінні для ширини й висоти квадрата
-let sw = 200;
-let sh = 200;
+// координати та розміри прямокутника
+let rx;
+let ry;
+const rw = 200;
+const rh = 200;
 
 function setup() {
   createCanvas(window.innerWidth, window.innerHeight);
-  strokeWeight(5); // збільшена жирність, щоб краще бачити лінії
+  strokeWeight(5); // товщина лінії для кращої видимості
 
-  // визначення положення координат для лівого верхнього кута, щоб квадрат був по центру полотна
-  sx = (width - sw) / 2;
-  sy = (height - sw) / 2;
+  // розміщуємо прямокутник по центру полотна
+  rx = (width - rw) / 2;
+  ry = (height - rh) / 2;
 }
 
 function draw() {
   background(255);
 
-  // оновлення координат кінця відрізка координатами курсора
+  // оновлюємо один кінець відрізка координатами курсора
   x1 = mouseX;
   y1 = mouseY;
 
-  // результат перевірки на зіткнення
-  const isHit = isLineWithRectCollides(x1,y1,x2,y2, sx,sy,sw,sh);
+  // перевіряємо перетин лінії з прямокутником
+  const isColliding = collideLineRect(x1, y1, x2, y2, rx, ry, rw, rh);
 
-  // зміна кольору при перетині
-  if (isHit) fill(255,150,0);
-  else fill(0,150,255);
+  // змінюємо колір прямокутника при перетині
+  if (isColliding) {
+    fill(255, 150, 0);
+  } else {
+    fill(0, 150, 255);
+  }
 
-  // малювання прямокутника
+  // малюємо прямокутник
   noStroke();
-  rect(sx, sy, sw, sh);
+  rect(rx, ry, rw, rh);
 
-  // малювання лінії
+  // малюємо лінію
   stroke(0, 150);
   line(x1, y1, x2, y2);
 }
 
+// перевірка на зіткнення між лінією та прямокутником
+function collideLineRect(x1, y1, x2, y2, rx, ry, rw, rh) {
+  // перевіряємо перетин лінії з кожною із чотирьох сторін прямокутника
+  const collidesLeft   = collideLineLine(x1, y1, x2, y2, rx, ry, rx, ry + rh);
+  const collidesRight  = collideLineLine(x1, y1, x2, y2, rx + rw, ry, rx + rw, ry + rh);
+  const collidesTop    = collideLineLine(x1, y1, x2, y2, rx, ry, rx + rw, ry);
+  const collidesBottom = collideLineLine(x1, y1, x2, y2, rx, ry + rh, rx + rw, ry + rh);
 
-// перевірка на перетин між лінією та прямокутником
-function isLineWithRectCollides(x1, y1, x2, y2, rx, ry, rw, rh) {
-  // перевірка, чи лінія торкнулася будь-якої сторони прямокутника
-  const isLeftCollides   = isLineWithLineCollides(x1,y1,x2,y2, rx,ry,rx, ry+rh);
-  const isRightCollides  = isLineWithLineCollides(x1,y1,x2,y2, rx+rw,ry, rx+rw,ry+rh);
-  const isTopCollides    = isLineWithLineCollides(x1,y1,x2,y2, rx,ry, rx+rw,ry);
-  const isBottomCollides = isLineWithLineCollides(x1,y1,x2,y2, rx,ry+rh, rx+rw,ry+rh);
-
-  // якщо БУДЬ-ЩО з наведеного вище вірно, значить лінія має перетин з прямокутником
-  if (isLeftCollides || isRightCollides || isTopCollides || isBottomCollides) {
+  // якщо перетнуто будь-яку сторону — зіткнення відбулося
+  if (collidesLeft || collidesRight || collidesTop || collidesBottom) {
     return true;
   }
+
   return false;
 }
 
+// перевірка на перетин між двома відрізками
+function collideLineLine(x1, y1, x2, y2, x3, y3, x4, y4) {
+  const uA = ((x4 - x3) * (y1 - y3) - (y4 - y3) * (x1 - x3)) / ((y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1));
+  const uB = ((x2 - x1) * (y1 - y3) - (y2 - y1) * (x1 - x3)) / ((y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1));
 
-// перевірка на перетин між лінією та кругом
-function isLineWithLineCollides(x1, y1, x2, y2, x3, y3, x4, y4) {
-  // розрахунок напрямку ліній
-  const uA = ((x4-x3)*(y1-y3) - (y4-y3)*(x1-x3)) / ((y4-y3)*(x2-x1) - (x4-x3)*(y2-y1));
-  const uB = ((x2-x1)*(y1-y3) - (y2-y1)*(x1-x3)) / ((y4-y3)*(x2-x1) - (x4-x3)*(y2-y1));
-
-  // якщо uA та uB мають значення між 0 та 1, тоді лінії мають перетин
-  if (uA >= 0 && uA <= 1 && uB >= 0 && uB <= 1) {
-    // малювання точки у місці перетину ліній (опціонально)
-    const intersectionX = x1 + (uA * (x2-x1));
-    const intersectionY = y1 + (uA * (y2-y1));
-    fill(255,0,0);
+  // якщо uA та uB мають значення від 0 до 1, лінії перетинаються
+  if (uA &gt;= 0 &amp;&amp; uA &lt;= 1 &amp;&amp; uB &gt;= 0 &amp;&amp; uB &lt;= 1) {
+    // необов’язково: малюємо маркер у точці перетину лінії зі стороною прямокутника
+    const intersectionX = x1 + (uA * (x2 - x1));
+    const intersectionY = y1 + (uA * (y2 - y1));
+    fill(255, 0, 0);
     noStroke();
     ellipse(intersectionX, intersectionY, 20, 20);
 
@@ -181,39 +191,54 @@ function isLineWithLineCollides(x1, y1, x2, y2, x3, y3, x4, y4) {
   }
 
   return false;
-}
-</code></pre>
+}</code></pre>
+
+    <h2 class="uppercase">Пряма видимість в іграх (Line of Sight)</h2>
 
     <p>
-        Цей алгоритм також можна використовувати для перевірки
-        <a class="inline-link" href="http://en.wikipedia.org/wiki/Line_of_sight_%28gaming%29" target="_blank">прямої видимості</a>.
-        Скажімо, у вас є два об’єкти та прямокутна перешкода: якщо ви проводите лінію між одним об’єктом та іншим,
-        а потім перевіряєте, чи вона потрапила у прямокутник, то зможете визначити, чи можуть об’єкти "бачити" один
-        одного чи вони прикриті перешкодою.
+      Перетин лінії з прямокутником має ще одне чудове застосування у стелс-іграх
+      та стратегіях&nbsp;— перевірку
+      <a class="inline-link" href="http://en.wikipedia.org/wiki/Line_of_sight_%28gaming%29" target="_blank">прямої видимості</a>
+      (<em>Line of Sight</em>). Уявіть, що на карті є охоронець, гравець і
+      прямокутна стіна між ними. Як комп’ютерному охоронцеві зрозуміти, чи
+      «бачить» він гравця? Дуже просто: проведіть уявну лінію від охоронця до
+      гравця і перевірте її функцією <span class="code">collideLineRect()</span>!
+      Якщо лінія перетинає стіну&nbsp;— гравець у безпеці в тіні, якщо ж
+      перетину немає&nbsp;— охоронець помічає ціль!
     </p>
 
-    <p>
-        <img src="./assets/images/line-of-sight.jpg" alt="Приклад прямої видимості" title="Приклад прямої видимості">
-    </p>
+    <img
+      src="./assets/images/line-of-sight.jpg"
+      alt="Схема перевірки прямої видимості через перешкоду"
+      title="Схема перевірки прямої видимості через перешкоду"
+    >
 
-    <a href="./section-3-challenges.html"><p class="nextPage">Далі: Завдання 3</p></a>
+    <a href="./section-3-challenges.html">
+      <p class="nextPage">Далі: Завдання 3</p>
+    </a>
 
     <footer>
-        <p>
-            [
-            <a class="inline-link" href="./index.html">вступ</a>,
-            <a href="https://github.com/jeffThompson/CollisionDetection" target="_blank">оригінальне джерело</a>
-            ]
-        </p>
+      <p>
+        [
+        <a class="inline-link" href="./index.html">вступ</a>,
+        <a class="inline-link" href="https://github.com/jeffThompson/CollisionDetection" target="_blank">оригінальне джерело</a>
+        ]
+      </p>
 
-        <p class="license">
-            <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
-                <img id="license" class="license" alt="Creative Commons License" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png">
-            </a>
-        </p>
+      <p class="license">
+        <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+          <img
+            id="license"
+            class="license"
+            alt="Creative Commons License"
+            src="./assets/images/graphics/by-nc-sa.svg""
+          >
+        </a>
+      </p>
     </footer>
 
     <script>hljs.highlightAll();</script>
-</div>
+  </div>
 </body>
+
 </html>

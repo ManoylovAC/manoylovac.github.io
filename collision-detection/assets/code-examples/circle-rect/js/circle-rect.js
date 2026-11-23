@@ -31,7 +31,7 @@ function draw() {
   cy = mouseY;
 
   // результат перевірки на зіткнення
-  const isHit = isCircleWithRectCollides(cx, cy, r, sx, sy, sw, sh);
+  const isHit = collideCircleRect(cx, cy, r, sx, sy, sw, sh);
 
   // при зіткненні змінюємо колір заливки
   if (isHit) {
@@ -49,7 +49,7 @@ function draw() {
 }
 
 // перевірка на перетин між кругом і прямокутником
-function isCircleWithRectCollides(cx, cy, radius, rx, ry, rw, rh) {
+function collideCircleRect(cx, cy, radius, rx, ry, rw, rh) {
   // тестові змінні точки, з якою буде відбуватися перевірка на перетин
   let testX = cx;
   let testY = cy;

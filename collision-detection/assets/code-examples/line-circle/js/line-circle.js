@@ -33,7 +33,7 @@ function draw() {
   cy = mouseY;
 
   // результат перевірки на зіткнення
-  const isHit = isLineWithCircleCollides(x1, y1, x2, y2, cx, cy, r);
+  const isHit = collideLineCircle(x1, y1, x2, y2, cx, cy, r);
 
   // зміна кольору при зіткненні
   if (isHit) {
@@ -52,11 +52,11 @@ function draw() {
 }
 
 // перевірка на перетин між лінією та кругом
-function isLineWithCircleCollides(x1, y1, x2, y2, cx, cy, r) {
+function collideLineCircle(x1, y1, x2, y2, cx, cy, r) {
   // якщо один з кінців всередині круга,
   // тоді одразу повертаємо true
-  const inside1 = isPointWithCircleCollides(x1, y1, cx, cy, r);
-  const inside2 = isPointWithCircleCollides(x2, y2, cx, cy, r);
+  const inside1 = collidePointCircle(x1, y1, cx, cy, r);
+  const inside2 = collidePointCircle(x2, y2, cx, cy, r);
   if (inside1 || inside2) return true;
 
   // отримання довжини лінії
@@ -73,7 +73,7 @@ function isLineWithCircleCollides(x1, y1, x2, y2, cx, cy, r) {
 
   // ця точка дійсно знаходиться на відрізку?
   // якщо так, продовжуємо, але повертаємо false
-  const onSegment = isLineWithPointCollides(x1, y1, x2, y2, closestX, closestY);
+  const onSegment = collideLinePoint(x1, y1, x2, y2, closestX, closestY);
   if (!onSegment) return false;
 
   // малювання кружечка, щоб підсвітити найближчу точку на лінії (опціонально)
@@ -94,7 +94,7 @@ function isLineWithCircleCollides(x1, y1, x2, y2, cx, cy, r) {
 }
 
 // перевірка на перетин між лінією та точкою
-function isLineWithPointCollides(x1, y1, x2, y2, px, py) {
+function collideLinePoint(x1, y1, x2, y2, px, py) {
   // обчислення відстані від точки до двох кінців відрізка
   const d1 = dist(px, py, x1, y1);
   const d2 = dist(px, py, x2, y2);
@@ -114,7 +114,7 @@ function isLineWithPointCollides(x1, y1, x2, y2, px, py) {
 }
 
 // перевірка на перетин між точкою та кругом
-function isPointWithCircleCollides(px, py, cx, cy, r) {
+function collidePointCircle(px, py, cx, cy, r) {
   // отримання дистанції між точкою та центром круга
   // за допомоги теореми Піфагора
   const distX = px - cx;

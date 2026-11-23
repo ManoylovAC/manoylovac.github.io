@@ -30,7 +30,7 @@ function draw() {
   s1y = mouseY;
 
   // результат перевірки на зіткнення
-  const isHit = isRectWithRectCollides(s1x, s1y, s1w, s1h, s2x, s2y, s2w, s2h);
+  const isHit = collideRectRect(s1x, s1y, s1w, s1h, s2x, s2y, s2w, s2h);
 
   // при зіткненні змінюємо колір заливки
   if (isHit) {
@@ -48,7 +48,7 @@ function draw() {
 }
 
 // перевірка на перетин між двома прямокутниками
-function isRectWithRectCollides(r1x, r1y, r1w, r1h, r2x, r2y, r2w, r2h) {
+function collideRectRect(r1x, r1y, r1w, r1h, r2x, r2y, r2w, r2h) {
   // чи сторони прямокутників перетинаються між собою?
   if (
     r1x + r1w >= r2x &&  // правий край r1 правіше лівого краю r2
@@ -64,7 +64,7 @@ function isRectWithRectCollides(r1x, r1y, r1w, r1h, r2x, r2y, r2w, r2h) {
 
 // перевірка на перетин між двома прямокутниками
 // альтернативний підхід
-function isRectWithRectCollides_intuitive(r1x, r1y, r1w, r1h, r2x, r2y, r2w, r2h) {
+function collideRectRectIntuitive(r1x, r1y, r1w, r1h, r2x, r2y, r2w, r2h) {
   // чи сторони прямокутників НЕ перетинаються між собою?
   if (
     r1x >= r2x + r2w ||  // лівий край r1 знаходиться за правим краєм r2

@@ -1,40 +1,42 @@
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', () => {
+  const navTitle = document.getElementById('navigation-title');
+  if (!navTitle) return;
 
-  function resizeCommands() {
-    if (window.innerWidth > 600) {
-      const setNavigationEvents = () => {
-        const navTitle = document.getElementById('navigation-title');
-        const prevArrow = document.querySelector('#prev a');
-        const nextArrow = document.querySelector('#next a');
+  const prevArrow = document.querySelector('#prev a');
+  const nextArrow = document.querySelector('#next a');
 
-        const currTitle = navTitle?.getAttribute('data-curr-title');
-        const prevTitle = navTitle?.getAttribute('data-prev-title');
-        const nextTitle = navTitle?.getAttribute('data-next-title');
+  const currTitle = navTitle.getAttribute('data-curr-title') || navTitle.textContent;
+  const prevTitle = navTitle.getAttribute('data-prev-title');
+  const nextTitle = navTitle.getAttribute('data-next-title');
 
-        const setContestsTitle = () => navTitle.innerText = currTitle;
+  const isDesktopWidth = () => window.innerWidth > 600;
+  const resetTitle = () => {
+    navTitle.textContent = currTitle;
+  };
 
-        if (navTitle) {
-          navTitle.addEventListener("mouseout", setContestsTitle);
-        }
+  navTitle.addEventListener('mouseleave', resetTitle);
 
-        if (prevArrow) {
-          prevArrow.addEventListener("mouseover", event => navTitle.innerText = `Назад: ${prevTitle}`);
-          prevArrow.addEventListener("mouseout", setContestsTitle);
-        }
-
-        if (nextArrow) {
-          nextArrow.addEventListener("mouseover", event => navTitle.innerText = `Далі: ${nextTitle}`);
-          nextArrow.addEventListener("mouseout", setContestsTitle);
-        }
+  if (prevArrow && prevTitle) {
+    prevArrow.addEventListener('mouseenter', () => {
+      if (isDesktopWidth()) {
+        navTitle.textContent = `Назад: ${prevTitle}`;
       }
-
-      setNavigationEvents();
-    }
+    });
+    prevArrow.addEventListener('mouseleave', resetTitle);
   }
 
-  window.onresize = (function () {
-    resizeCommands();
-  });
+  if (nextArrow && nextTitle) {
+    nextArrow.addEventListener('mouseenter', () => {
+      if (isDesktopWidth()) {
+        navTitle.textContent = `Далі: ${nextTitle}`;
+      }
+    });
+    nextArrow.addEventListener('mouseleave', resetTitle);
+  }
 
-  resizeCommands();
+  window.addEventListener('resize', () => {
+    if (!isDesktopWidth()) {
+      resetTitle();
+    }
+  });
 });

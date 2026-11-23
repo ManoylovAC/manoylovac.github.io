@@ -1,44 +1,47 @@
 // COLLISION DETECTION: POINT with POINT
 // Jeff Thompson | 2015 | www.jeffreythompson.org
-// ported to p5js by Manoilov Andrii 2024
+// ported to p5.js by Andrii Manoilov | 2024
 
-// змінні для зберігання координат статичної точки
+// координати нерухомої цільової точки
 let targetX;
 let targetY;
 
 function setup() {
   createCanvas(window.innerWidth, window.innerHeight);
   noCursor();
-  strokeWeight(15); // збільшена жирність точки, щоб краще її бачити
+  strokeWeight(15); // збільшуємо візуальний розмір точок для наочності
 
-  targetX = width / 2;  // визначення горизонтального центра полотна
-  targetY = height / 2; // визначення вертикального центра полотна
+  // округлюємо до цілих пікселів на випадок непарної ширини/висоти вікна
+  targetX = round(width / 2);
+  targetY = round(height / 2);
 }
 
 function draw() {
-  // результат перевірки на зіткнення, який повертає наша функція
-  let isColliding = isPointWithPointCollides(mouseX, mouseY, targetX, targetY);
+  const px = round(mouseX);
+  const py = round(mouseY);
 
-  // якщо є колізія, тоді змінюємо колір фону на помаранчевий...
+  // перевіряємо, чи збігаються координати курсора з цільовою точкою
+  const isColliding = collidePointPoint(px, py, targetX, targetY);
+
+  // змінюємо колір фону залежно від результату перевірки
   if (isColliding) {
-    background('orange');
+    background(255, 150, 0);
   } else {
-    // ...якщо ні, тоді фон лишаємо білим
     background(255);
   }
 
-  // малювання статичної точки, яку ми перевірятимемо на зіткнення
+  // малюємо статичну цільову точку
   stroke(0, 150, 255);
   point(targetX, targetY);
 
-  // малювання другої точки, що контролюється курсором
+  // малюємо рухому точку на місці курсора
   stroke(0, 150);
-  point(mouseX, mouseY);
+  point(px, py);
 }
 
-// перевірка на перетин двох точок
-function isPointWithPointCollides(x1, y1, x2, y2) {
-  // чи координати обох точок у спільному положенні?
+// перевірка на зіткнення двох точок
+function collidePointPoint(x1, y1, x2, y2) {
+  // чи обидві точки мають однакові координати?
   if (x1 === x2 && y1 === y2) {
     return true;
   }

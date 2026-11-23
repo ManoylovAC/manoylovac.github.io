@@ -1,52 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html lang="uk">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/png" href="./assets/images/graphics/favicon.png">
-    <meta name="description" content="An online book about collision detection using p5js, онлайн-книга про виявлення зіткнень за допомогою p5js">
-    <meta name="keywords" content="Rectangle with rectangle collision, interactive collision, перевірка на зіткнення між кругом і прямокутником, зіткнення, ітерактивні приклади">
-    <title>Виявлення зіткнень: круг і прямокутник</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/png" href="./assets/images/graphics/favicon.png">
+  <meta name="description" content="Як перевірити зіткнення круга та прямокутника (Circle-Rectangle Collision) у p5.js: пошук найближчої точки на межі прямокутника та теорема Піфагора.">
+  <meta name="keywords" content="circle and rectangle collision, interactive collision, перевірка зіткнення круга і прямокутника, найближча точка, зіткнення, інтерактивні приклади, p5.js">
+  <title>Виявлення зіткнень: Круг і Прямокутник</title>
 
-    <!-- FONTS AND CSS -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400..700&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+  <!-- FONTS AND CSS -->
+  <link href="./assets/css/stylesheet.css" rel="stylesheet" type="text/css">
 
-    <link href="./assets/css/stylesheet.css" rel="stylesheet" type="text/css">
+  <!-- CODE PRETTIFY -->
+  <link href="./assets/css/obsidian.min.css" rel="stylesheet" type="text/css">
+  <script src="./assets/js/highlight.min.js"></script>
 
-    <!-- CODE PRETTIFY -->
-    <link href="./assets/css/obsidian.min.css" rel="stylesheet" type="text/css">
-    <script src="./assets/js/highlight.min.js"></script>
-
-    <!-- additional behaviour -->
-    <script src="./assets/js/main.js"></script>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-46TNRV0VFR"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-46TNRV0VFR');
-    </script>
-    <script src="./assets/js/main.js"></script>
+  <!-- additional behaviour -->
+  <script src="./assets/js/main.js"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-46TNRV0VFR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-46TNRV0VFR');
+  </script>
 </head>
 
 <body>
-<div id="wrapper">
+  <div id="wrapper">
     <header class="navigation">
-        <span id="prev"><a href="./rect-rect.html">←</a></span>
-        <span id="title">
-            <a id="navigation-title"
-               class="navigation-title inline-link bg-blue"
-               data-prev-title="Прямокутник і Прямокутник"
-               data-curr-title="Виявлення зіткнень"
-               data-next-title="Завдання 2"
-               href="table-of-contents.html"
-            >Виявлення зіткнень</a>
-        </span>
-        <span id="next"><a href="./section-2-challenges.html">→</a></span>
+      <span id="prev"><a href="./rect-rect.html">←</a></span>
+      <span id="title">
+        <a
+          id="navigation-title"
+          class="navigation-title inline-link bg-blue"
+          data-prev-title="Прямокутник і Прямокутник"
+          data-curr-title="Виявлення зіткнень"
+          data-next-title="Завдання 2"
+          href="table-of-contents.html"
+        >Виявлення зіткнень</a>
+      </span>
+      <span id="next"><a href="./section-2-challenges.html">→</a></span>
     </header>
 
     <iframe class="w-full canvas" style="aspect-ratio:2/1" loading="lazy" src="./assets/code-examples/circle-rect/"></iframe>
@@ -54,231 +50,273 @@
     <h1 class="uppercase">Круг і Прямокутник</h1>
 
     <p>
-        Останній приклад цього розділу поєднає разом код для круга та прямокутника. У нас є круг з позицією
-        <span class="code">(cx, cy)</span> і радіусом <span class="code">r</span> та квадрат у положенні
-        <span class="code">(rx, ry)</span> з шириною/висотою <span class="code">(rw, rh)</span>.
+      Завершуючи розділ про прямокутники, поєднаймо дві різні геометрії! Нехай у
+      нас є круг із центром <span class="code">(cx, cy)</span> і радіусом
+      <span class="code">radius</span> та прямокутник із лівим верхнім кутом
+      <span class="no-wrap"><span class="code">(rx, ry)</span>,</span> шириною <span class="code">rw</span> і
+      висотою <span class="code">rh</span>. Як дізнатися, чи вони перетинаються?
     </p>
 
     <p>
-        Цей підхід визначення колізії буде складатися з двох послідовних дій. Спочатку ми перевіримо та дізнаємося,
-        який край прямокутника ближче до круга, а потім за допомогою теореми Піфагора перевіримо, чи є зіткнення з цим ребром.
-        Спочатку створимо тимчасові змінні для збереження найближчих <span class="code">X/Y</span> значень країв квадрата.
-        На початку ініціалізуємо їх значення початковим положенням центра круга:
+      Секрет цього елегантного алгоритму полягає у двох кроках:
+    </p>
+
+    <ol>
+      <li>
+        Знайти на прямокутнику <strong>найближчу до центра круга точку</strong>
+        <span class="code">(testX, testY)</span>.
+      </li>
+      <li>
+        Перевірити за теоремою Піфагора, чи потрапляє ця найближча точка
+        всередину круга (тобто чи відстань до неї не перевищує
+        <span class="code">radius</span>).
+      </li>
+    </ol>
+
+    <p>
+      Як знайти цю найближчу точку? Почнімо з того, що створимо змінні
+      <span class="code">testX</span> і <span class="code">testY</span> та
+      спочатку прирівняємо їх до координат самого центра круга:
     </p>
 
     <pre><code class="language-js code-block">let testX = cx;
-let testY = cy;
-</code></pre>
+let testY = cy;</code></pre>
 
     <p>
-        Потім зробимо наступні перевірки:
+      Тепер «притиснемо» (обмежимо) ці координати межами прямокутника, окремо за
+      горизонталлю і за вертикаллю:
     </p>
 
-    <pre><code class="language-text code-block">Якщо круг ПРАВОРУЧ від квадрата, звіряємося з ПРАВИМ краєм квадрата.
+    <pre><code class="language-text sm-txt code-block">- Якщо центр круга ЛІВІШЕ  від прямокутника (cx &lt; rx),    притискаємо testX до ЛІВОГО краю.
+- Якщо центр круга ПРАВІШЕ від прямокутника (cx &gt; rx+rw), притискаємо testX до ПРАВОГО краю.
+  (А якщо центр круга вже між лівим і правим краями, testX залишається рівним cx!)
 
-Якщо круг ЛІВОРУЧ від квадрата, звіряємося з ЛІВИМ краєм квадрата.
-
-Якщо круг НАД квадратом, звіряємося з ВЕРХНІМ краєм квадрата.
-
-Якщо круг НИЖЧЕ квадрата, звіряємося з НИЖНІМ краєм квадрата.
-</code></pre>
+- Якщо центр круга ВИЩЕ    від прямокутника (cy &lt; ry),    притискаємо testY до ВЕРХНЬОГО краю.
+- Якщо центр круга НИЖЧЕ   від прямокутника (cy &gt; ry+rh), притискаємо testY до НИЖНЬОГО краю.
+  (А якщо центр круга вже між верхнім і нижнім краями, testY залишається рівним cy!)</code></pre>
 
     <p>
-        Ось як це виглядає в коді з оператором <span class="code">if</span>.
-        Зверніть увагу на дещо інший <span class="code">if/else</span> формат. Вам не потрібні фігурні дужки, якщо вам
-        потрібно виконати лише оператор. Іноді це може здатися зручним і заощадливим способом, але будьте обережні, бо
-        насправді ви не заощадите місце за рахунок читабельності коду, тому бажано так не робити!
+      У коді ці перевірки записуються дуже лаконічно:
     </p>
 
-    <pre><code class="language-js code-block">if (cx < rx)           testX = rx;       // ліва сторона
-else if (cx > rx + rw) testX = rx + rw;  // права сторона
+    <pre><code class="language-js code-block">// знаходимо найближчу координату за віссю x
+if (cx &lt; rx) {
+  testX = rx;            // лівий край
+} else if (cx &gt; rx + rw) {
+  testX = rx + rw;       // правий край
+}
 
-if (cy < ry)           testY = ry;       // верхня сторона
-else if (cy > ry + rh) testY = ry + rh;  // нижня сторона
-</code></pre>
-
+// знаходимо найближчу координату за віссю y
+if (cy &lt; ry) {
+  testY = ry;            // верхній край
+} else if (cy &gt; ry + rh) {
+  testY = ry + rh;       // нижній край
+}</code></pre>
 
     <p>
-        Коли умови виконуються, то значення тестових змінних перезаписуються значеннями сторони квадрата. Якщо ж
-        вищезазначені умови не виконуються, тоді значення тестових координат залишаються значеннями центру круга. Іноді
-        одна координата матиме <span class="code">x</span> або <span class="code">y</span> значення якоїсь сторони
-        квадрата, а інша <span class="code">x</span> або <span class="code">y</span> значення центру.
-        Тобто у тестових значеннях будуть або значення якоїсь зі сторін квадрата або значення центру круга.
+      Щоб краще зрозуміти логіку і суть того, що тут відбувається, візьміть аркуш паперу та самостійно зобразіть як будуть поводити себе координати при різних положеннях круга відносно квадрата.
+      По суті, нам спочатку потрібно зрозуміти з якого боку від прямокутника знаходиться круг. Це своєю чергою допоможе визначити точку найближчої сторони прямокутника або одну з його внутрішніх точок.
+    </p>
+    <p>
+      Тож чому це працює? Уявіть простір навколо прямокутника:
     </p>
 
-    <p>
-        Щоб краще зрозуміти логіку і суть того, що тут відбувається, бажано знову взяти олівець і аркуш паперу та
-        помалювати, щоб визначити які результати будуть при різних положеннях круга відносно квадрата. Тут ми по суті
-        спочатку хочемо зрозуміти з якого боку від прямокутника знаходиться круг. Це своєю чергою допоможе визначити точку
-        на цій стороні з якою ми й перевіримо наявність перетину з кругом. Кінець кінцем ми робимо вже знайому
-        перевірку на колізію з точкою.
-    </p>
+    <ul>
+      <li>
+        Якщо круг підлітає <strong>збоку</strong> (наприклад, ліворуч, але на
+        рівні середини вертикальної стінки), то значення <span class="code">testX</span>
+        стане рівним <span class="code">rx</span> (тобто положенню лівої сторони прямокутника), а
+        <span class="code">testY</span> залишиться рівним
+        <span class="code">cy</span>. Точка
+        <span class="code">(testX, testY)</span> ковзатиме ближньою вертикальною стінкою
+        прямо навпроти круга!
+      </li>
+      <li>
+        Якщо круг підлітає <strong>з кута</strong> (наприклад, ліворуч і вище),
+        спрацюють обидві умови: <span class="code">testX</span> стане
+        <span class="code">rx</span>, а <span class="code">testY</span> стане
+        <span class="code">ry</span>. Найближчою точкою виявиться сам кут
+        прямокутника!
+      </li>
+      <li>
+        Якщо ж центр круга вже <strong>всередині</strong> прямокутника, жодна з
+        умов не спрацює, тому <span class="code">(testX, testY)</span>
+        залишиться рівним <span class="code">(cx, cy)</span>, а відстань між
+        ними дорівнюватиме нулю.
+      </li>
+    </ul>
 
-
     <p>
-        Тепер, коли ми знаємо, яке ребро квадрата потрібно перевіряти, ми запускаємо теорему Піфагора, використовуючи
-        центр кола та значення координат, які ми знайшли вище:
+      Коли найближчу точку <span class="code">(testX, testY)</span> знайдено,
+      завдання зводиться до вже знайомого нам алгоритму
+      <a class="inline-link" href="./point-circle.html">«Точка і Круг»</a>!
+      Обчислюємо відстань від центра круга до точки
+      <span class="code">(testX, testY)</span> за теоремою Піфагора:
     </p>
 
     <pre><code class="language-js code-block">const distX = cx - testX;
 const distY = cy - testY;
-const distance = sqrt((distX * distX) + (distY * distY));
-</code></pre>
+const distance = sqrt((distX * distX) + (distY * distY));</code></pre>
 
     <p>
-        Нарешті, ми порівняємо цю відстань з радіусом кола:
+      Нарешті, порівнюємо цю відстань із радіусом круга:
     </p>
 
-    <pre><code class="language-js code-block">if (distance <= radius) {
-    return true;
+    <pre><code class="language-js code-block">if (distance &lt;= radius) {
+  return true;
 }
 
-return false;
-</code></pre>
+return false;</code></pre>
 
-    <p>Here's a full example:</p>
-    Ось повний приклад:
+    <p>Ось повний код прикладу:</p>
 
-
-    <pre><code class="language-js code-block sm-txt">// змінні для положення та радіусу круга
+    <pre><code class="language-js code-block">// координати та радіус рухомого круга
 let cx = 0;
 let cy = 0;
-let r = 30;
+const radius = 30;
 
-// змінні для положення та розмірів прямокутника
-let sx;
-let sy;
-let sw = 200;
-let sh = 200;
+// координати та розміри прямокутника
+let rx;
+let ry;
+const rw = 200;
+const rh = 200;
 
 function setup() {
   createCanvas(window.innerWidth, window.innerHeight);
   noStroke();
-  // визначення положення координат для лівого верхнього кута, щоб квадрат був по центру полотна
-  sx = (width - sw) / 2;
-  sy = (height - sh) / 2;
+
+  // центруємо прямокутник на полотні
+  rx = (width - rw) / 2;
+  ry = (height - rh) / 2;
 }
 
 function draw() {
   background(255);
 
-  // оновлення координат рухомого круга координатами курсора
+  // оновлюємо координати круга положенням курсора
   cx = mouseX;
   cy = mouseY;
 
-  // результат перевірки на зіткнення
-  const isHit = isCircleWithRectCollides(cx, cy, r, sx, sy, sw, sh);
+  // перевіряємо зіткнення круга з прямокутником
+  const isColliding = collideCircleRect(cx, cy, radius, rx, ry, rw, rh);
 
-  // при зіткненні змінюємо колір заливки
-  if (isHit) {
+  // змінюємо колір прямокутника при зіткненні
+  if (isColliding) {
     fill(255, 150, 0);
   } else {
     fill(0, 150, 255);
   }
 
-  // малюємо квадрат
-  rect(sx, sy, sw, sh);
+  // малюємо прямокутник
+  rect(rx, ry, rw, rh);
 
   // малюємо круг
   fill(0, 150);
-  ellipse(cx, cy, r * 2, r * 2);
+  cirlce(cx, cy, radius * 2);
 }
 
-// перевірка на перетин між кругом і прямокутником
-function isCircleWithRectCollides(cx, cy, radius, rx, ry, rw, rh) {
-  // тестові змінні точки, з якою буде відбуватися перевірка на перетин
+// перевірка на зіткнення між кругом і прямокутником
+function collideCircleRect(cx, cy, radius, rx, ry, rw, rh) {
+  // координати найближчої до круга точки прямокутника
   let testX = cx;
   let testY = cy;
 
-  // які координати квадрата знаходяться найближче до круга?
-  if (cx < rx) {
-    testX = rx;       // якщо круг лівіше прямокутника
-  } else if (cx > rx + rw) {
-    testX = rx + rw;  // якщо круг правіше прямокутника
+  // визначаємо, який край прямокутника найближчий за віссю x
+  if (cx &lt; rx) {
+    testX = rx;          // лівий край
+  } else if (cx &gt; rx + rw) {
+    testX = rx + rw;     // правий край
   }
 
-  if (cy < ry) {
-    testY = ry;       // якщо круг вище прямокутника
-  } else if (cy > ry + rh) {
-    testY = ry + rh;  // якщо круг нижче прямокутника
+  // визначаємо, який край прямокутника найближчий за віссю y
+  if (cy &lt; ry) {
+    testY = ry;          // верхній край
+  } else if (cy &gt; ry + rh) {
+    testY = ry + rh;     // нижній край
   }
 
-  // визначення відстані до найближчої точки ребра прямокутника, якщо круг за межами прямокутника
-  let distX = cx - testX;
-  let distY = cy - testY;
-  let distance = sqrt((distX * distX) + (distY * distY));
+  // обчислюємо відстань від центра круга до знайденої точки
+  const distX = cx - testX;
+  const distY = cy - testY;
+  const distance = sqrt((distX * distX) + (distY * distY));
 
-  // якщо відстань менша за радіус круга це колізія!
-  if (distance <= radius) {
+  // якщо відстань не перевищує радіус — об’єкти стикаються!
+  if (distance &lt;= radius) {
     return true;
   }
 
   return false;
-}
-</code></pre>
+}</code></pre>
 
     <p>
-        Цей приклад створено на основі коду
-        <a class="inline-link" href="http://vband3d.tripod.com/visualbasic/tut_mixedcollisions.htm" target="_blank">Мета Вордена</a> (дякую!).
+      За ідею цього алгоритму дякуємо посібнику
+      <a class="inline-link" href="http://vband3d.tripod.com/visualbasic/tut_mixedcollisions.htm" target="_blank">Мета Вордена (Matt Worden)</a>!
     </p>
 
     <p>
-        До речі, оскільки ми вже маємо функцію на перевірку перетину кругу з точкою, то її можна повторно використати в
-        кінці нашої функції:
+      До речі, якщо у вашому проєкті вже є функція
+      <span class="code">collidePointCircle()</span> із першого розділу, ви
+      можете передати знайдену точку <span class="code">(testX, testY)</span>
+      прямо в неї, не дублюючи формулу Піфагора:
     </p>
 
-<pre><code class="language-js code-block">// змінні для положення та радіусу круга
-// перевірка на перетин між кругом і прямокутником
-function isCircleWithRectCollides(cx, cy, radius, rx, ry, rw, rh) {
-  // тестові змінні точки, з якою буде відбуватися перевірка на перетин
+    <pre><code class="language-js code-block">// компактний варіант із повторним використанням collidePointCircle()
+function collideCircleRect(cx, cy, radius, rx, ry, rw, rh) {
   let testX = cx;
   let testY = cy;
 
-  // які координати квадрата знаходяться найближче до круга?
-  if (cx < rx) {
-    testX = rx;       // якщо круг лівіше прямокутника
-  } else if (cx > rx + rw) {
-    testX = rx + rw;  // якщо круг правіше прямокутника
+  if (cx &lt; rx) {
+    testX = rx;
+  } else if (cx &gt; rx + rw) {
+    testX = rx + rw;
   }
 
-  if (cy < ry) {
-    testY = ry;       // якщо круг вище прямокутника
-  } else if (cy > ry + rh) {
-    testY = ry + rh;  // якщо круг нижче прямокутника
+  if (cy &lt; ry) {
+    testY = ry;
+  } else if (cy &gt; ry + rh) {
+    testY = ry + rh;
   }
 
-   return isPointWithCircleCollides(testX, testY, cx, cy, radius);
-}
-</code></pre>
+  return collidePointCircle(testX, testY, cx, cy, radius);
+}</code></pre>
 
     <p>
-        У якості додаткової вправи ви можете намалювати точку тестових координат, що в результаті буде ковзати вздовж сторін
-        квадрата або всередині нього і показувати вам позицію тої самої точки з якої відбувається перевірка на колізію
-        з кругом. Якщо з такої програми прибрати малювання круга, то ви отримаєте свого роду точку, що завжди буде
-        максимально наближеною до положення курсора, але ніколи не виходитиме за його межі. Також код з виявлення
-        найближчих координат можна винести у окрему функцію, щоб використовувати її незалежно.
+      Щоб наочно побачити, як поводиться точка
+      <span class="code">(testX, testY)</span>, погляньте на інтерактивну
+      демонстрацію нижче. Помаранчева точка показує місце на межі (або всередині)
+      прямокутника, яке в цю мить є найближчим до центра круга. Вона ніби
+      намагається дотягнутися до курсора, але ніколи не покидає меж
+      прямокутника!
     </p>
 
     <iframe class="w-full canvas" style="aspect-ratio:2/1" loading="lazy" src="./assets/code-examples/circle-rect-point/"></iframe>
 
-    <a href="./section-2-challenges.html"><p class="nextPage">Далі: Завдання 2</p></a>
+    <a href="./section-2-challenges.html">
+      <p class="nextPage">Далі: Завдання 2</p>
+    </a>
 
     <footer>
-        <p>
-            [
-            <a class="inline-link" href="./index.html">вступ</a>,
-            <a href="https://github.com/jeffThompson/CollisionDetection" target="_blank">оригінальне джерело</a>
-            ]
-        </p>
+      <p>
+        [
+        <a class="inline-link" href="./index.html">вступ</a>,
+        <a class="inline-link" href="https://github.com/jeffThompson/CollisionDetection" target="_blank">оригінальне джерело</a>
+        ]
+      </p>
 
-        <p class="license">
-            <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
-                <img id="license" class="license" alt="Creative Commons License" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png">
-            </a>
-        </p>
+      <p class="license">
+        <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+          <img
+            id="license"
+            class="license"
+            alt="Creative Commons License"
+            src="./assets/images/graphics/by-nc-sa.svg""
+          >
+        </a>
+      </p>
     </footer>
 
     <script>hljs.highlightAll();</script>
-</div>
+  </div>
 </body>
+
 </html>

@@ -1,120 +1,128 @@
 <!DOCTYPE html>
-<html>
+<html lang="uk">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/png" href="./assets/images/graphics/favicon.png">
-    <meta name="description" content="An online book about collision detection using p5js, онлайн-книга про виявлення зіткнень за допомогою p5js">
-    <meta name="keywords" content="Object-oriented collision, interactive collision, перевірка на зіткнення в обʼєктно-орієнтований спосіб, зіткнення, ітерактивні приклади">
-    <title>Виявлення зіткнень: об’єктно-орієнтоване зіткнення</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/png" href="./assets/images/graphics/favicon.png">
+  <meta name="description" content="Об’єктно-орієнтоване виявлення зіткнень (Object-Oriented Collision Detection) у p5.js: створення класів Circle та Rectangle для ігор.">
+  <meta name="keywords" content="object-oriented collision, classes, interactive collision, перевірка на зіткнення в об’єктно-орієнтований спосіб, класи в p5.js, зіткнення, інтерактивні приклади, p5.js">
+  <title>Виявлення зіткнень: об’єктно-орієнтоване зіткнення</title>
 
-    <!-- FONTS AND CSS -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400..700&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
-    <link href="./assets/css/stylesheet.css" rel="stylesheet" type="text/css">
+  <!-- FONTS AND CSS -->
+  <link href="./assets/css/stylesheet.css" rel="stylesheet" type="text/css">
 
-    <!-- CODE PRETTIFY -->
-    <link href="./assets/css/obsidian.min.css" rel="stylesheet" type="text/css">
-    <script src="./assets/js/highlight.min.js"></script>
+  <!-- CODE PRETTIFY -->
+  <link href="./assets/css/obsidian.min.css" rel="stylesheet" type="text/css">
+  <script src="./assets/js/highlight.min.js"></script>
 
-    <!-- additional behaviour -->
-    <script src="./assets/js/main.js"></script>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-46TNRV0VFR"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-46TNRV0VFR');
-    </script>
-    <script src="./assets/js/main.js"></script>
+  <!-- additional behaviour -->
+  <script src="./assets/js/main.js"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-46TNRV0VFR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-46TNRV0VFR');
+  </script>
 </head>
 
 <body>
-<div id="wrapper">
+  <div id="wrapper">
     <header class="navigation">
-        <span id="prev"><a href="./section-5-challenges.html">←</a></span>
-        <span id="title">
-            <a id="navigation-title"
-               class="navigation-title inline-link bg-blue"
-               data-prev-title="Завдання 5"
-               data-curr-title="Виявлення зіткнень"
-               data-next-title="Робота з перетвореннями матриці"
-               href="table-of-contents.html"
-            >Виявлення зіткнень</a>
-        </span>
-        <span id="next"><a href="./matrix-transformations.html">→</a></span>
+      <span id="prev"><a href="./section-5-challenges.html">←</a></span>
+      <span id="title">
+        <a
+          id="navigation-title"
+          class="navigation-title inline-link bg-blue"
+          data-prev-title="Завдання 5"
+          data-curr-title="Виявлення зіткнень"
+          data-next-title="Робота з матричними перетвореннями"
+          href="table-of-contents.html"
+        >Виявлення зіткнень</a>
+      </span>
+      <span id="next"><a href="./matrix-transformations.html">→</a></span>
     </header>
 
-    <iframe class="w-full canvas" style="aspect-ratio:2/1" loading="lazy"
-            src="./assets/code-examples/object-oriented-collision/"></iframe>
+    <iframe class="w-full canvas" style="aspect-ratio:2/1" loading="lazy" src="./assets/code-examples/object-oriented-collision/"></iframe>
 
     <p class="caption">
-        Оновіть сторінку для нового положення випадкових квадратів!
+      Оновіть сторінку, щоб згенерувати нове розташування квадратів!
     </p>
 
     <h1 class="uppercase">Перехід до об’єктно-орієнтованого зіткнення</h1>
 
     <p>
-        Вітаю! Ви пройшли через значну кількість коду з виявлення колізій. Але ці приклади призначені лише для простої
-        демонстрації того, як працюють алгоритми. Об’єднання їх у більші проекти, ймовірно, означає переведення вашого
-        коду на об’єктно-орієнтований підхід. (Чудовий вступ до об’єктно-орієнтованого програмування можна подивитись
-        у книзі Деніела Шиффмана
-        <a class="inline-link" href="https://manoylovac.github.io/noc2/random.html" target="_blank"><em>Природа коду</em></a>).
+      Вітаємо! Ви пройшли через усі основні алгоритми виявлення зіткнень. Досі
+      в кожному прикладі ми мали лише дві фігури, координати яких зберігалися в
+      окремих глобальних змінних (<span class="code">rx, ry, rw, rh</span>). Це
+      чудово підходить для навчання, але що, як у вашій грі буде десяток
+      платформ, сотня монет і зграя ворогів?
     </p>
 
     <p>
-        Навіщо? Скажімо, у нас є круг та купа прямокутників, як у інтерактивному прикладі вище. Ми могли б зберігати
-        окремі позиції, розміри та стан зіткнення для кожного з них, але це швидко призведе до безладдя.
-        Натомість класи <span class="code">Circle</span> і <span class="code">Rectangle</span> нададуть нашому коду
-        набагато більше зручності та гнучкості.
+      Створювати окремі змінні <span class="code">rect1x, rect2x, ..., rect100x</span>
+      було б справжнім кошмаром і це швидко призведе до безладу! Саме тут на допомогу приходить
+      <strong>об’єктно-орієнтоване програмування (ООП)</strong> та
+      <em>класи</em>. Якщо ви хочете глибше розібратися з класами та об’єктами
+      в <span class="code">p5.js</span>, радимо зазирнути до книги Деніела
+      Шиффмана
+      <a class="inline-link" href="https://manoylovac.github.io/noc2/" target="_blank">«Природа коду»</a>.
     </p>
 
     <p>
-        Почнімо зі створення класу <span class="code">Circle</span>:
+      Розгляньте сцену вгорі: у нас є один рухомий круг і цілий масив
+      прямокутників. Ми можемл описати кожну фігуру власним класом&nbsp;—
+      <span class="code">Circle</span> та <span class="code">Rectangle</span>.
+      Кожен об’єкт сам пам’ятатиме свої координати, розміри та вмітиме
+      малювати себе на полотні.
     </p>
 
-    <pre><code class="language-js code-block sm-txt">class Circle {
-  constructor(x, y, r) {
-    this.x = x; // x-координата
-    this.y = y; // y-координата
-    this.r = r; // радіус
+    <p>
+      Почнімо зі створення простого класу <span class="code">Circle</span>:
+    </p>
+
+    <pre><code class="language-js code-block">class Circle {
+  constructor(x, y, radius) {
+    this.x = x;           // x-координата центра
+    this.y = y;           // y-координата центра
+    this.radius = radius; // радіус круга
   }
 
+  // оновлення координат круга
   update(x, y) {
     this.x = x;
     this.y = y;
   }
 
-  // малювання круга
+  // малювання круга на полотні
   display() {
     fill(0, 150);
     noStroke();
-    ellipse(this.x, this.y, this.r * 2, this.r * 2);
+    ellipse(this.x, this.y, this.radius * 2, this.radius * 2);
   }
-}
-</code></pre>
+}</code></pre>
 
     <p>
-        Це було досить просто. Ми також можемо створити базовий клас <span class="code">Rectangle</span>:
+      Тепер створимо клас <span class="code">Rectangle</span>:
     </p>
 
-    <pre><code class="language-js code-block sm-txt">class Rectangle {
+    <pre><code class="language-js code-block">class Rectangle {
   constructor(x, y, w, h) {
-    // xy-координати лівого кута
-    this.x = x;
-    this.y = y;
-    this.w = w; // ширина,
-    this.h = h; // висота,
-    this.isHit = false; // чи є зіткнення
+    this.x = x;          // x-координата лівого верхнього кута
+    this.y = y;          // y-координата лівого верхнього кута
+    this.w = w;          // ширина
+    this.h = h;          // висота
+    this.isHit = false;  // прапорець стану зіткнення
   }
 
-  // перевірка на зіткнення з кругом
-  // використовуючи функцію isCircleWithRectCollides, яку ми зробили на початку
-  checkCollisionWithCircle(c) {
-    this.isHit = isCircleWithRectCollides(c.x, c.y, c.r, this.x, this.y, this.w, this.h);
+  // метод для перевірки зіткнення цього прямокутника з об’єктом круга
+  checkCollisionWithCircle(circleObj) {
+    this.isHit = collideCircleRect(
+      circleObj.x, circleObj.y, circleObj.radius,
+      this.x, this.y, this.w, this.h
+    );
   }
 
   // малювання прямокутника
@@ -128,80 +136,68 @@
     noStroke();
     rect(this.x, this.y, this.w, this.h);
   }
-}
-</code></pre>
+}</code></pre>
 
     <p>
-        Зауважте, що у класі <span class="code">Rectangle</span> у нас є змінна під назвою <span class="code">isHit</span>.
-        У ній ми будемо зберігати поточний стан обʼєкта стосовно того, чи він має колізію з кругом, і відповідно
-        змінювати колір його заливки. За замовчуванням значення встановлено на <span class="code">false</span>.
+      Зверніть увагу на властивість <span class="code">this.isHit</span>
+      усередині класу <span class="code">Rectangle</span> (типово вона дорівнює
+      <span class="code">false</span>). Кожен прямокутник має власний
+      індивідуальний прапорець <span class="code">isHit</span> і змінює свій
+      колір у методі <span class="code">display()</span> лише тоді, коли круг
+      торкається саме його!
     </p>
 
     <p>
-        У нас буде лише один обʼєкт типу <span class="code">Circle</span>, але ми створимо масив об’єктів
-        <span class="code">Rectangle</span>. Ось так виглядатиме функція <span class="code">draw()</span>, яка
-        малюватиме наші фігури і оновлюватиме положення круга:
+      А як відбувається сама перевірка? Ми додали до класу
+      <span class="code">Rectangle</span> метод
+      <span class="code">checkCollisionWithCircle(circleObj)</span>, який
+      приймає об’єкт круга і передає його властивості та власні координати
+      прямокутника до вже знайомої нам функції
+      <a class="inline-link" href="./circle-rect.html">collideCircleRect()</a>:
+    </p>
+
+    <pre><code class="language-js code-block">checkCollisionWithCircle(circleObj) {
+  this.isHit = collideCircleRect(
+    circleObj.x, circleObj.y, circleObj.radius,
+    this.x, this.y, this.w, this.h
+  );
+}</code></pre>
+
+    <p>
+      Завдяки класам головна функція <span class="code">draw()</span> стає
+      неймовірно чистою та зрозумілою&nbsp;— незалежно від того, чи на екрані 8
+      прямокутників, чи 800:
     </p>
 
     <pre><code class="language-js code-block">function draw() {
   background(255);
 
-  // перебір усіх прямокутників
+  // перебираємо всі прямокутники в масиві
   for (const rectangle of rects) {
-    rectangle.checkCollisionWithCircle(circle);  // перевірка на колізію
-    rectangle.display();                         // малювання прямокутника
+    rectangle.checkCollisionWithCircle(circle); // перевіряємо зіткнення
+    rectangle.display();                        // малюємо прямокутник
   }
 
-  // оновлення положення круга положенням курсора і його зображення
+  // оновлюємо та малюємо круг курсора
   circle.update(mouseX, mouseY);
   circle.display();
-}
-</code></pre>
+}</code></pre>
 
-    <p>
-        Отже, як ми перевіримо, чи коло прямокутник зіткнувя з кругом? Давайте створимо у класі
-        <span class="code">Rectangle</span> <em>метод</em> (внутрішню функцію) під назвою
-        <span class="code">checkCollisionWithCircle()</span>. Ми передамо у цей метод об’єкт
-        <span class="code">Circle</span> як аргумент, а потім виконаємо базовий тест на перевірку зіткнення
-        <a class="inline-link" href="./circle-rect.html">круга з прямокутником</a>.
-    </p>
+    <p>Повний код прикладу:</p>
 
-    <pre><code class="language-js code-block">function checkCollision(c) {
-    this.isHit = isCircleWithRectCollides(c.x,c.y,c.r, x,y,w,h);
-}
-</code></pre>
-
-    <p>
-        Результат функції <span class="code">isCircleWithRectCollides()</span> встановлює значення змінної
-        <span class="code">isHit</span> на <span class="code">true</span> або <span class="code">false</span>,
-        що, у свою чергу, змінює колір заливки. Тепер ми просто додаємо виклик цьої перевірки у функцію
-        <span class="code">draw()</span> loop:
-    </p>
-
-    <pre><code class="language-js code-block">// перебір усіх прямокутників
-for (const rectangle of rects) {
-    rectangle.checkCollisionWithCircle(circle);  // перевірка на колізію
-    rectangle.display();                         // малювання прямокутника
-}
-</code></pre>
-
-    <p>
-        Дуже добре! Ось повний код:
-    </p>
-
-    <pre><code class="language-js code-block sm-txt">// змінна для єдиного обʼєкту круга, що контролюватиметься курсором
+    <pre><code class="language-js code-block">// змінна для об’єкта круга, яким керує курсор
 let circle;
-// масив прямокутників
-let rects = new Array(8);
+// масив для об’єктів прямокутників
+const rects = new Array(8);
 
 function setup() {
   createCanvas(window.innerWidth, window.innerHeight);
 
-  // створення круга з радіусом у 30 пікселів
+  // створюємо круг радіусом 30 пікселів
   circle = new Circle(0, 0, 30);
 
-  // генерація прямокутників у випадкових місцях, але з привʼязкою до сітки у 50 пікселів
-  for (let i = 0; i < rects.length; i++) {
+  // генеруємо 8 прямокутників у випадкових клітинках сітки з кроком у 50 пікселів
+  for (let i = 0; i &lt; rects.length; i++) {
     const x = round(random(50, width - 50) / 50) * 50;
     const y = round(random(50, height - 50) / 50) * 50;
     rects[i] = new Rectangle(x, y, 50, 50);
@@ -211,23 +207,22 @@ function setup() {
 function draw() {
   background(255);
 
-  // перебір усіх прямокутників
+  // перебираємо всі прямокутники
   for (const rectangle of rects) {
-    rectangle.checkCollisionWithCircle(circle);  // перевірка на колізію
-    rectangle.display();                         // малювання прямокутника
+    rectangle.checkCollisionWithCircle(circle); // перевірка на зіткнення
+    rectangle.display();                        // відображення прямокутника
   }
 
-  // оновлення положення круга положенням курсора і його зображення
+  // оновлюємо положення круга координатами курсора і малюємо його
   circle.update(mouseX, mouseY);
   circle.display();
 }
 
-
 class Circle {
-  constructor(x, y, r) {
-    this.x = x; // x-координата
-    this.y = y; // y-координата
-    this.r = r; // радіус
+  constructor(x, y, radius) {
+    this.x = x;           // x-координата центра
+    this.y = y;           // y-координата центра
+    this.radius = radius; // радіус
   }
 
   update(x, y) {
@@ -235,33 +230,31 @@ class Circle {
     this.y = y;
   }
 
-  // малювання круга
   display() {
     fill(0, 150);
     noStroke();
-    ellipse(this.x, this.y, this.r * 2, this.r * 2);
+    ellipse(this.x, this.y, this.radius * 2, this.radius * 2);
   }
 }
 
-
 class Rectangle {
   constructor(x, y, w, h) {
-    this.x = x; // x-координата лівого кута
-    this.y = y; // y-координата лівого кута
-    this.w = w; // ширина
-    this.h = h; // висота
+    this.x = x;         // x-координата лівого верхнього кута
+    this.y = y;         // y-координата лівого верхнього кута
+    this.w = w;         // ширина
+    this.h = h;         // висота
     this.isHit = false; // чи є зіткнення
   }
 
-  // перевірка на зіткнення з кругом
-  // використовуючи функцію isCircleWithRectCollides, яку ми зробили на початку
+  // перевірка на зіткнення з об’єктом круга
   checkCollisionWithCircle(circleObj) {
-    this.isHit = isCircleWithRectCollides(circleObj.x, circleObj.y, circleObj.r, this.x, this.y, this.w, this.h);
+    this.isHit = collideCircleRect(
+      circleObj.x, circleObj.y, circleObj.radius,
+      this.x, this.y, this.w, this.h
+    );
   }
 
-  // малювання прямокутника
   display() {
-    // при зіткненні змінюємо колір
     if (this.isHit) {
       fill(255, 150, 0);
     } else {
@@ -272,59 +265,72 @@ class Rectangle {
   }
 }
 
-
-// перевірка на перетин між кругом і прямокутником
-function isCircleWithRectCollides(cx, cy, radius, rx, ry, rw, rh) {
-  // тестові змінні точки, з якою буде відбуватися перевірка на перетин
+// перевірка на зіткнення між кругом і прямокутником
+function collideCircleRect(cx, cy, radius, rx, ry, rw, rh) {
   let testX = cx;
   let testY = cy;
 
-  // які координати квадрата знаходяться найближче до круга?
-  if (cx < rx)         testX = rx;        // compare to left edge
-  else if (cx > rx+rw) testX = rx+rw;     // right edge
-  if (cy < ry)         testY = ry;        // top edge
-  else if (cy > ry+rh) testY = ry+rh;     // bottom edge
+  if (cx &lt; rx) {
+    testX = rx;          // лівий край
+  } else if (cx &gt; rx + rw) {
+    testX = rx + rw;     // правий край
+  }
 
-  // визначення відстані до найближчої точки ребра прямокутника, якщо круг за межами прямокутника
-  const distX = cx-testX;
-  const distY = cy-testY;
-  const distance = sqrt((distX*distX) + (distY*distY));
+  if (cy &lt; ry) {
+    testY = ry;          // верхній край
+  } else if (cy &gt; ry + rh) {
+    testY = ry + rh;     // нижній край
+  }
 
-  // якщо відстань менша за радіус круга це колізія!
-  return distance <= radius;
-}
-</code></pre>
+  const distX = cx - testX;
+  const distY = cy - testY;
+  const distance = sqrt((distX * distX) + (distY * distY));
+
+  return distance &lt;= radius;
+}</code></pre>
 
     <p>
-        Зверніть увагу, що наш код трохи задовгий, бо включає усі потрібні класи, тому фактичний проєкт прикладу у
-        репозиорії розбитий на окремі файли. За потреби ви можете обʼєднати усі допоміжні функції по виявленню колізій,
-        які необхідні для вашого проєкту, в один файл під назвою <em>collision-functions</em>.
+      У реальних проєктах класи та допоміжні функції з виявлення зіткнень
+      зручно виносити в окремі <b>js</b>-файли (наприклад,
+      зібрати всі функції перевірки в один файл
+      <span class="code">collision-detection-functions.js</span>), щоб основний
+      файл програми залишався компактним.
     </p>
 
     <p>
-        Ви можете побачити інший, більш складний приклад об’єктно-орієнтованої колізії у
-        <a class="inline-link" href="./index.html">вступі</a>. Він використовує класи для
-        кругів, прямокутників і ліній.
+      Ще один приклад об’єктно-орієнтованої сцени, де одночасно взаємодіють
+      класи кругів, прямокутників та ліній, ви вже бачили на
+      <a class="inline-link" href="./index.html">вступній сторінці книги</a>
     </p>
 
-    <a href="./matrix-transformations.html"><p class="nextPage">Далі: Робота з перетвореннями матриці</p></a>
+    <iframe class="w-full canvas" style="aspect-ratio:2/1" loading="lazy" src="./assets/code-examples/introduction/"></iframe>
+
+    <a href="./matrix-transformations.html">
+      <p class="nextPage">Далі: Робота з матричними перетвореннями</p>
+    </a>
 
     <footer>
-        <p>
-            [
-            <a class="inline-link" href="./index.html">вступ</a>,
-            <a href="https://github.com/jeffThompson/CollisionDetection" target="_blank">оригінальне джерело</a>
-            ]
-        </p>
+      <p>
+        [
+        <a class="inline-link" href="./index.html">вступ</a>,
+        <a class="inline-link" href="https://github.com/jeffThompson/CollisionDetection" target="_blank">оригінальне джерело</a>
+        ]
+      </p>
 
-        <p class="license">
-            <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
-                <img id="license" class="license" alt="Creative Commons License" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png">
-            </a>
-        </p>
+      <p class="license">
+        <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+          <img
+            id="license"
+            class="license"
+            alt="Creative Commons License"
+            src="./assets/images/graphics/by-nc-sa.svg""
+          >
+        </a>
+      </p>
     </footer>
 
     <script>hljs.highlightAll();</script>
-</div>
+  </div>
 </body>
+
 </html>

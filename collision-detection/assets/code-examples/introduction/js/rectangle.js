@@ -10,7 +10,7 @@ class Rectangle {
 
   update(cx, cy, cr) {
     this.y += this.speed;
-    this.isHit = isCircleWithRectCollides(cx, cy, cr, this.x, this.y, this.w, this.h);
+    this.isHit = collideCircleRect(cx, cy, cr, this.x, this.y, this.w, this.h);
   }
 
   display() {

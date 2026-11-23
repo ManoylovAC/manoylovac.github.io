@@ -1,112 +1,130 @@
 <!DOCTYPE html>
-<html>
+<html lang="uk">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/png" href="./assets/images/graphics/favicon.png">
-    <meta name="description" content="An online book about collision detection using p5js, онлайн-книга про виявлення зіткнень за допомогою p5js">
-    <meta name="keywords" content="challenges collision, interactive collision, перевірка на зіткнення, завдання, ітерактивні приклади">
-    <title>Виявлення зіткнень: завдання 3</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/png" href="./assets/images/graphics/favicon.png">
+  <meta name="description" content="Практичні завдання з виявлення зіткнень ліній у p5.js: гра з лазерами, фізичний відскок кульки від похилих поверхонь та пряма видимість.">
+  <meta name="keywords" content="challenges collision, interactive collision, перевірка зіткнень, завдання, лінії, лазери, пряма видимість, інтерактивні приклади, p5.js">
+  <title>Виявлення зіткнень: Завдання 3</title>
 
-    <!-- FONTS AND CSS -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400..700&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
-    <link href="./assets/css/stylesheet.css" rel="stylesheet" type="text/css">
+  <!-- FONTS AND CSS -->
+  <link href="./assets/css/stylesheet.css" rel="stylesheet" type="text/css">
 
-    <!-- CODE PRETTIFY -->
-    <link href="./assets/css/obsidian.min.css" rel="stylesheet" type="text/css">
-    <script src="./assets/js/highlight.min.js"></script>
+  <!-- CODE PRETTIFY -->
+  <link href="./assets/css/obsidian.min.css" rel="stylesheet" type="text/css">
+  <script src="./assets/js/highlight.min.js"></script>
 
-    <!-- additional behaviour -->
-    <script src="./assets/js/main.js"></script>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-46TNRV0VFR"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-46TNRV0VFR');
-    </script>
-    <script src="./assets/js/main.js"></script>
+  <!-- additional behaviour -->
+  <script src="./assets/js/main.js"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-46TNRV0VFR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-46TNRV0VFR');
+  </script>
 </head>
 
 <body>
-<div id="wrapper">
+  <div id="wrapper">
     <header class="navigation">
-        <span id="prev"><a href="./line-rect.html">←</a></span>
-        <span id="title">
-            <a id="navigation-title"
-               class="navigation-title inline-link bg-blue"
-               data-prev-title="Лінія і Прямокутник"
-               data-curr-title="Виявлення зіткнень"
-               data-next-title="Прямокутник і Точка"
-               href="table-of-contents.html"
-            >Виявлення зіткнень</a>
-        </span>
-        <span id="next"><a href="./poly-point.html">→</a></span>
+      <span id="prev"><a href="./line-rect.html">←</a></span>
+      <span id="title">
+        <a
+          id="navigation-title"
+          class="navigation-title inline-link bg-blue"
+          data-prev-title="Лінія і Прямокутник"
+          data-curr-title="Виявлення зіткнень"
+          data-next-title="Багатокутник і Точка"
+          href="table-of-contents.html"
+        >Виявлення зіткнень</a>
+      </span>
+      <span id="next"><a href="./poly-point.html">→</a></span>
     </header>
 
-
-    <img src="./assets/images/challenge.jpg" alt="прев'ю для секції завдань">
+    <img src="./assets/images/challenge.jpg" alt="Прев’ю для секції завдань">
 
     <h1 class="uppercase">Завдання 3</h1>
 
     <p>
-        Спробуйте ці завдання-підказки, щоб змінити код, який ми написали раніше:
+      Лінії відкривають шлях до променів, стін і похилих схилів! Спробуйте свої
+      сили в цих завданнях:
     </p>
 
-    <p>
-        <ol>
-            <li>
-                <a
-                  class="inline-link"
-                  href="https://www.google.com/search?q=cat+lasers&sa=X&biw=970&bih=818&tbm=isch&tbo=u&source=univ&ei=A5hXVb7mCcWwsAT0rYGoCA&ved=0CB4QsAQ"
-                  target="_blank"
-                >
-                    Лазери!
-                </a>
-                Чи можете ви створити просту гру, де гравець використовує курсор для переміщення повз ряди рухомих або
-                статичних лазерів, щоб дістатися іншої сторони умовної кімнати? Намалюйте свого персонажа у вигляді простого круга
-                чи прямокутника або замініть їх зображенням. Якщо використовуєте зображення, то для спрощення обрахунку
-                колізії перевіряйте зіткнення за допомогою обмежувального кола чи рамки про які розповідалося у темах про
-                <a class="inline-link" href="./circle-circle.html">круги</a> та
-                <a class="inline-link" href="./rect-rect.html">прямокутники</a>.
-            </li>
-            <li>
-                Використовуючи зіткнення <a class="inline-link" href="./line-circle.html">лінії з кругом</a>, ми можемо
-                імітувати кульку, яка відскакує від поверхонь під певним кутом. Чи можете ви додати силу тяжіння, а також
-                змусити кульку відскакувати в напрямку, який залежить від кута лінії? Підказка: щоб отримати напрямок відскоку,
-                знайдіть кут між кулькою і найближчою точкою на лінії. Для цього можна скористатися функцією з <span class="code">p5js</span>
-                під назвою
-                <span class="code"><a class="inline-link" href="https://p5js.org/reference/p5.Vector/angleBetween/" target="_blank">angleBetween()</a></span>.
-                Про імітацію різних сил і зокрема гравітацію можна також почитати у розділі
-                <a class="inline-link" href="https://manoylovac.github.io/noc2/forces.html" target="_blank">сили</a>
-                з книги <a class="inline-link" href="https://manoylovac.github.io/noc2/" target="_blank">Природа Коду</a>.
-                У разі чого в розділі про
-                <a class="inline-link" href="https://manoylovac.github.io/noc2/vectors.html#example-12-bouncing-ball-with-vectors" target="_blank">вектори</a>
-                також розглядається і приклад з кулькою, що відплигує від стінок полотна.
-            </li>
-        </ol>
-    </p>
+    <ol>
+      <li>
+        <strong>Кімната з лазерами!</strong> Створіть мінігру, де гравець керує
+        персонажем за допомогою курсора і має провести його крізь кімнату,
+        заповнену лазерними променями (статичними або такими, що обертаються чи
+        пульсують), до протилежного краю екрана. Персонажа можна намалювати
+        кругом чи прямокутником, або ж завантажити спрайт-картинку й оточити її
+        невидимим
+        <a class="inline-link" href="./circle-circle.html">обмежувальним колом</a>
+        чи <a class="inline-link" href="./rect-rect.html">хітбоксом</a>.
+      </li>
 
-    <a href="./poly-point.html"><p class="nextPage">Далі: Прямокутник і Точка</p></a>
+      <li>
+        <strong>Хованки від охоронця (Line of Sight).</strong> Використайте ідею
+        прямої видимості з розділу
+        <a class="inline-link" href="./line-rect.html">«Лінія і Прямокутник»</a>:
+        розмістіть у центрі сцени прямокутну колону, з одного боку поставте
+        точку-охоронця, а точкою-гравцем керуйте за допомогою миші. Малюйте
+        між ними промінь: якщо він не перетинає колону, нехай екран
+        підсвічується тривожним червоним кольором («Помічено!»), а якщо
+        перетинає&nbsp;— спокійним зеленим («У схованці»).
+      </li>
+
+      <li>
+        <strong>Відскок кульки від похилого схилу.</strong> Використовуючи
+        алгоритм <a class="inline-link" href="./line-circle.html">«Лінія і Круг»</a>,
+        змоделюйте кульку, яка падає під дією гравітації та реалістично
+        відскакує від похилої лінії!
+        <br>
+        <em>Підказка:</em> щоб визначити напрямок відскоку,
+            знайдіть кут між кулькою та найближчою точкою на лінії. Для цього можна скористатися методом
+            <span class="code-link"><a class="inline-link" href="https://p5js.org/reference/p5.Vector/angleBetween/" target="_blank">angleBetween()</a></span> з класу векторів у <span class="code">p5.js</span>.
+            Вектор від найближчої точки на лінії
+        <span class="code">(closestX, closestY)</span> до центра кульки
+        <span class="code">(cx, cy)</span> задає напрямок нормалі (перпендикуляра
+        до поверхні в точці удару).  Докладніше про моделювання гравітації та відскоків
+        читайте в розділах про
+        <a class="inline-link" href="https://manoylovac.github.io/noc2/vectors.html#example-12-bouncing-ball-with-vectors" target="_blank">вектори</a>
+        та
+        <a class="inline-link" href="https://manoylovac.github.io/noc2/forces.html" target="_blank">сили</a>
+        в українському перекладі книги Деніела Шиффмана
+        <a class="inline-link" href="https://manoylovac.github.io/noc2/" target="_blank">«Природа коду»</a>.
+      </li>
+    </ol>
+
+    <a href="./poly-point.html">
+      <p class="nextPage">Далі: Багатокутник і Точка</p>
+    </a>
 
     <footer>
-        <p>
-            [
-            <a class="inline-link" href="./index.html">вступ</a>,
-            <a href="https://github.com/jeffThompson/CollisionDetection" target="_blank">оригінальне джерело</a>
-            ]
-        </p>
+      <p>
+        [
+        <a class="inline-link" href="./index.html">вступ</a>,
+        <a class="inline-link" href="https://github.com/jeffThompson/CollisionDetection" target="_blank">оригінальне джерело</a>
+        ]
+      </p>
 
-        <p class="license">
-            <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
-                <img id="license" class="license" alt="Creative Commons License" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png">
-            </a>
-        </p>
+      <p class="license">
+        <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+          <img
+            id="license"
+            class="license"
+            alt="Creative Commons License"
+            src="./assets/images/graphics/by-nc-sa.svg""
+          >
+        </a>
+      </p>
     </footer>
-</div>
+
+    <script>hljs.highlightAll();</script>
+  </div>
 </body>
+
 </html>

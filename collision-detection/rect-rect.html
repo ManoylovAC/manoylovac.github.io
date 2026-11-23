@@ -1,205 +1,228 @@
 <!DOCTYPE html>
-<html>
+<html lang="uk">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/png" href="./assets/images/graphics/favicon.png">
-    <meta name="description" content="An online book about collision detection using p5js, онлайн-книга про виявлення зіткнень за допомогою p5js">
-    <meta name="keywords" content="rectangle with rectangle collision, interactive example, перевірка на зіткнення між прямокутником і прямокутником, зіткнення, ітерактивні приклади">
-    <title>Виявлення зіткнень: прямокутник і прямокутник</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/png" href="./assets/images/graphics/favicon.png">
+  <meta name="description" content="Виявлення зіткнення двох прямокутників (Rectangle-Rectangle / AABB Collision) у p5.js: класичний та інтуїтивний підходи, обмежувальні рамки (хітбокси).">
+  <meta name="keywords" content="rectangle with rectangle collision, AABB collision, interactive example, перевірка зіткнення прямокутника і прямокутника, хітбокс, обмежувальна рамка, інтерактивні приклади, p5.js">
+  <title>Виявлення зіткнень: Прямокутник і Прямокутник</title>
 
-    <!-- FONTS AND CSS -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400..700&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
-    <link href="./assets/css/stylesheet.css" rel="stylesheet" type="text/css">
+  <!-- FONTS AND CSS -->
+  <link href="./assets/css/stylesheet.css" rel="stylesheet" type="text/css">
 
-    <!-- CODE PRETTIFY -->
-    <link href="./assets/css/obsidian.min.css" rel="stylesheet" type="text/css">
-    <script src="./assets/js/highlight.min.js"></script>
+  <!-- CODE PRETTIFY -->
+  <link href="./assets/css/obsidian.min.css" rel="stylesheet" type="text/css">
+  <script src="./assets/js/highlight.min.js"></script>
 
-    <!-- additional behaviour -->
-    <script src="./assets/js/main.js"></script>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-46TNRV0VFR"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-46TNRV0VFR');
-    </script>
-    <script src="./assets/js/main.js"></script>
+  <!-- additional behaviour -->
+  <script src="./assets/js/main.js"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-46TNRV0VFR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-46TNRV0VFR');
+  </script>
 </head>
 
 <body>
-<div id="wrapper">
+  <div id="wrapper">
     <header class="navigation">
-        <span id="prev"><a href="./point-rect.html">←</a></span>
-        <span id="title">
-            <a id="navigation-title"
-               class="navigation-title inline-link bg-blue"
-               data-prev-title="Точка і Прямокутник"
-               data-curr-title="Виявлення зіткнень"
-               data-next-title="Круг і Прямокутник"
-               href="table-of-contents.html"
-            >Виявлення зіткнень</a>
-        </span>
-        <span id="next"><a href="./circle-rect.html">→</a></span>
+      <span id="prev"><a href="./point-rect.html">←</a></span>
+      <span id="title">
+        <a
+          id="navigation-title"
+          class="navigation-title inline-link bg-blue"
+          data-prev-title="Точка і Прямокутник"
+          data-curr-title="Виявлення зіткнень"
+          data-next-title="Круг і Прямокутник"
+          href="table-of-contents.html"
+        >Виявлення зіткнень</a>
+      </span>
+      <span id="next"><a href="./circle-rect.html">→</a></span>
     </header>
 
     <iframe class="w-full canvas" style="aspect-ratio:2/1" loading="lazy" src="./assets/code-examples/rect-rect/"></iframe>
 
-    <h1 class="uppercase">Прямокутник і прямокутник</h1>
+    <h1 class="uppercase">Прямокутник і Прямокутник</h1>
 
     <p>
-        Перейти від визначення перетину <a class="inline-link" href="./point-rect.html">точки і прямокутника</a> до
-        визначення перетину двох прямокутників легко, але if-оператор при цьому починає ставати досить довгими.
-        Скажімо, у нас є два квадрати, <span class="code">r1</span> and <span class="code">r2</span>, з положеннями та
-        розмірами, встановленими як у попередньому прикладі. Тепер ми маємо перевірити наступне:
-    </p>
-
-<pre><code class="language-text code-block">Чи ПРАВИЙ  край r1 ПРАВІШЕ від ЛІВОГО    краю r2?
-Чи ЛІВИЙ   край r1 ЛІВОРУЧ від ПРАВОГО   краю r2?
-Чи НИЖНІЙ  край r1 НИЖЧЕ   від ВЕРХНЬОГО краю r2?
-Чи ВЕРХНИЙ край r1 ВИЩЕ    від НИЖНЬОГО  краю r2?
-</code></pre>
-
-    <p>
-        Так, це не зовсім інтуїтивні умови 😖. Тут потрібен деякий час, щоб зрозуміти чому саме так. Також, щоб краще
-        зрозуміти потрібний набір правил можна вирізати два прямокутники й погратися ними, накладаючи один на одного.
-        А ще візьміть олівець з аркушем паперу та крок за кроком візуалізуйте свої думки щодо цих або <em>інших</em> правил.
-        Через декілька хвилин ви почнете розуміти що до чого. А коли у вас зійдеться останній пазл щодо усіх цих умов,
-        то ви отримаєте надзвичайне задоволення від свого розуму. Можливо зображення трохи допоможе: (Від перекладача:
-        після оригінального підходу я запропоную схожий, проте більш інтуїтивний підхід стосовно цього питання):
+      Перехід від перевірки
+      <a class="inline-link" href="./point-rect.html">точки з прямокутником</a>
+      до зіткнення <strong>двох прямокутників</strong> спирається на ту саму
+      ідею порівняння країв. У розробці ігор цей класичний алгоритм має навіть
+      власну назву&nbsp;— <strong>AABB</strong> (<em>Axis-Aligned Bounding
+      Box</em>, тобто обмежувальна рамка, вирівняна за осями координат).
     </p>
 
     <p>
-        <img src="./assets/images/rect-rect.jpg" alt="перевірка пересічення прямокутників" title="перевірка пересічення прямокутників">
+      Нехай у нас є два прямокутники (<span class="code">r1</span> та <span class="code">r2</span>): перший із параметрами
+      <span class="code">(r1x, r1y, r1w, r1h)</span> та другий із параметрами
+      <span class="code">(r2x, r2y, r2w, r2h)</span>. Щоб вони перетиналися,
+      мають одночасно виконуватися чотири умови:
+    </p>
+
+    <pre><code class="language-text code-block">1. Чи ПРАВИЙ  край r1 розташований ПРАВОРУЧ від ЛІВОГО    краю r2?
+2. Чи ЛІВИЙ   край r1 розташований ЛІВОРУЧ  від ПРАВОГО   краю r2?
+3. Чи НИЖНІЙ  край r1 розташований НИЖЧЕ    від ВЕРХНЬОГО краю r2?
+4. Чи ВЕРХНІЙ край r1 розташований ВИЩЕ     від НИЖНЬОГО  краю r2?</code></pre>
+
+    <p>
+      Зізнаймося чесно: з першого прочитання ці чотири рядки можуть заплутати
+      будь-кого! Щоб відчути їх на дотик, спробуйте взяти дві візитівки,
+      книжки або два вирізані з паперу прямокутники й порухати їх один відносно
+      одного на столі. Або намалюйте їх на аркуші. Уже за пару хвилин пазл
+      складеться! Нижче ми також розберемо другий, ще інтуїтивніший спосіб
+      міркування «від супротивного», а поки погляньмо на ілюстрацію:
     </p>
 
     <p>
-        Для початку перевіримо чи правий край <span class="code">r1</span> правіше від лівого краю <span class="code">r2</span>:
+      <img
+        src="./assets/images/rect-rect.jpg"
+        alt="Схема перетину двох прямокутників"
+        title="Схема перетину двох прямокутників"
+      >
+    </p>
+
+    <p>
+      Як ми вже знаємо з попереднього розділу, правий край першого
+      прямокутника має координату <span class="code">r1x + r1w</span>, а лівий
+      край другого&nbsp;— <span class="code">r2x</span>. Тож перша умова
+      записується так:
     </p>
 
     <pre><code class="language-js code-block">const r1RightEdge = r1x + r1w;
 
-if (r1RightEdge >= r2x) {
-    // правй край r1 правіше лівого краю r2
-}
-</code></pre>
+if (r1RightEdge &gt;= r2x) {
+  // правий край r1 зайшов за лівий край r2
+}</code></pre>
 
     <p>
-        Тепер ми можемо розширити цей початок коду, перевіривши всі чотири сторони:
+      Додавши перевірки для решти трьох сторін, отримуємо повну умову
+      перетину:
     </p>
 
     <pre><code class="language-js code-block">if (
-  r1x + r1w >= r2x &&  // правий  край r1 правіше лівого  краю r2
-  r1x <= r2x + r2w &&  // лівий   край r1 лівіше правого  краю r2
-  r1y + r1h >= r2y &&  // нижній  край r1 нижче верхнього краю r2
-  r1y <= r2y + r2h     // верхній край r1 вище нижнього   краю r2
+  r1x +  r1w &gt;= r2x &amp;&amp; // правий край r1 праворуч від лівого краю r2
+  r1x &lt;= r2x +  r2w &amp;&amp; // лівий край r1 ліворуч від правого краю r2
+  r1y +  r1h &gt;= r2y &amp;&amp; // нижній край r1 нижче від верхнього краю r2
+  r1y &lt;= r2y +  r2h    // верхній край r1 вище від нижнього краю r2
 ) {
-    return true;
+  return true;
 }
 
-return false;
-</code></pre>
+return false;</code></pre>
+
+    <h2 class="uppercase">Інтуїтивний підхід: від супротивного</h2>
 
     <p>
-        Насправді можна піти іншим шляхом роздумів. Шляхом від зворотного. Як на мене, цей підхід більш інтуїтивний.
-        Отже, підготуйте для кращого сприйнятя і додаткової візуалізації два прямокутники й по черзі
-        перевіряйте нові умови. На цей раз ми розглянемо умови які говорять нам про те коли прямокутники
-        <span class="uppercase">не</span> перетинаються. Таких правил теж чотири. Отже, ми матимемо колізію лише якщо
-        жодне з правил <em>відсутності</em> перетину не пройде. Прямокутники не перетинаються, якщо:
+      Якщо попередня умова все ще здається складною для запам’ятовування,
+      спробуймо поставити запитання інакше: <strong>коли два прямокутники точно
+      <span class="uppercase">не</span> торкаються один одного?</strong>
     </p>
-
-<pre><code class="language-text code-block">1) лівий край першого прямокутника знаходиться за правим краєм другого;
-2) правий край першого прямокутника знаходиться перед лівим краєм другого;
-3) верхній край першого прямокутника знаходиться нижче нижнього краю другого;
-4) нижній край першого прямокутника знаходить вище верхнього краю другого;
-</code></pre>
 
     <p>
-        Тобто початково ми будуємо умови не про наявність перетину, а про його відсутність. Якщо хоча б одна з чотирьох
-        умов відсутності справджується, тоді перетину немає і в операторі <span class="code">if</span> ми повертаємо
-        <span class="code">false</span>, а інакше вважаємо, що колізія є і тоді за замовчуванням повертаємо
-        <span class="code">true</span>. Код схожий на попередній і такі умови як мінімум легше пригадати.
+      Уявіть ті самі два прямокутники на столі. Очевидно, що між ними є проміжок
+      і вони не перетинаються лише в чотирьох простих випадках:
     </p>
 
-<pre><code class="language-js code-block">if (
-  r1x >= r2x + r2w ||  // лівий край r1 знаходиться за правим краєм r2
-  r1x + r1w <= r2x ||  // правий край r1 знаходиться перед лівим краєм r2
-  r1y >= r2y + r2h ||  // верхній край r1 знаходиться нижче нижнього краю r2
-  r1y + r1h <= r2y     // нижній край r1 знаходиться вище верхнього краю r2
+    <pre><code class="language-text code-block sm">1. Лівий   край першого прямокутника знаходиться за правим краєм другого.
+2. Правий  край першого прямокутника знаходиться перед лівим краєм другого.
+3. Верхній край першого прямокутника знаходиться нижче від нижнього краю другого.
+4. Нижній  край першого прямокутника знаходиться вище від верхнього краю другого.</code></pre>
+<!-- 1. Перший прямокутник повністю ПРАВОРУЧ від другого (його лівий край далі за правий край другого).
+2. Перший прямокутник повністю ЛІВОРУЧ  від другого (його правий край не дійшов до лівого краю другого).
+3. Перший прямокутник повністю НИЖЧЕ    від другого (його верхній край нижче за нижній край другого).
+4. Перший прямокутник повністю ВИЩЕ     від другого (його нижній край вище за верхній край другого). -->
+
+    <p>
+      Якщо справджується <em>хоча б одна</em> з цих чотирьох умов (використовуємо оператор
+      логічного <span class="no-wrap">«АБО»&nbsp;— <span class="code">||</span>),</span> прямокутники точно не
+      стикаються, і ми повертаємо <span class="code">false</span>. А якщо
+      <em>жодна</em> з них не виконалась&nbsp;— прямокутникам просто нікуди
+      подітися, окрім як перетинатися, тож повертаємо
+      <span class="code">true</span>! Код дуже схожий на попередній, але такі умови іноді легше пригадати та пояснити.
+    </p>
+
+    <pre><code class="language-js code-block">if (
+  r1x &gt; r2x + r2w || // r1 повністю праворуч від r2
+  r1x + r1w &lt; r2x || // r1 повністю ліворуч від r2
+  r1y &gt; r2y + r2h || // r1 повністю нижче від r2
+  r1y + r1h &lt; r2y    // r1 повністю вище від r2
 ) {
-    return false;
+  return false;
 }
 
-return true;
-</code></pre>
+return true;</code></pre>
 
     <p>
-        Хоча математика для цього прикладу базується на простому додаванні, це одна з найскладніших колізій для більшості
-        людей, до якої потрібно звикнути. Попрактикувавшись, ви зможете краще уявити це у своїй голові. А підготовлена
-        функція значно спростить перевірку колізій! І не пам'ятайте, що замальовки на аркуші паперу, можуть значно
-        допомогти вам при написанні вашого коду.
+        Хоча математика для цього прикладу базується на простому додаванні та порівнянні, це один із непростих випадків для інтуїтивного сприйняття. Попрактикувавшись, ви зможете легко уявляти це. А створена нами
+        функція значно спростить перевірку зіткнень! І пам'ятайте, що замальовки на аркуші паперу можуть суттєво
+        допомогти вам під час написання коду.
     </p>
 
-    <p>Повний код прикладу:</p>
+    <p>
+      Отже обидві функції математично рівносильні, тож ви можете користуватися тією,
+      яка вам ближча і зрозуміліша! Ось повний код прикладу:
+    </p>
 
-    <pre><code class="language-js code-block sm-txt">// змінні для положення і розмірів рухомого квадрата
-let s1x = 0;
-let s1y = 0;
-let s1w = 30;
-let s1h = 30;
+    <pre><code class="language-js code-block">// координати та розміри першого (рухомого) прямокутника
+let r1x = 0;
+let r1y = 0;
+const r1w = 30;
+const r1h = 30;
 
-// змінні для положення і розмірів другого статичного квадрата
-let s2x = 200;
-let s2y = 100;
-let s2w = 200;
-let s2h = 200;
+// координати та розміри другого (статичного) прямокутника
+let r2x;
+let r2y;
+const r2w = 200;
+const r2h = 200;
 
 function setup() {
   createCanvas(window.innerWidth, window.innerHeight);
   noStroke();
-  // визначення положення координат для лівого верхнього кута другого квадрата, так квадрат був по центру полотна
-  s2x = (width - s2w) / 2;
-  s2y = (height - s2h) / 2;
+
+  // розміщуємо статичний прямокутник по центру полотна
+  r2x = (width - r2w) / 2;
+  r2y = (height - r2h) / 2;
 }
 
 function draw() {
   background(255);
 
-  // оновлення координат рухомого квадрата координатами курсора
-  s1x = mouseX;
-  s1y = mouseY;
+  // оновлюємо положення рухомого прямокутника координатами курсора
+  r1x = mouseX;
+  r1y = mouseY;
 
-  // результат перевірки на зіткнення
-  const isHit = isRectWithRectCollides(s1x, s1y, s1w, s1h, s2x, s2y, s2w, s2h);
+  // перевіряємо, чи перетинаються два прямокутники
+  const isColliding = collideRectRect(r1x, r1y, r1w, r1h, r2x, r2y, r2w, r2h);
 
-  // при зіткненні змінюємо колір заливки
-  if (isHit) {
+  // змінюємо колір центрального прямокутника при зіткненні
+  if (isColliding) {
     fill(255, 150, 0);
   } else {
     fill(0, 150, 255);
   }
 
-  // малюємо рухомий квадрат
-  rect(s2x, s2y, s2w, s2h);
+  // малюємо статичний прямокутник
+  rect(r2x, r2y, r2w, r2h);
 
-  // малюємо другий статичний квадрат
+  // малюємо рухомий прямокутник
   fill(0, 150);
-  rect(s1x, s1y, s1w, s1h);
+  rect(r1x, r1y, r1w, r1h);
 }
 
-// перевірка на перетин між двома прямокутниками
-function isRectWithRectCollides(r1x, r1y, r1w, r1h, r2x, r2y, r2w, r2h) {
-  // чи сторони прямокутників перетинаються між собою?
+// перевірка на зіткнення між двома прямокутниками
+function collideRectRect(r1x, r1y, r1w, r1h, r2x, r2y, r2w, r2h) {
+  // чи перекриваються проєкції прямокутників за осями x та y?
   if (
-    r1x + r1w >= r2x &&  // правий край r1 правіше лівого краю r2
-    r1x <= r2x + r2w &&  // лівий край r1 лівіше правого краю r2
-    r1y + r1h >= r2y &&  // нижній край r1 нижче верхнього краю r2
-    r1y <= r2y + r2h     // верхній край r1 вище нижнього краю r2
+    r1x + r1w &gt;= r2x &amp;&amp; // правий край r1 праворуч від лівого краю r2
+    r1x &lt;= r2x + r2w &amp;&amp; // лівий край r1 ліворуч від правого краю r2
+    r1y + r1h &gt;= r2y &amp;&amp; // нижній край r1 нижче від верхнього краю r2
+    r1y &lt;= r2y + r2h    // верхній край r1 вище від нижнього краю r2
   ) {
     return true;
   }
@@ -207,66 +230,85 @@ function isRectWithRectCollides(r1x, r1y, r1w, r1h, r2x, r2y, r2w, r2h) {
   return false;
 }
 
-// перевірка на перетин між двома прямокутниками
-// альтернативний підхід
-function isRectWithRectCollides_intuitive(r1x, r1y, r1w, r1h, r2x, r2y, r2w, r2h) {
-  // чи сторони прямокутників НЕ перетинаються між собою?
+// альтернативний запис через перевірку відсутності перетину
+function collideRectRectIntuitive(r1x, r1y, r1w, r1h, r2x, r2y, r2w, r2h) {
   if (
-    r1x >= r2x + r2w ||  // лівий край r1 знаходиться за правим краєм r2
-    r1x + r1w <= r2x ||  // правий край r1 знаходиться перед лівим краєм r2
-    r1y >= r2y + r2h ||  // верхній край r1 знаходиться нижче нижнього краю r2
-    r1y + r1h <= r2y     // нижній край r1 знаходиться вище верхнього краю r2
+    r1x &gt; r2x + r2w || // r1 повністю праворуч від r2
+    r1x + r1w &lt; r2x || // r1 повністю ліворуч від r2
+    r1y &gt; r2y + r2h || // r1 повністю нижче від r2
+    r1y + r1h &lt; r2y    // r1 повністю вище від r2
   ) {
     return false;
   }
 
   return true;
-}
-</code></pre>
+}</code></pre>
 
     <p>
-        Тут варто зазначити дві важливі речі. По-перше, хоча в останніх двох прикладах використовуються квадрати, з цим
-        кодом працюватиме будь-який прямокутник. По-друге, цей алгоритм передбачає, що ви використовуєте стандартний режим
-        малювання прямокутників, де перші два параметри відповідають за лівий верхній кут прямокутника, що малюється, а
-        останні два визначають йоно ширину і висоту. У p5js за цей режим за замовчуванням відповідає функція
-        <span class="code"><a class="inline-link" href="https://p5js.org/reference/p5/rectMode/" target="_blank">rectMode(CORNER)</a></span>.
-        Якщо ви захочете використовувати інший режим малювання прямокутників, скажімо
-        <span class="code">rectMode(CENTER)</span>, вам потрібно буде трохи змінити цей алгоритм і це цікаве
-        завдання для розминки, яке ще буде згадано у наступному розділі із
-        <a class="inline-link" href="./section-2-challenges.html">завданнями 2</a> через кілька розділів.
+      Зверніть увагу на два важливі моменти. По-перше, хоча на сцені намальовано
+      квадрати, функція однаково добре працює з прямокутниками будь-яких
+      пропорцій. По-друге, алгоритм розрахований на стандартний режим
+      <span class="code-link"><a class="inline-link" href="https://p5js.org/reference/p5/rectMode/" target="_blank">rectMode(CORNER)</a></span>,
+      де координати <span class="code">(x, y)</span> задають лівий верхній кут.
+      Якщо у вашому проєкті використовується малювання від центра
+      <span class="code">rectMode(CENTER)</span>, формулу легко адаптувати&nbsp;—
+      ми запропонуємо це зробити в розділі
+      <a class="inline-link" href="./section-2-challenges.html">«Завдання 2»</a>.
     </p>
 
     <p>
-        <img src="./assets/images/bounding-box.jpg">
+      <img
+        src="./assets/images/bounding-box.jpg"
+        alt="Обмежувальна рамка (хітбокс) навколо складної фігури"
+        title="Обмежувальна рамка (хітбокс) навколо складної фігури"
+      >
     </p>
 
     <p>
-        Подібно до прикладу <a class="inline-link" href="./circle-circle.html">Круг і Круг</a>, зіткнення
-        <b>Прямокутник і Прямокутник</b> можна використовувати для малювання "обмежувальних рамок" навколо складніших
-        форм. Однак те, що ви отримуєте в продуктивності, втрачаєте в точності. Якщо ви коли-небудь грали в гру і
-        розчаровано кричали: "Я ж точно влучив!", тоді ви напевно зіткнулися з обмежувальними рамками, які не зовсім
-        узгоджуються з об’єктами, а значить не точно їх повторюють. В таких випадках потрібно знаходити правильний баланс
-        між фактичною правильністю і продуктивністю коду та потребами користувача.
+      Як і <a class="inline-link" href="./circle-circle.html">обмежувальні кола</a>,
+      зіткнення <strong>прямокутника з прямокутником</strong> постійно
+      використовують для створення невидимих <strong>«обмежувальних рамок»</strong>
+      або <strong>хітбоксів</strong> (<em>bounding boxes / hitboxes</em>)
+      навколо персонажів і спрайтів. Перевірка чотирьох нерівностей не потребує
+      навіть квадратного кореня, тому комп’ютер може виконувати мільйони таких
+      перевірок за секунду!
     </p>
 
-    <a href="./circle-rect.html"><p class="nextPage">Далі: Круг і Прямокутник</p></a>
+    <p>
+      Звісно, за високу швидкодію доводиться платити точністю. Якщо ви колись
+      грали у відеогру й обурено вигукували: «Та це ж промах, снаряд пролетів
+      повз плече!»,&nbsp;— ви зіткнулися саме з прямокутним хітбоксом, кути
+      якого виступали за межі намальованого персонажа. Пошук балансу між
+      математичною точністю, швидкодією та відчуттям справедливості у гравця&nbsp;—
+      одне з найцікавіших завдань геймдизайну.
+    </p>
+
+    <a href="./circle-rect.html">
+      <p class="nextPage">Далі: Круг і Прямокутник</p>
+    </a>
 
     <footer>
-        <p>
-            [
-            <a class="inline-link" href="./index.html">вступ</a>,
-            <a href="https://github.com/jeffThompson/CollisionDetection" target="_blank">оригінальне джерело</a>
-            ]
-        </p>
+      <p>
+        [
+        <a class="inline-link" href="./index.html">вступ</a>,
+        <a class="inline-link" href="https://github.com/jeffThompson/CollisionDetection" target="_blank">оригінальне джерело</a>
+        ]
+      </p>
 
-        <p class="license">
-            <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
-                <img id="license" class="license" alt="Creative Commons License" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png">
-            </a>
-        </p>
+      <p class="license">
+        <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+          <img
+            id="license"
+            class="license"
+            alt="Creative Commons License"
+            src="./assets/images/graphics/by-nc-sa.svg""
+          >
+        </a>
+      </p>
     </footer>
 
     <script>hljs.highlightAll();</script>
-</div>
+  </div>
 </body>
+
 </html>

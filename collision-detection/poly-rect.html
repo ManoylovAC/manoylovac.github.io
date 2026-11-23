@@ -1,51 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html lang="uk">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/png" href="./assets/images/graphics/favicon.png">
-    <meta name="description" content="An online book about collision detection using p5js, онлайн-книга про виявлення зіткнень за допомогою p5js">
-    <meta name="keywords" content="polygon with  rectangle collision, interactive collision, перевірка на зіткнення між багатокутником і прямокутником, зіткнення, ітерактивні приклади">
-    <title>Виявлення зіткнень: багатокутник і прямокутник</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/png" href="./assets/images/graphics/favicon.png">
+  <meta name="description" content="Перевірка зіткнення багатокутника та прямокутника (Polygon-Rectangle Collision) у p5.js за допомогою модульного поєднання функцій.">
+  <meta name="keywords" content="polygon with rectangle collision, interactive collision, перевірка зіткнення багатокутника і прямокутника, полігон, інтерактивні приклади, p5.js">
+  <title>Виявлення зіткнень: Багатокутник і Прямокутник</title>
 
-    <!-- FONTS AND CSS -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400..700&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
-    <link href="./assets/css/stylesheet.css" rel="stylesheet" type="text/css">
+  <!-- FONTS AND CSS -->
+  <link href="./assets/css/stylesheet.css" rel="stylesheet" type="text/css">
 
-    <!-- CODE PRETTIFY -->
-    <link href="./assets/css/obsidian.min.css" rel="stylesheet" type="text/css">
-    <script src="./assets/js/highlight.min.js"></script>
+  <!-- CODE PRETTIFY -->
+  <link href="./assets/css/obsidian.min.css" rel="stylesheet" type="text/css">
+  <script src="./assets/js/highlight.min.js"></script>
 
-    <!-- additional behaviour -->
-    <script src="./assets/js/main.js"></script>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-46TNRV0VFR"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-46TNRV0VFR');
-    </script>
-    <script src="./assets/js/main.js"></script>
+  <!-- additional behaviour -->
+  <script src="./assets/js/main.js"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-46TNRV0VFR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-46TNRV0VFR');
+  </script>
 </head>
 
 <body>
-<div id="wrapper">
+  <div id="wrapper">
     <header class="navigation">
-        <span id="prev"><a href="./poly-circle.html">←</a></span>
-        <span id="title">
-            <a id="navigation-title"
-               class="navigation-title inline-link bg-blue"
-               data-prev-title="Прямокутник і Круг"
-               data-curr-title="Виявлення зіткнень"
-               data-next-title="Багатокутник і Лінія"
-               href="table-of-contents.html"
-            >Виявлення зіткнень</a>
-        </span>
-        <span id="next"><a href="./poly-line.html">→</a></span>
+      <span id="prev"><a href="./poly-circle.html">←</a></span>
+      <span id="title">
+        <a
+          id="navigation-title"
+          class="navigation-title inline-link bg-blue"
+          data-prev-title="Багатокутник і Круг"
+          data-curr-title="Виявлення зіткнень"
+          data-next-title="Багатокутник і Лінія"
+          href="table-of-contents.html"
+        >Виявлення зіткнень</a>
+      </span>
+      <span id="next"><a href="./poly-line.html">→</a></span>
     </header>
 
     <iframe class="w-full canvas" style="aspect-ratio:2/1" loading="lazy" src="./assets/code-examples/poly-rect/"></iframe>
@@ -53,194 +50,242 @@
     <h1 class="uppercase">Багатокутник і Прямокутник</h1>
 
     <p>
-        Як і в попередньому прикладі, зіткнення між багатокутником і прямокутником просто вимагає від нас розширення
-        функцій, що вже існують. У цьому випадку ми можемо перевірити, чи будь-яке з ребер прямокутника стикається з
-        будь-яким ребром багатокутника.
+      Як і в попередньому розділі, перевірка зіткнення між багатокутником і
+      прямокутником не потребує жодної нової формули&nbsp;— ми просто
+      поєднуємо вже знайомі функції! Нам потрібно перевірити, чи перетинається
+      будь-яке ребро багатокутника з будь-якою стороною прямокутника.
     </p>
 
     <p>
-        Для цього ми перевіряємо зіткнення <a class="inline-link" href="./line-rect.html">лінії з прямокутником</a>
-        для кожної сторони багатокутника. Подібно до наших попередніх прикладів, дві змінні <span class="code">vc</span>
-        і <span class="code">vn</span> це два векторні обʼєкти, що формують ребро:
+      Для цього ми в циклі беремо поточну та наступну вершини багатокутника
+      (<span class="code">currVertex</span> і
+      <span class="code">nextVertex</span>) та передаємо утворене ними ребро до
+      функції <a class="inline-link" href="./line-rect.html">collideLineRect()</a>:
     </p>
 
-    <pre><code class="language-js code-block">const isCollision = isLineWithRectCollides(vc.x,vc.y,vn.x,vn.y, rx,ry,rw,rh);
+    <pre><code class="language-js code-block">const isCollision = collideLineRect(
+  currVertex.x, currVertex.y,
+  nextVertex.x, nextVertex.y,
+  rx, ry, rw, rh
+);
 
-if (isCollision) return true;
-</code></pre>
+if (isCollision) {
+  return true;
+}</code></pre>
 
     <p>
-        Також, як і в останньому прикладі, ми можемо обробити той випадок, коли прямокутник знаходиться всередині
-        багатокутника, перевіривши, чи його кутові точки знаходиться всередині полігона. Ця перевірка не потрібна
-        для усіх випадків, тому її використання залежить від ваших потреб, оскільки, як і в нашому попередньому прикладі,
-        це вимагає повторного проходження всіх вершин багатокутника, що призводить до додаткових обчислень.
+      А що, як маленький прямокутник повністю опиниться всередині великого
+      багатокутника, не торкаючись жодного його ребра? Як і в прикладі з кругом,
+      ми можемо після завершення циклу перевірити, чи лежить будь-який кут прямокутника
+      <span class="code">(rx, ry)</span> усередині багатокутника за допомогою
+      <a class="inline-link" href="./poly-point.html">collidePolyPoint()</a>:
     </p>
 
-    <pre><code class="language-js code-block">const isInside = isPolygonPointCollides(vertices, rx,ry);
+    <pre><code class="language-js code-block">const isInside = collidePolyPoint(vertices, rx, ry);
+if (isInside) {
+  return true;
+}</code></pre>
 
-if (isInside) return true;
-</code></pre>
+    <p>
+      Виконуйте цю перевірку один раз <em>після</em> циклу
+      <span class="code">for</span> (або взагалі пропустіть її, якщо у вашій
+      грі важлива лише фіксація моменту удару об зовнішній контур).
+    </p>
 
     <p>Повний приклад коду:</p>
 
-    <pre><code class="language-js code-block sm-txt">// змінні для рухомого квадрата
-let sx = 0;
-let sy = 0;
-let sw = 30;
-let sh = 30;
+    <pre><code class="language-js code-block">// координати та розміри рухомого прямокутника
+let rx = 0;
+let ry = 0;
+const rw = 30;
+const rh = 30;
 
-// масив для векторів, по одному для кожної вершини багатокутника
-let vertices = [];
+// масив векторів вершин багатокутника
+const vertices = [];
 
 function setup() {
   createCanvas(window.innerWidth, window.innerHeight);
   noStroke();
 
-  // створення набору координат багатокутника (тут це паралелограм)
+  // задаємо координати вершин багатокутника (трапеція)
   vertices[0] = createVector(width / 2 - 100, height / 2 - 100);
   vertices[1] = createVector(width / 2 + 100, height / 2 - 100);
-  vertices[2] = createVector(width / 2 + 50, height / 2 + 100);
-  vertices[3] = createVector(width / 2 - 50, height / 2 + 100);
+  vertices[2] = createVector(width / 2 + 50,  height / 2 + 100);
+  vertices[3] = createVector(width / 2 - 50,  height / 2 + 100);
 }
 
 function draw() {
   background(255);
 
-  // оновлення координат центру круга координатами курсора
-  sx = mouseX;
-  sy = mouseY;
+  // оновлюємо координати прямокутника положенням курсора
+  rx = mouseX;
+  ry = mouseY;
 
-  // результат перевірки на зіткнення
-  const isHit = isPolyWithRectCollides(vertices, sx, sy, sw, sh);
+  // перевіряємо зіткнення багатокутника і прямокутника
+  const isColliding = collidePolyRect(vertices, rx, ry, rw, rh);
 
-  // при зіткненні змінюємо колір
-  if (isHit) fill(255, 150, 0);
-  else fill(0, 150, 255);
+  // змінюємо колір багатокутника при зіткненні
+  if (isColliding) {
+    fill(255, 150, 0);
+  } else {
+    fill(0, 150, 255);
+  }
 
-  // малювання багатокутника через перебір вершин
+  // малюємо багатокутник
   noStroke();
   beginShape();
   for (const v of vertices) {
     vertex(v.x, v.y);
   }
-  endShape();
+  endShape(CLOSE);
 
-  // малювання прямокутника
+  // малюємо прямокутник
   fill(0, 150);
-  rect(sx, sy, sw, sh);
+  rect(rx, ry, rw, rh);
 }
 
-// перевірка на перетин між багатокутником і прямокутником
-function isPolyWithRectCollides(vertices, rx, ry, rw, rh) {
-  // перебір кожної вершини з використанням наступної вершини в списку
+// перевірка на зіткнення між багатокутником і прямокутником
+function collidePolyRect(vertices, rx, ry, rw, rh) {
+  // перебираємо всі ребра багатокутника
   let next = 0;
-  for (let current = 0; current < vertices.length; current++) {
-
-    // отримання наступної вершини зі списку
+  for (let current = 0; current &lt; vertices.length; current++) {
     next = current + 1;
-    // коли дійшли до останньої вершини, беремо першу під індексом 0
     if (next === vertices.length) {
       next = 0;
     }
 
-    // отримуємо p5.Vector у нашій поточній позиції
-    // це зробить наш оператор if трохи чистішим
-    const vc = vertices[current];// c для "current" (поточний)
-    const vn = vertices[next];   // n для "next" (наступний)
+    const currVertex = vertices[current];
+    const nextVertex = vertices[next];
 
-    // перевіряємо всі чотири сторони прямокутника
-    const isCollision = isLineWithRectCollides(vc.x, vc.y, vn.x, vn.y, rx, ry, rw, rh);
-    if (isCollision) return true;
-
-    // необов’язково: перевірка на те, чи прямокутник знаходиться ВСЕРЕДИНІ багатокутника,
-    // зауважте, що це повторює перебір усіх сторін багатокутника знову,
-    // тому використовуйте це лише, якщо вам потрібно
-    const isInside = isPolygonPointCollides(vertices, rx, ry);
-    if (isInside) return true;
+    // перевіряємо, чи поточне ребро перетинає прямокутник
+    const isCollision = collideLineRect(
+      currVertex.x, currVertex.y,
+      nextVertex.x, nextVertex.y,
+      rx, ry, rw, rh
+    );
+    if (isCollision) {
+      return true;
+    }
   }
 
-  return false;
-}
-
-// перевірка на перетин між лінією та прямокутником
-function isLineWithRectCollides(x1, y1, x2, y2, rx, ry, rw, rh) {
-  // перевірка, чи лінія торкнулася будь-якої сторони прямокутника
-  const left = isLineWithLineCollides(x1, y1, x2, y2, rx, ry, rx, ry + rh);
-  const right = isLineWithLineCollides(x1, y1, x2, y2, rx + rw, ry, rx + rw, ry + rh);
-  const top = isLineWithLineCollides(x1, y1, x2, y2, rx, ry, rx + rw, ry);
-  const bottom = isLineWithLineCollides(x1, y1, x2, y2, rx, ry + rh, rx + rw, ry + rh);
-
-  // якщо БУДЬ-ЩО з наведеного вище вірно, значить лінія має перетин з прямокутником
-  if (left || right || top || bottom) {
+  // необов’язково: перевіряємо, чи прямокутник повністю всередині багатокутника
+  const isInside = collidePolyPoint(vertices, rx, ry);
+  if (isInside) {
     return true;
   }
 
   return false;
 }
 
-// перевірка на перетин між лінією та кругом
-function isLineWithLineCollides(x1, y1, x2, y2, x3, y3, x4, y4) {
-  // розрахунок напрямку ліній
-  const uA = ((x4-x3) * (y1-y3) - (y4-y3) * (x1-x3)) / ((y4-y3) * (x2-x1) - (x4-x3) * (y2-y1));
-  const uB = ((x2-x1) * (y1-y3) - (y2-y1) * (x1-x3)) / ((y4-y3) * (x2-x1) - (x4-x3) * (y2-y1));
+// перевірка на зіткнення між лінією та прямокутником
+function collideLineRect(x1, y1, x2, y2, rx, ry, rw, rh) {
+  // перевірка, чи лінія перетинає будь-яку сторону прямокутника
+  const collidesLeft   = collideLineLine(x1, y1, x2, y2, rx, ry, rx, ry + rh);
+  const collidesRight  = collideLineLine(x1, y1, x2, y2, rx + rw, ry, rx + rw, ry + rh);
+  const collidesTop    = collideLineLine(x1, y1, x2, y2, rx, ry, rx + rw, ry);
+  const collidesBottom = collideLineLine(x1, y1, x2, y2, rx, ry + rh, rx + rw, ry + rh);
 
-  // якщо uA та uB мають значення між 0 та 1, тоді лінії мають перетин
-  if (uA >= 0 && uA <= 1 && uB >= 0 && uB <= 1) {
+  // якщо будь-яка з наведених вище умов істинна, лінія перетинає прямокутник
+  if (collidesLeft || collidesRight || collidesTop || collidesBottom) {
     return true;
   }
 
   return false;
 }
 
-// перевірка на перетин між багатокутником та точкою
-// потрібно, лише якщо ви збираєтеся перевірити, чи прямокутник знаходиться ВСЕРЕДИНІ багатокутника
-function isPolygonPointCollides(vertices, px, py) {
+// перевірка на перетин двох відрізків
+function collideLineLine(x1, y1, x2, y2, x3, y3, x4, y4) {
+  const uA = ((x4 - x3) * (y1 - y3) - (y4 - y3) * (x1 - x3)) / ((y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1));
+  const uB = ((x2 - x1) * (y1 - y3) - (y2 - y1) * (x1 - x3)) / ((y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1));
+
+  if (uA &gt;= 0 &amp;&amp; uA &lt;= 1 &amp;&amp; uB &gt;= 0 &amp;&amp; uB &lt;= 1) {
+    return true;
+  }
+
+  return false;
+}
+
+// перевірка на зіткнення між багатокутником та точкою
+// потрібно, лише якщо ви збираєтеся перевірити, чи прямокутник знаходиться всередині багатокутника
+function collidePolyPoint(vertices, px, py) {
   let isCollision = false;
 
-  // перебір кожної вершини з використанням наступної вершини в списку
   let next = 0;
-  for (let current = 0; current < vertices.length; current++) {
-    // отримання наступної вершини зі списку
+  for (let current = 0; current &lt; vertices.length; current++) {
     next = current + 1;
-    // коли дійшли до останньої вершини, беремо першу під індексом 0
     if (next === vertices.length) {
       next = 0;
     }
 
-    // отримуємо p5.Vector у нашій поточній позиції
-    // це зробить наш оператор if трохи чистішим
-    const vc = vertices[current];  // c для "current" (поточний)
-    const vn = vertices[next];     // n для "next" (наступний)
+    const currVertex = vertices[current];
+    const nextVertex = vertices[next];
 
-    // порівняти позицію, інвертувати змінну 'isCollision'
-    if (((vc.y > py && vn.y < py) || (vc.y < py && vn.y > py)) &&
-      (px < (vn.x - vc.x) * (py - vc.y) / (vn.y - vc.y) + vc.x)) {
+    if (
+      ((currVertex.y &gt;= py &amp;&amp; nextVertex.y &lt; py) || (currVertex.y &lt; py &amp;&amp; nextVertex.y &gt;= py)) &amp;&amp;
+      (px &lt; (nextVertex.x - currVertex.x) * (py - currVertex.y) / (nextVertex.y - currVertex.y) + currVertex.x)
+    ) {
       isCollision = !isCollision;
     }
   }
 
   return isCollision;
-}
-</code></pre>
+}</code></pre>
 
-    <a href="./poly-line.html"><p class="nextPage">Далі: Багатокутник і Лінія</p></a>
+    <p>
+      <strong>А що у зворотній ситуації&nbsp;— коли багатокутник повністю
+      опиняється всередині великого прямокутника?</strong>
+    </p>
+    <p>
+      Якщо у вашій сцені прямокутник буде значно більшим за багатокутник, може
+      трапитися протилежний граничний випадок: увесь багатокутник зайде
+      всередину прямокутника, не перетинаючи жодної з його чотирьох сторін.
+      Перевірка <span class="code">collidePolyPoint(vertices, rx, ry)</span>
+      тут не допоможе, адже кут прямокутника <span class="code">(rx, ry)</span>
+      залишиться далеко ззовні багатокутника.
+    </p>
+    <p>
+      Щоб охопити й цю ситуацію, достатньо виконати зворотну перевірку: чи
+      лежить бодай одна вершина багатокутника (наприклад, перша&nbsp;—
+      <span class="code">vertices[0]</span>) усередині прямокутника за
+      допомогою вже знайомої нам функції
+      <a class="inline-link" href="./point-rect.html">collidePointRect()</a>:
+    </p>
+
+    <pre><code class="language-js code-block">const isPolyInside = collidePointRect(
+  vertices[0].x, vertices[0].y,
+  rx, ry, rw, rh
+);
+
+if (isPolyInside) {
+  return true;
+}</code></pre>
+
+    <a href="./poly-line.html">
+      <p class="nextPage">Далі: Багатокутник і Лінія</p>
+    </a>
 
     <footer>
-        <p>
-            [
-            <a class="inline-link" href="./index.html">вступ</a>,
-            <a href="https://github.com/jeffThompson/CollisionDetection" target="_blank">оригінальне джерело</a>
-            ]
-        </p>
+      <p>
+        [
+        <a class="inline-link" href="./index.html">вступ</a>,
+        <a class="inline-link" href="https://github.com/jeffThompson/CollisionDetection" target="_blank">оригінальне джерело</a>
+        ]
+      </p>
 
-        <p class="license">
-            <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
-                <img id="license" class="license" alt="Creative Commons License" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png">
-            </a>
-        </p>
+      <p class="license">
+        <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+          <img
+            id="license"
+            class="license"
+            alt="Creative Commons License"
+            src="./assets/images/graphics/by-nc-sa.svg""
+          >
+        </a>
+      </p>
     </footer>
 
     <script>hljs.highlightAll();</script>
-</div>
+  </div>
 </body>
+
 </html>

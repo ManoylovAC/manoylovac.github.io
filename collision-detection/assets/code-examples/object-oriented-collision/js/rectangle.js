@@ -8,9 +8,9 @@ class Rectangle {
   }
 
   // перевірка на зіткнення з кругом
-  // використовуючи функцію isCircleWithRectCollides, яку ми зробили на початку
+  // використовуючи функцію collideCircleRect, яку ми зробили на початку
   checkCollisionWithCircle(circleObj) {
-    this.isHit = isCircleWithRectCollides(circleObj.x, circleObj.y, circleObj.r, this.x, this.y, this.w, this.h);
+    this.isHit = collideCircleRect(circleObj.x, circleObj.y, circleObj.r, this.x, this.y, this.w, this.h);
   }
 
   // малювання прямокутника

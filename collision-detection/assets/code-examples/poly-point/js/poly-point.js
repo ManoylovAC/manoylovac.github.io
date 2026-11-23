@@ -1,21 +1,20 @@
 // POLYGON with POINT
 // Jeff Thompson | 2015 | www.jeffreythompson.org
-// ported to p5js by Manoilov Andrii 2024
+// ported to p5.js by Andrii Manoilov | 2024
 
-// змінні для положення точки
+// координати рухомої точки
 let px = 0;
 let py = 0;
 
-// масив векторів p5js, по одному для кожної вершини багатокутника
-let vertices = [];
+// масив векторів вершин багатокутника
+const vertices = [];
 
 function setup() {
   createCanvas(window.innerWidth, window.innerHeight);
-  strokeWeight(15); // збільшена жирність, щоб краще бачити точку
+  strokeWeight(15); // збільшена товщина точки для кращої видимості
   noCursor();
 
-  // встановлення координат вершин
-  // тут ми малюємо трапецію, але ви можете створити складніші фігури
+  // задаємо вершини багатокутника (тут трапеція)
   vertices[0] = createVector(width / 2 - 100, height / 2 - 100);
   vertices[1] = createVector(width / 2 + 100, height / 2 - 100);
   vertices[2] = createVector(width / 2 + 50,  height / 2 + 100);
@@ -25,55 +24,53 @@ function setup() {
 function draw() {
   background(255);
 
-  // оновлення координат точки координатами курсора
+  // оновлюємо координати точки положенням курсора
   px = mouseX;
   py = mouseY;
 
-  // результат перевірки на зіткнення
-  const isHit = isPolyWithPointCollides(vertices, px, py);
+  // перевіряємо, чи точка всередині багатокутника
+  const isColliding = collidePolyPoint(vertices, px, py);
 
-  // при зіткненні змінюємо колір
-  if (isHit) {
+  // змінюємо колір багатокутника при зіткненні
+  if (isColliding) {
     fill(255, 150, 0);
   } else {
     fill(0, 150, 255);
   }
 
-  // малювання багатокутника з beginShape() та відповідними вершинами
+  // малюємо багатокутник за його вершинами
   noStroke();
   beginShape();
   for (const v of vertices) {
     vertex(v.x, v.y);
   }
-  endShape();
+  endShape(CLOSE);
 
-  // малювання рухомої точки
+  // малюємо рухому точку
   stroke(0, 150);
   point(px, py);
 }
 
-// перевірка на перетин між багатокутником та точкою
-function isPolyWithPointCollides(vertices, px, py) {
+// перевірка на зіткнення між багатокутником та точкою
+function collidePolyPoint(vertices, px, py) {
   let isCollision = false;
 
-  // перебір кожної вершини з використанням наступної вершини в списку
+  // перебираємо всі ребра багатокутника
   let next = 0;
   for (let current = 0; current < vertices.length; current++) {
-    // отримання наступної вершини зі списку
     next = current + 1;
-    // коли дійшли до останньої вершини, беремо першу під індексом 0
     if (next === vertices.length) {
       next = 0;
     }
 
-    // отримуємо p5.Vector у нашій поточній позиції
-    // це зробить наш оператор if трохи чистішим
-    const vc = vertices[current];  // c для "current" (поточний)
-    const vn = vertices[next];     // n для "next" (наступний)
+    const currentVertex = vertices[current];
+    const nextVertex = vertices[next];
 
-    // здійснити перевірку та за потреби інвертувати змінну 'isCollision'
-    if (((vc.y >= py && vn.y < py) || (vc.y < py && vn.y >= py)) &&
-      (px < (vn.x - vc.x) * (py - vc.y) / (vn.y - vc.y) + vc.x)) {
+    // якщо горизонтальний промінь від точки праворуч перетинає поточне ребро, інвертуємо прапорець isCollision
+    if (
+      ((currentVertex.y >= py && nextVertex.y < py) || (currentVertex.y < py && nextVertex.y >= py)) &&
+      (px < (nextVertex.x - currentVertex.x) * (py - currentVertex.y) / (nextVertex.y - currentVertex.y) + currentVertex.x)
+    ) {
       isCollision = !isCollision;
     }
   }

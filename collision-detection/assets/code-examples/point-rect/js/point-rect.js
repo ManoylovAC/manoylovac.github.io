@@ -19,7 +19,7 @@ function setup() {
   strokeWeight(15); // збільшена жирність точки, щоб краще її бачити
   // визначення положення координат для лівого верхнього кута, щоб квадрат був по центру полотна
   sx = (width - sw) / 2;
-  sy = (height - sw) / 2;
+  sy = (height - sh) / 2;
 }
 
 function draw() {
@@ -30,7 +30,7 @@ function draw() {
   py = mouseY;
 
   // результат перевірки на зіткнення
-  const isHit = isPointWithRectCollides(px, py, sx, sy, sw, sh);
+  const isHit = collidePointRect(px, py, sx, sy, sw, sh);
 
   // при зіткненні змінюємо колір заливки
   if (isHit) {
@@ -49,7 +49,7 @@ function draw() {
 }
 
 // перевірка на перетин між точкою та прямокутником
-function isPointWithRectCollides(px, py, rx, ry, rw, rh) {
+function collidePointRect(px, py, rx, ry, rw, rh) {
   // чи точка знаходиться всередині прямокутника?
   if (
        px >= rx       // точка правіше лівої сторони прямокутника

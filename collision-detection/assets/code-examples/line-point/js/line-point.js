@@ -30,7 +30,7 @@ function draw() {
   py = mouseY;
 
   // результат перевірки на зіткнення
-  const isHit = isLineWithPointCollides(x1, y1, x2, y2, px, py);
+  const isHit = collideLinePoint(x1, y1, x2, y2, px, py);
 
   // зміна кольору при зіткненні
   if (isHit) {
@@ -48,7 +48,7 @@ function draw() {
 }
 
 // перевірка на перетин між лінією та точкою
-function isLineWithPointCollides(x1, y1, x2, y2, px, py) {
+function collideLinePoint(x1, y1, x2, y2, px, py) {
   // отримання відстаней від точки до двох кінців лінії
   const d1 = dist(px, py, x1, y1);
   const d2 = dist(px, py, x2, y2);

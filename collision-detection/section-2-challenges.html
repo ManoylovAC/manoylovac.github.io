@@ -1,101 +1,130 @@
 <!DOCTYPE html>
-<html>
+<html lang="uk">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/png" href="./assets/images/graphics/favicon.png">
-    <meta name="description"
-          content="An online book about collision detection using p5js, онлайн-книга про виявлення зіткнень за допомогою p5js">
-    <meta name="keywords" content="challenges collision, interactive collision, перевірка на зіткнення, завдання, ітерактивні приклади">
-    <title>Виявлення зіткнень: завдання 2</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/png" href="./assets/images/graphics/favicon.png">
+  <meta name="description" content="Практичні завдання з виявлення зіткнень прямокутників та кругів у p5.js: плавна зміна кольору, режим rectMode(CENTER) та створення гри Pong.">
+  <meta name="keywords" content="challenges collision, interactive collision, перевірка зіткнень, завдання, прямокутник і круг, Pong, інтерактивні приклади, p5.js">
+  <title>Виявлення зіткнень: Завдання 2</title>
 
-    <!-- FONTS AND CSS -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400..700&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
-          rel="stylesheet">
-    <link href="./assets/css/stylesheet.css" rel="stylesheet" type="text/css">
+  <!-- FONTS AND CSS -->
+  <link href="./assets/css/stylesheet.css" rel="stylesheet" type="text/css">
 
-    <!-- additional behaviour -->
-    <script src="./assets/js/main.js"></script>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-46TNRV0VFR"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-46TNRV0VFR');
-    </script>
-    <script src="./assets/js/main.js"></script>
+  <!-- additional behaviour -->
+  <script src="./assets/js/main.js"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-46TNRV0VFR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-46TNRV0VFR');
+  </script>
 </head>
 
 <body>
-<div id="wrapper">
+  <div id="wrapper">
     <header class="navigation">
-        <span id="prev"><a href="./circle-rect.html">←</a></span>
-        <span id="title">
-            <a id="navigation-title"
-               class="navigation-title inline-link bg-blue"
-               data-prev-title="Круг і Прямокутник"
-               data-curr-title="Виявлення зіткнень"
-               data-next-title="Лінія і Точка"
-               href="table-of-contents.html"
-            >Виявлення зіткнень</a>
-        </span>
-        <span id="next"><a href="./line-point.html">→</a></span>
+      <span id="prev"><a href="./circle-rect.html">←</a></span>
+      <span id="title">
+        <a
+          id="navigation-title"
+          class="navigation-title inline-link bg-blue"
+          data-prev-title="Круг і Прямокутник"
+          data-curr-title="Виявлення зіткнень"
+          data-next-title="Лінія і Точка"
+          href="table-of-contents.html"
+        >Виявлення зіткнень</a>
+      </span>
+      <span id="next"><a href="./line-point.html">→</a></span>
     </header>
 
-    <img src="./assets/images/challenge.jpg" alt="прев'ю для секції завдань">
+    <img src="./assets/images/challenge.jpg" alt="Прев’ю для секції завдань">
 
     <h1 class="uppercase">Завдання 2</h1>
 
     <p>
-        Спробуйте ці завдання-підказки, щоб змінити код, який ми вже написали:
+      Ви вже вмієте перевіряти зіткнення найважливіших базових фігур&nbsp;—
+      точок, кругів та прямокутників! Спробуйте застосувати ці знання на
+      практиці в таких завданнях:
     </p>
 
-    <p>
     <ol>
-        <li>
-            Чи можете ви зробити так, щоб колір об’єкта поступово змінював колір у міру наближення курсора?
-            Підказка: використовуйте функцію
-            <span class="code"><a class="inline-link" href="https://p5js.org/reference/p5/map/" target="_blank">map()</a></span>
-            для перетворення значення відстані у корисний діапазон, який можна застосувати для кольору.
-            Також для створення для створення плавних переходів кольорів ви можете використовувати функцію
-            <span class="code"><a class="inline-link" href="https://p5js.org/reference/p5/lerpColor/" target="_blank">lerpColor()</a></span>.
-        </li>
+      <li>
+        <strong>Тепло-холодно (плавна зміна кольору).</strong> Зробіть так, щоб
+        прямокутник у прикладі
+        <a class="inline-link" href="./circle-rect.html">«Круг і Прямокутник»</a>
+        поступово змінював свій відтінок у міру того, як круг наближається до
+        нього, а під час дотику спалахував яскравим кольором.
+        <br>
+        <em>Підказка:</em> обчисліть відстань <span class="code">distance</span>
+        до найближчої точки прямокутника і скористайтеся функцією
+        <span class="code-link"><a class="inline-link" href="https://p5js.org/reference/p5/map/" target="_blank">map()</a></span>,
+        щоб перетворити цю відстань на значення яскравості від
+        <span class="code">0</span> до <span class="code">255</span>, або
+        функцією
+        <span class="code-link"><a class="inline-link" href="https://p5js.org/reference/p5/lerpColor/" target="_blank">lerpColor()</a></span>
+        для плавного змішування двох кольорів.
+      </li>
 
-        <li>
-            Як згадувалося раніше, приклади з прямокутниками використовували режим малюванню
-            <span class="code"><a class="inline-link" href="https://p5js.org/reference/p5/rectMode/" target="_blank">rectMode(CORNER)</a></span>.
-            Чи можете ви створити нові версії функцій-перевірок на зіткнення для роботи з режимом
-            <span class="code"><a class="inline-link" href="https://p5js.org/reference/p5/rectMode/" target="_blank">rectMode(CENTER)</a></span>?
-        </li>
+      <li>
+        <strong>Прямокутники від центра.</strong> Усі наші приклади з
+        прямокутниками працювали в стандартному режимі
+        <span class="code-link"><a class="inline-link" href="https://p5js.org/reference/p5/rectMode/" target="_blank">rectMode(CORNER)</a></span>,
+        де <span class="code">(rx, ry)</span>&nbsp;— це лівий верхній кут. Чи
+        можете ви переписати функції <span class="code">collidePointRect()</span>
+        та <span class="code">collideRectRect()</span> для режиму
+        <span class="code">rectMode(CENTER)</span>, де
+        <span class="code">(rx, ry)</span> означає геометричний центр
+        прямокутника?
+        <br>
+        <em>Підказка:</em> якщо центр прямокутника лежить у точці
+        <span class="code">rx</span>, то його лівий край розташований на
+        півширини лівіше (<span class="code">rx - rw / 2</span>), а правий&nbsp;—
+        на півширини правіше (<span class="code">rx + rw / 2</span>).
+      </li>
 
-        <li>
-            Враховуючи інформацію про зіткнення між <a href="./circle-rectangle.html">кругом і прямокутником</a>, ми маємо
-            достатньо для того, щоб зробити <a class="inline-link" href="https://uk.wikipedia.org/wiki/Pong" target="_blank">Pong</a>!
-            Чи можете ви створити просту версію гри з прямокутниками-ракетками та кругом-мʼячиком?
-        </li>
+      <li>
+        <strong>Класична гра Pong!</strong> Маючи алгоритм зіткнення
+        <a class="inline-link" href="./circle-rect.html">круга з прямокутником</a>,
+        ви знаєте все необхідне для відтворення легендарної аркади
+        <a class="inline-link" href="https://uk.wikipedia.org/wiki/Pong" target="_blank">Pong</a>
+        або гри «Арканоїд» (Breakout)! Створіть круг-м’ячик, який рухається зі
+        швидкістю <span class="code">speedX</span> та
+        <span class="code">speedY</span>, і прямокутник-ракетку, якою керує
+        курсор миші. Коли <span class="code">collideCircleRect()</span> повертає
+        <span class="code">true</span>, змінюйте напрямок руху м’ячика на
+        протилежний (<span class="code">speedX = -speedX</span> або
+        <span class="code">speedY = -speedY</span>).
+      </li>
     </ol>
-    </p>
 
-    <a href="./line-point.html"><p class="nextPage">Далі: Лінія і Точка</p></a>
+    <a href="./line-point.html">
+      <p class="nextPage">Далі: Лінія і Точка</p>
+    </a>
 
     <footer>
-        <p>
-            [
-            <a class="inline-link" href="./index.html">вступ</a>,
-            <a href="https://github.com/jeffThompson/CollisionDetection" target="_blank">оригінальне джерело</a>
-            ]
-        </p>
+      <p>
+        [
+        <a class="inline-link" href="./index.html">вступ</a>,
+        <a class="inline-link" href="https://github.com/jeffThompson/CollisionDetection" target="_blank">оригінальне джерело</a>
+        ]
+      </p>
 
-        <p class="license">
-            <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
-                <img id="license" class="license" alt="Creative Commons License" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png">
-            </a>
-        </p>
+      <p class="license">
+        <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+          <img
+            id="license"
+            class="license"
+            alt="Creative Commons License"
+            src="./assets/images/graphics/by-nc-sa.svg""
+          >
+        </a>
+      </p>
     </footer>
-</div>
+  </div>
 </body>
+
 </html>

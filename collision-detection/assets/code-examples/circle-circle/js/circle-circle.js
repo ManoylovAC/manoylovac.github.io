@@ -27,7 +27,7 @@ function draw() {
   circle1y = mouseY;
 
   // перевірка на зіткнення
-  const isHit = isCircleWithCircleCollides(circle1x, circle1y, circle1r, circle2x, circle2y, circle2r);
+  const isHit = collideCircleCircle(circle1x, circle1y, circle1r, circle2x, circle2y, circle2r);
 
   // якщо є зіткнення, змінюємо колір другого круга
   if (isHit) {
@@ -46,7 +46,7 @@ function draw() {
 
 
 // перевірка на перетин між двома кругами
-function isCircleWithCircleCollides(circle1x, circle1y, circle1r, circle2x, circle2y, circle2r) {
+function collideCircleCircle(circle1x, circle1y, circle1r, circle2x, circle2y, circle2r) {
   // обчислюємо дистанцію між центрами двох кругів,
   // використовуючи теорему Піфагора
   const distX = circle1x - circle2x;

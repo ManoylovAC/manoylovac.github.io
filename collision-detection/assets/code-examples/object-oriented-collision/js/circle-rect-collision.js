@@ -1,5 +1,5 @@
 // перевірка на перетин між кругом і прямокутником
-function isCircleWithRectCollides(cx, cy, radius, rx, ry, rw, rh) {
+function collideCircleRect(cx, cy, radius, rx, ry, rw, rh) {
   // тестові змінні точки, з якою буде відбуватися перевірка на перетин
   let testX = cx;
   let testY = cy;

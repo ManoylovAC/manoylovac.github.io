@@ -1,89 +1,109 @@
 <!DOCTYPE html>
-<html>
+<html lang="uk">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/png" href="./assets/images/graphics/favicon.png">
-    <meta name="description" content="An online book about collision detection using p5js, онлайн-книга про виявлення зіткнень за допомогою p5js">
-    <meta name="keywords" content="challenges collision, interactive collision, перевірка на зіткнення, завдання, ітерактивні приклади">
-    <title>Виявлення зіткнень: завдання 5</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/png" href="./assets/images/graphics/favicon.png">
+  <meta name="description" content="Практичні завдання з виявлення зіткнень трикутників у p5.js: спеціалізовані функції без масивів та створення платформера з шипами.">
+  <meta name="keywords" content="challenges collision, interactive collision, triangle collision, перевірка на зіткнення, завдання, трикутники, інтерактивні приклади, p5.js">
+  <title>Виявлення зіткнень: Завдання 5</title>
 
-    <!-- FONTS AND CSS -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400..700&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
-    <link href="./assets/css/stylesheet.css" rel="stylesheet" type="text/css">
+  <!-- FONTS AND CSS -->
+  <link href="./assets/css/stylesheet.css" rel="stylesheet" type="text/css">
 
-    <!-- CODE PRETTIFY -->
-    <link href="./assets/css/obsidian.min.css" rel="stylesheet" type="text/css">
-    <script src="./assets/js/highlight.min.js"></script>
+  <!-- CODE PRETTIFY -->
+  <link href="./assets/css/obsidian.min.css" rel="stylesheet" type="text/css">
+  <script src="./assets/js/highlight.min.js"></script>
 
-    <!-- additional behaviour -->
-    <script src="./assets/js/main.js"></script>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-46TNRV0VFR"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-46TNRV0VFR');
-    </script>
-    <script src="./assets/js/main.js"></script>
+  <!-- additional behaviour -->
+  <script src="./assets/js/main.js"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-46TNRV0VFR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-46TNRV0VFR');
+  </script>
 </head>
 
 <body>
-<div id="wrapper">
+  <div id="wrapper">
     <header class="navigation">
-        <span id="prev"><a href="./where-are-the-other-triangle-examples.html">←</a></span>
-        <span id="title">
-            <a id="navigation-title"
-               class="navigation-title inline-link bg-blue"
-               data-prev-title="Де інші приклади з трикутниками?"
-               data-curr-title="Виявлення зіткнень"
-               data-next-title="Об’єктно-Орієнтоване Зіткнення"
-               href="table-of-contents.html"
-            >Виявлення зіткнень</a>
-        </span>
-        <span id="next"><a href="./object-oriented-collision.html">→</a></span>
+      <span id="prev"><a href="./where-are-the-other-triangle-examples.html">←</a></span>
+      <span id="title">
+        <a
+          id="navigation-title"
+          class="navigation-title inline-link bg-blue"
+          data-prev-title="Де інші приклади з трикутниками?"
+          data-curr-title="Виявлення зіткнень"
+          data-next-title="Об’єктно-Орієнтоване Зіткнення"
+          href="table-of-contents.html"
+        >Виявлення зіткнень</a>
+      </span>
+      <span id="next"><a href="./object-oriented-collision.html">→</a></span>
     </header>
 
-    <img src="./assets/images/challenge.jpg" alt="прев'ю для секції завдань">
+    <img src="./assets/images/challenge.jpg" alt="Прев’ю для секції завдань">
 
     <h1 class="uppercase">Завдання 5</h1>
 
     <p>
-        Спробуйте ці завдання-підказки, щоб змінити код, який ми написали раніше:
+      Спробуйте виконати ці завдання, щоб закріпити роботу з трикутниками:
     </p>
 
-    <p>
-        <ol>
-            <li>
-                Чи можете ви написати відсутні функції, специфічні для перевірки на колізії з трикутниками?
-            </li>
-            <li>
-                <a class="inline-link" href="https://uk.wikipedia.org/wiki/Prince_of_Persia_(1989)" target="_blank">Шипи!</a>
-                Спробуйте створити просту гру, де гравець стрибає через ями з шипами.
-            </li>
-        </ol>
-    </p>
+    <ol>
+      <li>
+        <strong>Спеціалізовані функції для трикутника.</strong> Напишіть власні
+        функції <span class="code">collideTriCircle()</span>,
+        <span class="code">collideTriRect()</span> та
+        <span class="code">collideTriLine()</span>, які приймають шість
+        координат вершин трикутника
+        <span class="code">(x1, y1, x2, y2, x3, y3)</span> напряму, без
+        створення масиву векторів і без циклу <span class="code">for</span>.
+        <br>
+        <em>Підказка:</em> оскільки у трикутника завжди лише три сторони, ви
+        можете просто перевірити три відрізки:
+        <span class="code">(x1, y1)–(x2, y2)</span>,
+        <span class="code">(x2, y2)–(x3, y3)</span> та
+        <span class="code">(x3, y3)–(x1, y1)</span>!
+      </li>
 
-    <a href="./object-oriented-collision.html"><p class="nextPage">Далі: Об’єктно-Орієнтоване Зіткнення</p></a>
+      <li>
+        <strong>Обережно, шипи!</strong> Пригадайте класичні платформери на
+        кшталт
+        <a class="inline-link" href="https://uk.wikipedia.org/wiki/Prince_of_Persia_(1989)" target="_blank">Prince of Persia</a>
+        або Geometry Dash. Створіть просту аркадну гру, де персонаж (круг або
+        прямокутник) біжить уперед і за натисканням клавіші «Пробіл» перестрибує
+        через гострі трикутні шипи!
+      </li>
+    </ol>
+
+    <a href="./object-oriented-collision.html">
+      <p class="nextPage">Далі: Об’єктно-Орієнтоване Зіткнення</p>
+    </a>
 
     <footer>
-        <p>
-            [
-            <a class="inline-link" href="./index.html">вступ</a>,
-            <a href="https://github.com/jeffThompson/CollisionDetection" target="_blank">оригінальне джерело</a>
-            ]
-        </p>
+      <p>
+        [
+        <a class="inline-link" href="./index.html">вступ</a>,
+        <a class="inline-link" href="https://github.com/jeffThompson/CollisionDetection" target="_blank">оригінальне джерело</a>
+        ]
+      </p>
 
-        <p class="license">
-            <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
-                <img id="license" class="license" alt="Creative Commons License" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png">
-            </a>
-        </p>
+      <p class="license">
+        <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+          <img
+            id="license"
+            class="license"
+            alt="Creative Commons License"
+            src="./assets/images/graphics/by-nc-sa.svg""
+          >
+        </a>
+      </p>
     </footer>
-</div>
+  </div>
 </body>
+
 </html>

@@ -1,8 +1,8 @@
 // MATRIX TRANSFORMATIONS
 // Jeff Thompson | 2019 | jeffreythompson.org
-// ported to p5js by Manoilov Andrii 2024
+// ported to p5.js by Andrii Manoilov | 2024
 
-// змінні для двох масивів, що зберігатиуть вершини квадратів
+// масиви локальних вершин двох квадратів
 let squarePoints1;
 let squarePoints2;
 
@@ -12,8 +12,8 @@ function setup() {
   createCanvas(window.innerWidth, window.innerHeight);
   noCursor();
 
-  // ініціалізація додаткового коду для користування функцією screenPosition()
-  // цей код лежить в окремому файлі, взято з https://github.com/bohnacker/p5js-screenPosition
+  // активуємо функцію screenPosition() із підключеного модуля
+  // джерело: https://github.com/bohnacker/p5js-screenPosition
   addScreenPositionFunction();
 
   squarePoints1 = [
@@ -33,21 +33,18 @@ function setup() {
 function draw() {
   background(255);
 
-  // оновлення кута для обертання
+  // збільшуємо кут обертання в кожному кадрі
   angle += 0.02;
 
-  // зміщення початкових координат для першого квадрата
-  // у точку на 100px лівіше від центру полотна
+  // переміщуємо та повертаємо систему координат для першого квадрата
   push();
   translate(width / 2 - 100, height / 2);
   rotate(angle);
 
-  // перетворення чотирьох точок першого квадрата на
-  // фактичні координати полотна (відносно лівого верхнього кута полотна)
-  // після матричних перетворень вище (для деталей перегляньте функцію, яка це робить)
+  // зчитуємо фактичні екранні координати першого квадрата після трансформацій
   const square1Screen = pointsToScreenCoords(squarePoints1);
 
-  // малювання першого квадрата
+  // малюємо перший квадрат
   fill(0, 150);
   noStroke();
   beginShape();
@@ -57,22 +54,25 @@ function draw() {
   endShape(CLOSE);
   pop();
 
-  // зміщення початкових координат для другого квадрата
-  // у точку на 100px правіше від центру полотна
+  // переміщуємо та повертаємо систему координат для другого квадрата
   push();
-  translate(width - width / 2 + 100, height / 2);
+  translate(width / 2 + 100, height / 2);
   rotate(angle);
 
-  // отримання координат відносно лівого верхньго кута полотна
+  // зчитуємо фактичні екранні координати другого квадрата
   const square2Screen = pointsToScreenCoords(squarePoints2);
 
-  // результат перевірки на зіткнення
-  const isHit = isPolyWithPolyCollides(square1Screen, square2Screen);
-  // при зіткненні змінюємо колір
-  if (isHit) fill(255, 150, 0);
-  else fill(0, 150, 255);
+  // перевіряємо зіткнення двох повернутих квадратів як багатокутників
+  const isColliding = collidePolyPoly(square1Screen, square2Screen);
 
-  // малювання другого квадрата
+  // змінюємо колір другого квадрата при зіткненні
+  if (isColliding) {
+    fill(255, 150, 0);
+  } else {
+    fill(0, 150, 255);
+  }
+
+  // малюємо другий квадрат
   beginShape();
   for (const pt of squarePoints2) {
     vertex(pt.x, pt.y);
@@ -81,84 +81,77 @@ function draw() {
   pop();
 }
 
-// функція, яка повертає фактичні координати на полотні (відносно його лівого верхнього кута)
-// після матричних перетворень (наприклад, translate та rotate),
+// перетворення локальних вершин на екранні координати полотна після матричних перетворень (наприклад, translate та rotate),
 function pointsToScreenCoords(points) {
-  const screenPoints = new Array(points.length);  // створення результівного масиву
+  const screenPoints = new Array(points.length);
 
-  for (let i = 0; i < points.length; i++) {       // перебір усіх вершин
-    const screenPoint = screenPosition(points[i].x, points[i].y);  // отримання xyz-координат відносно полотна
+  for (let i = 0; i < points.length; i++) {
+    const screenPoint = screenPosition(points[i].x, points[i].y);  // отримання абсолютних xyz-координат
     screenPoints[i] = createVector(screenPoint.x, screenPoint.y);
   }
 
   return screenPoints;
 }
 
-// перевірка на перетин між багатокутником та багатокутником
-function isPolyWithPolyCollides(p1, p2) {
-  // перебір кожної вершини з використанням наступної вершини в списку
+// перевірка на зіткнення між двома багатокутниками
+function collidePolyPoly(p1, p2) {
   let next = 0;
   for (let current = 0; current < p1.length; current++) {
-
-    // отримання наступної вершини зі списку
-    // коли дійшли до останньої вершини, беремо першу під індексом 0
     next = current + 1;
-    if (next === p1.length) next = 0;
+    if (next === p1.length) {
+      next = 0;
+    }
 
-    // отримуємо p5.Vector у нашій поточній позиції
-    // це зробить наш оператор if трохи чистішим
-    const vc = p1[current];  // c для "current" (поточний)
-    const vn = p1[next];     // n для "next" (наступний)
+    const currentVertex = p1[current];
+    const nextVertex = p1[next];
 
-    // тепер ми можемо використати ці дві точки (лінію) для порівняння
-    // з вершинами іншого багатокутника за допомогою isPolyWithLineCollides()
-    let isCollision = isPolyWithLineCollides(p2, vc.x, vc.y, vn.x, vn.y);
-    if (isCollision) return true;
+    const isCollision = collidePolyLine(
+      p2,
+      currentVertex.x, currentVertex.y,
+      nextVertex.x, nextVertex.y
+    );
+    if (isCollision) {
+      return true;
+    }
+  }
 
-    // опціонально: перевірка, чи другий багатокутник знаходиться ВСЕРЕДИНІ першого
-    isCollision = isPolyWithPointCollides(p1, p2[0].x, p2[0].y);
-    if (isCollision) return true;
+  // необов’язково: перевіряємо, чи один багатокутник всередині іншого
+  const isInside = collidePolyPoint(p1, p2[0].x, p2[0].y);
+  if (isInside) {
+    return true;
   }
 
   return false;
 }
 
-
-// перевірка на перетин між багатокутником та лінією
-function isPolyWithLineCollides(vertices, x1, y1, x2, y2) {
-  // перебір кожної вершини з використанням наступної вершини в списку
+// перевірка на зіткнення між багатокутником та лінією
+function collidePolyLine(vertices, x1, y1, x2, y2) {
   let next = 0;
   for (let current = 0; current < vertices.length; current++) {
-
-    // отримання наступної вершини зі списку
     next = current + 1;
-    // коли дійшли до останньої вершини, беремо першу під індексом 0
     if (next === vertices.length) {
       next = 0;
     }
 
-    // отримання векторів для поточної й наступної точки,
-    // що формують ребро та витягання відповідних XY-координат
-    const x3 = vertices[current].x;
-    const y3 = vertices[current].y;
-    const x4 = vertices[next].x;
-    const y4 = vertices[next].y;
+    const currentVertex = vertices[current];
+    const nextVertex = vertices[next];
 
-    // перевірка перетину лінії з лінією
-    // якщо є, тоді одразу повертаємо 'true', щоб зупинити інші перевірки
-    const isHit = isLineWithLineCollides(x1, y1, x2, y2, x3, y3, x4, y4);
+    const x3 = currentVertex.x;
+    const y3 = currentVertex.y;
+    const x4 = nextVertex.x;
+    const y4 = nextVertex.y;
+
+    const isHit = collideLineLine(x1, y1, x2, y2, x3, y3, x4, y4);
     if (isHit) {
       return true;
     }
   }
 
-  // якщо зіткнень не було, повертаємо 'false'
   return false;
 }
 
-// перевірка на перетин між лінією та кругом
-function isLineWithLineCollides(x1, y1, x2, y2, x3, y3, x4, y4) {
-  // розрахунок напрямку ліній
+// перевірка на перетин двох відрізків
+function collideLineLine(x1, y1, x2, y2, x3, y3, x4, y4) {
   const uA = ((x4 - x3) * (y1 - y3) - (y4 - y3) * (x1 - x3)) / ((y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1));
   const uB = ((x2 - x1) * (y1 - y3) - (y2 - y1) * (x1 - x3)) / ((y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1));
 
@@ -166,30 +159,24 @@ function isLineWithLineCollides(x1, y1, x2, y2, x3, y3, x4, y4) {
   return uA >= 0 && uA <= 1 && uB >= 0 && uB <= 1;
 }
 
-// перевірка на перетин між багатокутником та точкою
-// used only to check if the second polygon is INSIDE the first
-function isPolyWithPointCollides(vertices, px, py) {
+// перевірка на зіткнення між багатокутником та точкою
+function collidePolyPoint(vertices, px, py) {
   let isCollision = false;
 
-  // перебір кожної вершини з використанням наступної вершини в списку
   let next = 0;
   for (let current = 0; current < vertices.length; current++) {
-
-    // отримання наступної вершини зі списку
     next = current + 1;
-    // коли дійшли до останньої вершини, беремо першу під індексом 0
     if (next === vertices.length) {
       next = 0;
     }
 
-    // отримуємо p5.Vector у нашій поточній позиції
-    // це зробить наш оператор if трохи чистішим
-    const vc = vertices[current];  // c для "current" (поточний)
-    const vn = vertices[next];     // n для "next" (наступний)
+    const currentVertex = vertices[current];
+    const nextVertex = vertices[next];
 
-    // порівняти позицію, інвертувати змінну 'isCollision'
-    if (((vc.y > py && vn.y < py) || (vc.y < py && vn.y > py)) &&
-      (px < (vn.x - vc.x) * (py - vc.y) / (vn.y - vc.y) + vc.x)) {
+    if (
+      ((currentVertex.y >= py && nextVertex.y < py) || (currentVertex.y < py && nextVertex.y >= py)) &&
+      (px < (nextVertex.x - currentVertex.x) * (py - currentVertex.y) / (nextVertex.y - currentVertex.y) + currentVertex.x)
+    ) {
       isCollision = !isCollision;
     }
   }

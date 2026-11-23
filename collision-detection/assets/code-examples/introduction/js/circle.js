@@ -9,7 +9,7 @@ class Circle {
 
   update(cx, cy, cr) {
     this.y += this.speed;
-    this.isHit = isCircleWithCircleCollides(this.x, this.y, this.r, cx, cy, cr);
+    this.isHit = collideCircleCircle(this.x, this.y, this.r, cx, cy, cr);
   }
 
   display() {

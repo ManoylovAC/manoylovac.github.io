@@ -20,7 +20,7 @@ function draw() {
   background(255);
 
   // результат перевірки на зіткнення
-  const isHit = isPointWithCircleCollides(mouseX, mouseY, circleX, circleY, circleRadius);
+  const isHit = collidePointCircle(mouseX, mouseY, circleX, circleY, circleRadius);
 
   // зміна заливки при зіткненні
   if (isHit) {
@@ -39,7 +39,7 @@ function draw() {
 }
 
 // перевірка на перетин між точкою та кругом
-function isPointWithCircleCollides(pointX, pointY, circleX, circleY, r) {
+function collidePointCircle(pointX, pointY, circleX, circleY, r) {
   // отримання відстані між точкою та центром кола за допомогою теореми Піфагора
   let distX = pointX - circleX;
   let distY = pointY - circleY;

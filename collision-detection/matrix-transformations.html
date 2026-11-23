@@ -1,50 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html lang="uk">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/png" href="./assets/images/graphics/favicon.png">
-    <meta name="description" content="An online book about collision detection using p5js, онлайн-книга про виявлення зіткнень за допомогою p5js">
-    <meta name="keywords" content="matrix transformations collision, interactive collision, перевірка на зіткнення, зіткнення, ітерактивні приклади, матричні перетворення">
-    <title>Виявлення зіткнень: робота з матричними перетвореннями</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/png" href="./assets/images/graphics/favicon.png">
+  <meta name="description" content="Виявлення зіткнень при матричних перетвореннях (translate, rotate, push, pop) у p5.js за допомогою screenPosition() та багатокутників.">
+  <meta name="keywords" content="matrix transformations collision, rotate, translate, screenPosition, interactive collision, перевірка на зіткнення, матричні перетворення, обертання фігур, інтерактивні приклади, p5.js">
+  <title>Виявлення зіткнень: робота з матричними перетвореннями</title>
 
-    <!-- FONTS AND CSS -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400..700&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
-    <link href="./assets/css/stylesheet.css" rel="stylesheet" type="text/css">
+  <!-- FONTS AND CSS -->
+  <link href="./assets/css/stylesheet.css" rel="stylesheet" type="text/css">
 
-    <!-- CODE PRETTIFY -->
-    <link href="./assets/css/obsidian.min.css" rel="stylesheet" type="text/css">
-    <script src="./assets/js/highlight.min.js"></script>
+  <!-- CODE PRETTIFY -->
+  <link href="./assets/css/obsidian.min.css" rel="stylesheet" type="text/css">
+  <script src="./assets/js/highlight.min.js"></script>
 
-    <!-- additional behaviour -->
-    <script src="./assets/js/main.js"></script>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-46TNRV0VFR"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-46TNRV0VFR');
-    </script>
+  <!-- additional behaviour -->
+  <script src="./assets/js/main.js"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-46TNRV0VFR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-46TNRV0VFR');
+  </script>
 </head>
 
 <body>
-<div id="wrapper">
+  <div id="wrapper">
     <header class="navigation">
-        <span id="prev"><a href="./object-oriented-collision.html">←</a></span>
-        <span id="title">
-            <a id="navigation-title"
-               class="navigation-title inline-link bg-blue"
-               data-prev-title="Об’єктно-Орієнтоване Зіткнення"
-               data-curr-title="Виявлення зіткнень"
-               data-next-title="Подяки"
-               href="table-of-contents.html"
-            >Виявлення зіткнень</a>
-        </span>
-        <span id="next"><a href="./thanks.html">→</a></span>
+      <span id="prev"><a href="./object-oriented-collision.html">←</a></span>
+      <span id="title">
+        <a
+          id="navigation-title"
+          class="navigation-title inline-link bg-blue"
+          data-prev-title="Об’єктно-Орієнтоване Зіткнення"
+          data-curr-title="Виявлення зіткнень"
+          data-next-title="Подяки"
+          href="table-of-contents.html"
+        >Виявлення зіткнень</a>
+      </span>
+      <span id="next"><a href="./thanks.html">→</a></span>
     </header>
 
     <iframe class="w-full canvas" style="aspect-ratio:2/1" loading="lazy" src="./assets/code-examples/matrix-transformations/"></iframe>
@@ -52,48 +50,66 @@
     <h1 class="uppercase">Робота з матричними перетвореннями</h1>
 
     <p>
-        Використання простих форм із заздалегідь визначеними <span class="code">X/Y</span> координатами — це чудово,
-        але в реальних ситуаціях, імовірно, ми будемо використовувати матричні перетворення такі як
-        <span class="code">
-            <a class="inline-link" href="https://p5js.org/reference/p5/push/" target="_blank">push()</a>
-            /
-            <a class="inline-link" href="https://p5js.org/reference/p5/pop/" target="_blank">pop()</a>
-        </span>,
-        <span class="code"><a class="inline-link" href="https://p5js.org/reference/p5/translate/" target="_blank">translate()</a></span>
-        та <span class="code"><a class="inline-link" href="https://p5js.org/reference/p5/rotate/" target="_blank">rotate()</a></span>,
-        і малюватимемо фігури навколо певних початкових координат. Це також означає, що будь-які трансформації, такі
-        як обертання, перемістять вершини наших фігур у інші позиції на екрані, ніж ми їх визначили на початку!
+      Досі ми задавали всі фігури безпосередньо їхніми екранними координатами
+      <span class="code">x/y</span>. Проте у творчому програмуванні на
+      <span class="code">p5.js</span> об’єкти дуже часто переміщують і
+      обертають за допомогою <strong>матричних перетворень</strong>&nbsp;—
+      функцій
+      <span class="code-link"><a class="inline-link" href="https://p5js.org/reference/p5/push/" target="_blank">push()</a></span>
+      /
+      <span class="code-link"><a class="inline-link" href="https://p5js.org/reference/p5/pop/" target="_blank">pop()</a></span>,
+      <span class="code-link"><a class="inline-link" href="https://p5js.org/reference/p5/translate/" target="_blank">translate()</a></span>
+      та
+      <span class="code-link"><a class="inline-link" href="https://p5js.org/reference/p5/rotate/" target="_blank">rotate()</a></span>.
     </p>
 
     <p>
-        Щоб дізнатися або пригадати згадані трансформації ви можете перглянути про них вступне відео на сайті
-        <a class="inline-link" href="https://thecodingtrain.com" target="_blank">https://thecodingtrain.com</a>
-        <a class="inline-link" href="https://thecodingtrain.com/tracks/transformations-in-p5" target="_blank">Translate, Rotate, Push/Pop</a>.
+      У чому тут підступ для наших алгоритмів зіткнення? Коли ви викликаєте
+      <span class="code">translate()</span> та <span class="code">rotate()</span>,
+      ви повертаєте <em>саму координатну сітку полотна</em>, а числа у змінних
+      вашої фігури залишаються незмінними! Тобто на екрані квадрат уже
+      повернувся на <span class="code">45°</span> і змістився в центр, але
+      його локальні вершини все ще думають, що вони лежать у точках
+      <span class="code">(-50, -50)</span>.
     </p>
 
     <p>
-        На щастя ми можемо додати хитру функцію
-        <span class="code">
-            <a class="inline-link" href="https://github.com/bohnacker/p5js-screenPosition" target="_blank">screenPosition()</a>
-        </span>,
-        яка дозволить нам надсилати у неї <span class="code">X/Y</span> позиції потрібних точок, які нам відомі без
-        урахування застосованих трансформацій, а вона повертатиме фактичні координати на екрані з урахуванням усіх
-        матричних перетворень.
+      <em>Підказка:</em> якщо ви хочете освіжити в пам’яті, як працюють
+      трансформації координатної сітки в <span class="code">p5.js</span>,
+      перегляньте чудовий відеоурок Деніела Шиффмана
+      <a class="inline-link" href="https://thecodingtrain.com/tracks/transformations-in-p5" target="_blank">Translate, Rotate, Push/Pop</a>
+      на сайті
+      <a class="inline-link" href="https://thecodingtrain.com" target="_blank">The Coding Train</a>.
+    </p>
+
+    <h2 class="uppercase">Переведення локальних координат в екранні</h2>
+
+    <p>
+      На щастя, ми можемо скористатися невеликим розширенням для
+      <span class="code">p5.js</span>&nbsp;— функцією
+      <span class="code-link"><a class="inline-link" href="https://github.com/bohnacker/p5js-screenPosition" target="_blank">screenPosition()</a></span>.
+      Ви передаєте їй локальні координати <span class="code">(x, y)</span>
+      точки всередині блоку <span class="code">push() / pop()</span>, а вона
+      множить їх на поточну матрицю трансформацій і повертає <strong>фактичні
+      екранні координати</strong> цієї точки відносно лівого верхнього кута
+      полотна!
     </p>
 
     <p>
-        Хоча ми могли б оновити всі наші приклади, з урахуванням подібних трансформацій, простіше припустити, що всі
-        наші форми є багатокутниками і використати відповідну функціюю перевірки на колізію
-        <span class="code">isPolyWithPolyCollides()</span>, яку ми вже створили.
+      Оскільки після обертання звичайний прямокутник перестає бути вирівняним
+      за осями координат (його сторони стають похилими), найзручніше розглядати
+      будь-яку повернуту фігуру як <strong>багатокутник</strong> і перевіряти
+      її універсальною функцією
+      <a class="inline-link" href="./poly-poly.html">collidePolyPoly()</a>!
     </p>
 
     <p>
-        Замість того, щоб визначити багатокутник як масив екранних координат, ми розташуємо їх навколо власної
-        відносної точки відліку координат <span class="code">(0, 0)</span>, яку будемо зміщувати при малююванні
-        потрібних фігур. Наприклад, ось квадрат розміром 100 на 100 пікселів:
+      Спочатку задамо вершини квадрата розміром 100×100 пікселів у його
+      локальній системі координат навколо власного центра
+      <span class="code">(0, 0)</span>:
     </p>
 
-    <pre><code class="language-js code-block">let square1 = [
+    <pre><code class="language-js code-block">const squarePoints1 = [
   createVector(-50, -50),
   createVector( 50, -50),
   createVector( 50,  50),
@@ -101,20 +117,19 @@
 ];</code></pre>
 
     <p>
-        Потім цей квадрат буде малюватись відносно тої початковї точки, яку ми визначимо за допомогою
-        <span class="code">translate()</span>. Для кожного кадру анімації нам потрібно перетворити ці точки на екранні
-        координати з урахуванням будь-яких матричних перетворень, що відбулися. Для цього ми використаємо згадану
-        раніше функцію, яка приймає наші у стан ітрнасформаціх точки та повертає новий обʼєкт з із фактичними
-        координатами на полотні.
+      Напишимо допоміжну функцію <span class="code">pointsToScreenCoords()</span>,
+      яка в поточному кадрі пропускає кожну локальну вершину фігури через
+      <span class="code">screenPosition()</span> і повертає масив її реальних
+      екранних координат:
     </p>
 
-    <pre><code class="language-js code-block">// функція, яка повертає фактичні координати полона
-// після матричних перетворень (наприклад, translate та rotate),
+    <pre><code class="language-js code-block">// перетворює масив локальних вершин на фактичні координати полотна
+// з урахуванням активних translate() та rotate()
 function pointsToScreenCoords(points) {
-  const screenPoints = new Array(points.length);  // створення результівного масиву
+  const screenPoints = new Array(points.length);
 
-  for (let i = 0; i < points.length; i++) {       // перебір усіх вершин
-    const screenPoint = screenPosition(points[i].x, points[i].y);  // отримання xyz-координат відносно полотна
+  for (let i = 0; i &lt; points.length; i++) {
+    const screenPoint = screenPosition(points[i].x, points[i].y);
     screenPoints[i] = createVector(screenPoint.x, screenPoint.y);
   }
 
@@ -122,19 +137,20 @@ function pointsToScreenCoords(points) {
 }</code></pre>
 
     <p>
-        Потім ми передаємо ці точки до функції на перевірки зіткнення між полігонами
-        <span class="code">isPolyWithPolyCollides()</span> – супер просто! Цей підхід дуже добре масштабується
-        для об’єктно-орієнтованого коду і дозволяє обійтися без використання обмежувальних рамок або інших менш
-        точних методів.
+      Отримавши екранні координати обох повернутих квадратів
+      (<span class="code">square1Screen</span> та
+      <span class="code">square2Screen</span>), ми просто передаємо їх у функцію
+      <span class="code">collidePolyPoly()</span>&nbsp;— і маємо ідеально точне
+      виявлення зіткнень під будь-яким кутом обертання!
     </p>
 
     <p>
-        Нижче наведено повний приклад коду, окрім додаткової функції
-        <a class="inline-link" href="https://github.com/bohnacker/p5js-screenPosition" target="_blank">screenPosition()</a>,
-        яку я підключив окремо:
+      Нижче наведено повний код програми (допоміжна функція
+      <a class="inline-link" href="https://github.com/bohnacker/p5js-screenPosition" target="_blank">addScreenPositionFunction()</a>
+      підключена окремим скриптом):
     </p>
 
-    <pre><code class="language-js code-block sm-txt">// змінні для двох масивів, що зберігатиуть вершини квадратів
+    <pre><code class="language-js code-block">// масиви локальних вершин двох квадратів
 let squarePoints1;
 let squarePoints2;
 
@@ -144,8 +160,8 @@ function setup() {
   createCanvas(window.innerWidth, window.innerHeight);
   noCursor();
 
-  // ініціалізація додаткового коду для користування функцією screenPosition()
-  // цей код лежить в окремому файлі, взято з https://github.com/bohnacker/p5js-screenPosition
+  // активуємо функцію screenPosition() із підключеного додаткового коду
+  // джерело: https://github.com/bohnacker/p5js-screenPosition
   addScreenPositionFunction();
 
   squarePoints1 = [
@@ -165,21 +181,18 @@ function setup() {
 function draw() {
   background(255);
 
-  // оновлення кута для обертання
+  // збільшуємо кут обертання в кожному кадрі
   angle += 0.02;
 
-  // зміщення початкових координат для першого квадрата
-  // у точку на 100px лівіше від центру полотна
+  // переміщуємо та повертаємо систему координат для першого квадрата
   push();
   translate(width / 2 - 100, height / 2);
   rotate(angle);
 
-  // перетворення чотирьох точок першого квадрата на
-  // фактичні координати полотна (відносно лівого верхнього кута полотна)
-  // після матричних перетворень вище (для деталей перегляньте функцію, яка це робить)
+  // зчитуємо фактичні екранні координати першого квадрата після трансформацій
   const square1Screen = pointsToScreenCoords(squarePoints1);
 
-  // малювання першого квадрата
+  // малюємо перший квадрат
   fill(0, 150);
   noStroke();
   beginShape();
@@ -189,22 +202,25 @@ function draw() {
   endShape(CLOSE);
   pop();
 
-  // зміщення початкових координат для другого квадрата
-  // у точку на 100px правіше від центру полотна
+  // переміщуємо та повертаємо систему координат для другого квадрата
   push();
-  translate(width - width / 2 + 100, height / 2);
+  translate(width / 2 + 100, height / 2);
   rotate(angle);
 
-  // отримання координат відносно лівого верхньго кута полотна
+  // зчитуємо фактичні екранні координати другого квадрата
   const square2Screen = pointsToScreenCoords(squarePoints2);
 
-  // результат перевірки на зіткнення
-  const isHit = isPolyWithPolyCollides(square1Screen, square2Screen);
-  // при зіткненні змінюємо колір
-  if (isHit) fill(255, 150, 0);
-  else fill(0, 150, 255);
+  // перевіряємо зіткнення двох повернутих квадратів як багатокутників
+  const isColliding = collidePolyPoly(square1Screen, square2Screen);
 
-  // малювання другого квадрата
+  // змінюємо колір другого квадрата при зіткненні
+  if (isColliding) {
+    fill(255, 150, 0);
+  } else {
+    fill(0, 150, 255);
+  }
+
+  // малюємо другий квадрат
   beginShape();
   for (const pt of squarePoints2) {
     vertex(pt.x, pt.y);
@@ -213,115 +229,101 @@ function draw() {
   pop();
 }
 
-// функція, яка повертає фактичні координати на полотні (відносно його лівого верхнього кута)
-// після матричних перетворень (наприклад, translate та rotate),
+// перетворення локальних вершин на екранні координати полотна
 function pointsToScreenCoords(points) {
-  const screenPoints = new Array(points.length);  // створення результівного масиву
+  const screenPoints = new Array(points.length);
 
-  for (let i = 0; i < points.length; i++) {       // перебір усіх вершин
-    const screenPoint = screenPosition(points[i].x, points[i].y);  // отримання xyz-координат відносно полотна
+  for (let i = 0; i &lt; points.length; i++) {
+    const screenPoint = screenPosition(points[i].x, points[i].y);
     screenPoints[i] = createVector(screenPoint.x, screenPoint.y);
   }
 
   return screenPoints;
 }
 
-// перевірка на перетин між багатокутником та багатокутником
-function isPolyWithPolyCollides(p1, p2) {
-  // перебір кожної вершини з використанням наступної вершини в списку
+// перевірка на зіткнення між двома багатокутниками
+function collidePolyPoly(p1, p2) {
   let next = 0;
-  for (let current = 0; current < p1.length; current++) {
-
-    // отримання наступної вершини зі списку
-    // коли дійшли до останньої вершини, беремо першу під індексом 0
+  for (let current = 0; current &lt; p1.length; current++) {
     next = current + 1;
-    if (next === p1.length) next = 0;
+    if (next === p1.length) {
+      next = 0;
+    }
 
-    // отримуємо p5.Vector у нашій поточній позиції
-    // це зробить наш оператор if трохи чистішим
-    const vc = p1[current];  // c для "current" (поточний)
-    const vn = p1[next];     // n для "next" (наступний)
+    const currentVertex = p1[current];
+    const nextVertex = p1[next];
 
-    // тепер ми можемо використати ці дві точки (лінію) для порівняння
-    // з вершинами іншого багатокутника за допомогою isPolyWithLineCollides()
-    let isCollision = isPolyWithLineCollides(p2, vc.x, vc.y, vn.x, vn.y);
-    if (isCollision) return true;
+    const isCollision = collidePolyLine(
+      p2,
+      currentVertex.x, currentVertex.y,
+      nextVertex.x, nextVertex.y
+    );
+    if (isCollision) {
+      return true;
+    }
+  }
 
-    // опціонально: перевірка, чи другий багатокутник знаходиться ВСЕРЕДИНІ першого
-    isCollision = isPolyWithPointCollides(p1, p2[0].x, p2[0].y);
-    if (isCollision) return true;
+  // необов’язково: перевіряємо, чи один багатокутник всередині іншого
+  const isInside = collidePolyPoint(p1, p2[0].x, p2[0].y);
+  if (isInside) {
+    return true;
   }
 
   return false;
 }
 
-
-// перевірка на перетин між багатокутником та лінією
-function isPolyWithLineCollides(vertices, x1, y1, x2, y2) {
-  // перебір кожної вершини з використанням наступної вершини в списку
+// перевірка на зіткнення між багатокутником та лінією
+function collidePolyLine(vertices, x1, y1, x2, y2) {
   let next = 0;
-  for (let current = 0; current < vertices.length; current++) {
-
-    // отримання наступної вершини зі списку
+  for (let current = 0; current &lt; vertices.length; current++) {
     next = current + 1;
-    // коли дійшли до останньої вершини, беремо першу під індексом 0
     if (next === vertices.length) {
       next = 0;
     }
 
-    // отримання векторів для поточної й наступної точки,
-    // що формують ребро та витягання відповідних XY-координат
-    const x3 = vertices[current].x;
-    const y3 = vertices[current].y;
-    const x4 = vertices[next].x;
-    const y4 = vertices[next].y;
+    const currentVertex = vertices[current];
+    const nextVertex = vertices[next];
 
-    // перевірка перетину лінії з лінією
-    // якщо є, тоді одразу повертаємо 'true', щоб зупинити інші перевірки
-    const isHit = isLineWithLineCollides(x1, y1, x2, y2, x3, y3, x4, y4);
+    const x3 = currentVertex.x;
+    const y3 = currentVertex.y;
+    const x4 = nextVertex.x;
+    const y4 = nextVertex.y;
+
+    const isHit = collideLineLine(x1, y1, x2, y2, x3, y3, x4, y4);
     if (isHit) {
       return true;
     }
   }
 
-  // якщо зіткнень не було, повертаємо 'false'
   return false;
 }
 
-// перевірка на перетин між лінією та кругом
-function isLineWithLineCollides(x1, y1, x2, y2, x3, y3, x4, y4) {
-  // розрахунок напрямку ліній
+// перевірка на перетин двох відрізків
+function collideLineLine(x1, y1, x2, y2, x3, y3, x4, y4) {
   const uA = ((x4 - x3) * (y1 - y3) - (y4 - y3) * (x1 - x3)) / ((y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1));
   const uB = ((x2 - x1) * (y1 - y3) - (y2 - y1) * (x1 - x3)) / ((y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1));
 
-  // якщо uA та uB мають значення між 0 та 1, тоді лінії мають перетин
-  return uA >= 0 && uA <= 1 && uB >= 0 && uB <= 1;
+  return uA &gt;= 0 &amp;&amp; uA &lt;= 1 &amp;&amp; uB &gt;= 0 &amp;&amp; uB &lt;= 1;
 }
 
-// перевірка на перетин між багатокутником та точкою
-// used only to check if the second polygon is INSIDE the first
-function isPolyWithPointCollides(vertices, px, py) {
+// перевірка на зіткнення між багатокутником та точкою
+function collidePolyPoint(vertices, px, py) {
   let isCollision = false;
 
-  // перебір кожної вершини з використанням наступної вершини в списку
   let next = 0;
-  for (let current = 0; current < vertices.length; current++) {
-
-    // отримання наступної вершини зі списку
+  for (let current = 0; current &lt; vertices.length; current++) {
     next = current + 1;
-    // коли дійшли до останньої вершини, беремо першу під індексом 0
     if (next === vertices.length) {
       next = 0;
     }
 
-    // отримуємо p5.Vector у нашій поточній позиції
-    // це зробить наш оператор if трохи чистішим
-    const vc = vertices[current];  // c для "current" (поточний)
-    const vn = vertices[next];     // n для "next" (наступний)
+    const currentVertex = vertices[current];
+    const nextVertex = vertices[next];
 
-    // порівняти позицію, інвертувати змінну 'isCollision'
-    if (((vc.y > py && vn.y < py) || (vc.y < py && vn.y > py)) &&
-      (px < (vn.x - vc.x) * (py - vc.y) / (vn.y - vc.y) + vc.x)) {
+    if (
+      ((currentVertex.y &gt;= py &amp;&amp; nextVertex.y &lt; py) || (currentVertex.y &lt; py &amp;&amp; nextVertex.y &gt;= py)) &amp;&amp;
+      (px &lt; (nextVertex.x - currentVertex.x) * (py - currentVertex.y) / (nextVertex.y - currentVertex.y) + currentVertex.x)
+    ) {
       isCollision = !isCollision;
     }
   }
@@ -329,25 +331,32 @@ function isPolyWithPointCollides(vertices, px, py) {
   return isCollision;
 }</code></pre>
 
-    <a href="./thanks.html"><p class="nextPage">Далі: Подяки</p></a>
+    <a href="./thanks.html">
+      <p class="nextPage">Далі: Подяки</p>
+    </a>
 
     <footer>
-        <p>
-            [
-            <a class="inline-link" href="./index.html">вступ</a>,
-            <a href="https://github.com/jeffThompson/CollisionDetection" target="_blank">оригінальне джерело</a>
-            ]
-        </p>
+      <p>
+        [
+        <a class="inline-link" href="./index.html">вступ</a>,
+        <a class="inline-link" href="https://github.com/jeffThompson/CollisionDetection" target="_blank">оригінальне джерело</a>
+        ]
+      </p>
 
-        <p class="license">
-            <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
-                <img id="license" class="license" alt="Creative Commons License" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png">
-            </a>
-        </p>
+      <p class="license">
+        <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+          <img
+            id="license"
+            class="license"
+            alt="Creative Commons License"
+            src="./assets/images/graphics/by-nc-sa.svg""
+          >
+        </a>
+      </p>
     </footer>
 
     <script>hljs.highlightAll();</script>
-</div>
+  </div>
 </body>
-</html>
 
+</html>

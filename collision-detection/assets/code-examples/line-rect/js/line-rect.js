@@ -21,7 +21,7 @@ function setup() {
 
   // визначення положення координат для лівого верхнього кута, щоб квадрат був по центру полотна
   sx = (width - sw) / 2;
-  sy = (height - sw) / 2;
+  sy = (height - sh) / 2;
 }
 
 function draw() {
@@ -32,7 +32,7 @@ function draw() {
   y1 = mouseY;
 
   // результат перевірки на зіткнення
-  const isHit = isLineWithRectCollides(x1,y1,x2,y2, sx,sy,sw,sh);
+  const isHit = collideLineRect(x1,y1,x2,y2, sx,sy,sw,sh);
 
   // зміна кольору при перетині
   if (isHit) fill(255,150,0);
@@ -49,15 +49,15 @@ function draw() {
 
 
 // перевірка на перетин між лінією та прямокутником
-function isLineWithRectCollides(x1, y1, x2, y2, rx, ry, rw, rh) {
+function collideLineRect(x1, y1, x2, y2, rx, ry, rw, rh) {
   // перевірка, чи лінія торкнулася будь-якої сторони прямокутника
-  const isLeftCollides   = isLineWithLineCollides(x1,y1,x2,y2, rx,ry,rx, ry+rh);
-  const isRightCollides  = isLineWithLineCollides(x1,y1,x2,y2, rx+rw,ry, rx+rw,ry+rh);
-  const isTopCollides    = isLineWithLineCollides(x1,y1,x2,y2, rx,ry, rx+rw,ry);
-  const isBottomCollides = isLineWithLineCollides(x1,y1,x2,y2, rx,ry+rh, rx+rw,ry+rh);
+  const left   = collideLineLine(x1,y1,x2,y2, rx,ry,rx, ry+rh);
+  const right  = collideLineLine(x1,y1,x2,y2, rx+rw,ry, rx+rw,ry+rh);
+  const top    = collideLineLine(x1,y1,x2,y2, rx,ry, rx+rw,ry);
+  const bottom = collideLineLine(x1,y1,x2,y2, rx,ry+rh, rx+rw,ry+rh);
   
   // якщо БУДЬ-ЩО з наведеного вище вірно, значить лінія має перетин з прямокутником
-  if (isLeftCollides || isRightCollides || isTopCollides || isBottomCollides) {
+  if (left || right || top || bottom) {
     return true;
   }
   return false;
@@ -65,7 +65,7 @@ function isLineWithRectCollides(x1, y1, x2, y2, rx, ry, rw, rh) {
 
 
 // перевірка на перетин між лінією та кругом
-function isLineWithLineCollides(x1, y1, x2, y2, x3, y3, x4, y4) {
+function collideLineLine(x1, y1, x2, y2, x3, y3, x4, y4) {
   // розрахунок напрямку ліній
   const uA = ((x4-x3)*(y1-y3) - (y4-y3)*(x1-x3)) / ((y4-y3)*(x2-x1) - (x4-x3)*(y2-y1));
   const uB = ((x2-x1)*(y1-y3) - (y2-y1)*(x1-x3)) / ((y4-y3)*(x2-x1) - (x4-x3)*(y2-y1));

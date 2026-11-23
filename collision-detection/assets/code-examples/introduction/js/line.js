@@ -11,7 +11,7 @@ class Line {
   update(cx, cy, cr) {
     this.y1 += this.speed;
     this.y2 += this.speed;
-    this.isHit = isLineWithCircleCollides(this.x1, this.y1, this.x2, this.y2, cx, cy, cr);
+    this.isHit = collideLineCircle(this.x1, this.y1, this.x2, this.y2, cx, cy, cr);
   }
 
   display() {

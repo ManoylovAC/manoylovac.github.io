@@ -39,7 +39,7 @@ function draw() {
   y1 = mouseY;
 
   // результат перевірки на зіткнення
-  const isHit = isLineWithLineCollides(x1, y1, x2, y2, x3, y3, x4, y4);
+  const isHit = collideLineLine(x1, y1, x2, y2, x3, y3, x4, y4);
 
   // зміна кольору при перетині
   if (isHit) {
@@ -57,7 +57,7 @@ function draw() {
 }
 
 // перевірка на перетин між лінією та кругом
-function isLineWithLineCollides(x1, y1, x2, y2, x3, y3, x4, y4) {
+function collideLineLine(x1, y1, x2, y2, x3, y3, x4, y4) {
   // розрахунок відстані до точки перетину
   const uA = ((x4 - x3) * (y1 - y3) - (y4 - y3) * (x1 - x3)) / ((y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1));
   const uB = ((x2 - x1) * (y1 - y3) - (y2 - y1) * (x1 - x3)) / ((y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1));
