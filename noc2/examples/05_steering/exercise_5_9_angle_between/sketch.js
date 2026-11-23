@@ -22,7 +22,7 @@ function draw() {
   v.normalize();
   v.mult(100);
 
-  let xaxis = new createVector(100, 0);
+  let xaxis = createVector(100, 0);
   // Draw the vectors
   drawVector(v, centerPos);
   drawVector(xaxis, centerPos);

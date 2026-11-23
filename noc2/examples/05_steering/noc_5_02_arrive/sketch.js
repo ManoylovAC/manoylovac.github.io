@@ -32,6 +32,3 @@ function draw() {
   vehicle.show();
 }
 
-function mousePressed(){
-  save('screenshot.png')
-}
